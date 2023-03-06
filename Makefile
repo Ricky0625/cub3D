@@ -1,0 +1,120 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
+#    Updated: 2023/03/06 14:58:12 by wricky-t         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+#------------------------------------------------------------------------------#
+#   INGREDIENTS                                                                #
+#------------------------------------------------------------------------------#
+
+NAME		:= cub3D
+
+CC			:= gcc
+
+CFLAGS		:= -Wall -Werror -Wextra $(INCFLAGS)
+
+ifeq ($(DB), 1)
+	CFLAGS += -fsanitize=address -g3
+endif
+
+SRC_PATH	:= srcs
+
+OBJ_PATH	:= objs
+
+LIBFT		:= lib42
+
+MLX			:= mlx
+
+INCLUDES	:= includes
+
+INCFLAGS	:= -I $(INCLUDES) -I $(LIBFT) -I $(MLX)
+
+CFLAGS		+= $(INCFLAGS)
+
+STATLIB		:= $(LIBFT)/*.a
+
+MLXFLAGS	:= -Lmlx -lmlx -framework OpenGL -framework AppKit
+
+RM			:= rm -rf
+
+NORM		:= norminette
+
+UNAME		:= $(shell uname)
+
+ifeq ($(UNAME), Linux)
+	MLXFLAGS	:= -Lmlx_linux -lmlx_Linux -L/usr/lib -I/usr/include -Imlx_linux -lXext -lX11 -lm -lz
+	CFLAGS		+= -I/usr/include -Imlx_linux -03
+endif
+
+#------------------------------------------------------------------------------#
+#   PROGRAM'S SCRS                                                             #
+#------------------------------------------------------------------------------#
+
+SRCS		:= cub3d.c
+
+SRCS		:= $(SRCS:%=$(SRC_PATH)/%)
+
+OBJS		:= $(SRCS:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
+
+#------------------------------------------------------------------------------#
+#   STYLING                                                                    #
+#------------------------------------------------------------------------------#
+
+GR			:= \033[1;92m
+
+BL			:= \033[1;34m
+
+UBL			:= \033[4;34m
+
+YL			:= \033[1;33m
+
+DF			:= \033[0m
+
+#------------------------------------------------------------------------------#
+#   RECIPE                                                                     #
+#------------------------------------------------------------------------------#
+
+all: $(NAME)
+	@echo "$(GR)CUB3D!!$(DF)"
+
+ifeq ($(DB), 1)
+	@echo "🐛 DEBUG MODE 🐛"
+endif
+
+$(NAME): $(OBJS)
+	@clear
+	@echo "$(GR)Patching everything...$(DF)"
+	@make bonus -C $(LIBFT)
+	@$(CC) $(CFLAGS) $(MLXFLAGS) $^ $(STATLIB) -o $@
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "$(BL)↻ Compiling $(UBL)$(notdir $<)$(DF)"
+
+clean:
+	@clear
+	@make clean -C $(LIBFT)
+	@$(RM) $(OBJ_PATH)
+	@echo "$(YL)✗ Removed $(OBJ_PATH)$(DF)"
+
+fclean: clean
+	@make fclean -C $(LIBFT)
+	@$(RM) $(NAME)
+	@echo "$(YL)✗ Removed $(NAME)$(DF)"
+
+re: fclean all
+
+norm: $(SRCS)
+	@clear
+	@$(NORM) $(SRCS) $(INCLUDES) $(LIBFT)
+
+.PHONY:
+	clean fclean re
