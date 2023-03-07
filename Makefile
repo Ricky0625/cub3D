@@ -6,7 +6,7 @@
 #    By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
-#    Updated: 2023/03/06 14:58:12 by wricky-t         ###   ########.fr        #
+#    Updated: 2023/03/07 19:09:37 by wricky-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,9 @@ endif
 #   PROGRAM'S SCRS                                                             #
 #------------------------------------------------------------------------------#
 
-SRCS		:= cub3d.c
+SRCS		:= cub3d.c \
+			   parsing/parse_map.c \
+			   utils/error.c utils/img_utils.c \
 
 SRCS		:= $(SRCS:%=$(SRC_PATH)/%)
 
@@ -82,14 +84,23 @@ DF			:= \033[0m
 #------------------------------------------------------------------------------#
 
 all: $(NAME)
-	@echo "$(GR)CUB3D!!$(DF)"
+	@clear
+	@echo ""
+	@echo "      ┏━━━┳┓╋┏┳━━┓┏━━━┳━━━┓"
+	@echo "      ┃┏━┓┃┃╋┃┃┏┓┃┃┏━┓┣┓┏┓┃"
+	@echo "      ┃┃╋┗┫┃╋┃┃┗┛┗╋┛┏┛┃┃┃┃┃"
+	@echo "      ┃┃╋┏┫┃╋┃┃┏━┓┣┓┗┓┃┃┃┃┃"
+	@echo "      ┃┗━┛┃┗━┛┃┗━┛┃┗━┛┣┛┗┛┃"
+	@echo "      ┗━━━┻━━━┻━━━┻━━━┻━━━┛"
+	@echo ""
 
 ifeq ($(DB), 1)
-	@echo "🐛 DEBUG MODE 🐛"
+	@echo "$(YL)"
+	@echo "	   DEBUG MODE"
+	@echo "$(DF)"
 endif
 
 $(NAME): $(OBJS)
-	@clear
 	@echo "$(GR)Patching everything...$(DF)"
 	@make bonus -C $(LIBFT)
 	@$(CC) $(CFLAGS) $(MLXFLAGS) $^ $(STATLIB) -o $@
@@ -98,6 +109,10 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(BL)↻ Compiling $(UBL)$(notdir $<)$(DF)"
+
+help:
+	@clear
+	@echo "Help"
 
 clean:
 	@clear
@@ -113,7 +128,7 @@ fclean: clean
 re: fclean all
 
 norm: $(SRCS)
-	@clear
+	@reset
 	@$(NORM) $(SRCS) $(INCLUDES) $(LIBFT)
 
 .PHONY:
