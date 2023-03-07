@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/06 14:34:29 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/07 11:29:58 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 # define CUB3D_H
 
 /* ====== LIBRARIES ====== */
+# include "../mlx/mlx.h"
 # include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <stdlib.h>
+# include <string.h>
+# include <math.h>
 
 /* ====== TEXT STYLING ====== */
 # define RED "\033[1;31m"
