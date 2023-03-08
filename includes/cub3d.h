@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/08 12:30:48 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/08 14:53:46 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ typedef enum e_dir
 typedef enum e_error
 {
 	NO_MAP,
-	TOO_MANY_MAP
+	TOO_MANY_MAP,
+	INVALID_MAP_FILE
 }	t_error;
 
 /* ====== STRUCTS ====== */
@@ -115,6 +116,7 @@ typedef struct s_img_caches
 */
 typedef struct s_map
 {
+	t_list		*info_list;
 	t_vector	size;
 	t_dir		player_dir;
 	char		**map;
@@ -129,6 +131,7 @@ typedef struct s_cub
 	void			*win;
 	t_img			buffer;
 	t_img_caches	caches;
+	t_map			map;
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */
@@ -139,5 +142,9 @@ int		show_error(t_cub *cub, t_error err);
 // Img utils
 void	new_image(t_cub *cub, t_img *img, t_vector size);
 void	xpm_to_image(t_cub *cub, t_img *img, char *xpm);
+
+// Parse Map
+void	parse_map(t_cub *cub, char *map_name);
+void	*llto2darr_func(void *content);
 
 #endif
