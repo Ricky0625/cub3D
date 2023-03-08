@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/07 19:24:06 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:30:48 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define CUB3D_H
 
 /* ====== LIBRARIES ====== */
-# include "../mlx/mlx.h"
-# include "lib42.h"
+# include <mlx.h>
+# include <lib42.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
@@ -57,13 +57,22 @@ typedef enum e_controls
 	KEY_RIGHT = 124
 }	t_controls;
 
+typedef enum e_dir
+{
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST,
+	INVALID
+}	t_dir;
+
 /**
  * @brief Enum for error types
 */
 typedef enum e_error
 {
 	NO_MAP,
-	TOO_MUCH_MAP
+	TOO_MANY_MAP
 }	t_error;
 
 /* ====== STRUCTS ====== */
@@ -100,6 +109,16 @@ typedef struct s_img_caches
 	t_img	we_tex;
 	t_img	ea_tex;
 }	t_img_caches;
+
+/**
+ * @brief Map data
+*/
+typedef struct s_map
+{
+	t_vector	size;
+	t_dir		player_dir;
+	char		**map;
+}	t_map;
 
 /**
  * @brief The main struct for Cub3D.

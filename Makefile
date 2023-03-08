@@ -6,7 +6,7 @@
 #    By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
-#    Updated: 2023/03/07 19:09:37 by wricky-t         ###   ########.fr        #
+#    Updated: 2023/03/08 12:28:57 by wricky-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ CFLAGS		+= $(INCFLAGS)
 
 STATLIB		:= $(LIBFT)/*.a
 
-MLXFLAGS	:= -Lmlx -lmlx -framework OpenGL -framework AppKit
+MLXFLAGS	:= -L$(MLX) -l$(MLX) -framework OpenGL -framework AppKit
 
 RM			:= rm -rf
 
