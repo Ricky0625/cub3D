@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/08 12:09:53 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/08 12:40:58 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ int	main(int ac, char **av)
 {
 	t_cub	cub;
 
-	(void)av;
 	if (ac < 2)
 		return (show_error(NULL, NO_MAP));
 	else if (ac > 2)
 		return (show_error(NULL, TOO_MANY_MAP));
 	init_cub(&cub);
+	parse_map(&cub, av[1]);
 	mlx_loop(cub.mlx);
 	return (1);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+         #
+#    By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
-#    Updated: 2023/03/08 12:28:57 by wricky-t         ###   ########.fr        #
+#    Updated: 2023/03/08 14:55:18 by wxuerui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ endif
 
 SRCS		:= cub3d.c \
 			   parsing/parse_map.c \
-			   utils/error.c utils/img_utils.c \
+			   utils/error.c utils/img_utils.c utils/parsing_utils.c\
 
 SRCS		:= $(SRCS:%=$(SRC_PATH)/%)
 
