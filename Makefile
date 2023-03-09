@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+         #
+#    By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
-#    Updated: 2023/03/08 14:55:18 by wxuerui          ###   ########.fr        #
+#    Updated: 2023/03/09 12:42:37 by wricky-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ endif
 #------------------------------------------------------------------------------#
 
 SRCS		:= cub3d.c \
-			   parsing/parse_map.c \
+			   init/init_textures.c \
+			   parsing/parse_map.c parsing/parse_elements.c \
 			   utils/error.c utils/img_utils.c utils/parsing_utils.c\
 
 SRCS		:= $(SRCS:%=$(SRC_PATH)/%)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/08 14:53:46 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/03/09 21:26:54 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /* ====== LIBRARIES ====== */
 # include <mlx.h>
+# include <error.h>
 # include <lib42.h>
 # include <stdio.h>
 # include <fcntl.h>
@@ -66,15 +67,25 @@ typedef enum e_dir
 	INVALID
 }	t_dir;
 
-/**
- * @brief Enum for error types
-*/
-typedef enum e_error
+typedef enum e_rgba
 {
-	NO_MAP,
-	TOO_MANY_MAP,
-	INVALID_MAP_FILE
-}	t_error;
+	R,
+	G,
+	B,
+	A,
+	TOTAL_RGBA
+}	t_rgba;
+
+typedef enum e_element
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	C,
+	F,
+	UNKNOWN
+}	t_element;
 
 /* ====== STRUCTS ====== */
 
@@ -101,15 +112,40 @@ typedef struct s_img
 }	t_img;
 
 /**
- * @brief Image caches. Store all the pointers to the textures.
+ * @brief Store value of RGBA
 */
-typedef struct s_img_caches
+typedef struct s_color
 {
-	t_img	no_tex;
-	t_img	so_tex;
-	t_img	we_tex;
-	t_img	ea_tex;
-}	t_img_caches;
+	unsigned char	color[TOTAL_RGBA];
+}	t_color;
+
+/**
+ * @brief Information about the textures.
+ * @attention Use this to check if all of the texture are set.
+*/
+typedef struct s_texture_data
+{
+	int	no_tex_set;
+	int	so_tex_set;
+	int	we_tex_set;
+	int	ea_tex_set;	
+	int	ceil_set;
+	int	floor_set;
+}	t_texture_data;
+
+/**
+ * @brief Store all the info about the texture
+*/
+typedef struct s_texture
+{
+	t_img			no_tex;
+	t_img			so_tex;
+	t_img			we_tex;
+	t_img			ea_tex;
+	unsigned char	ceil[TOTAL_RGBA];
+	unsigned char	floor[TOTAL_RGBA];
+	t_texture_data	info;
+}	t_texture;
 
 /**
  * @brief Map data
@@ -127,17 +163,17 @@ typedef struct s_map
 */
 typedef struct s_cub
 {
-	void			*mlx;
-	void			*win;
-	t_img			buffer;
-	t_img_caches	caches;
-	t_map			map;
+	void		*mlx;
+	void		*win;
+	t_img		buffer;
+	t_texture	textures;
+	t_map		map;
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */
 
-// Utils
-int		show_error(t_cub *cub, t_error err);
+// Init
+void	init_textures(t_texture *texture);
 
 // Img utils
 void	new_image(t_cub *cub, t_img *img, t_vector size);
@@ -145,6 +181,11 @@ void	xpm_to_image(t_cub *cub, t_img *img, char *xpm);
 
 // Parse Map
 void	parse_map(t_cub *cub, char *map_name);
+void	parse_elements(t_cub *cub, t_list **info_list);
 void	*llto2darr_func(void *content);
+
+// Utils
+int		show_error(char *err);
+void	exit_cub(t_cub *cub, char *err);
 
 #endif
