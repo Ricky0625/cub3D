@@ -6,12 +6,15 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/10 13:51:57 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/10 14:33:32 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief Check if the target row is map content or not.
+*/
 static int	is_map_content(char *str)
 {
 	if (*str == '\0')
@@ -24,7 +27,12 @@ static int	is_map_content(char *str)
 	return (1);
 }
 
-static int	check_rgba_format(char *rgba_str)
+/**
+ * @brief Check the format of RGB
+ * @attention
+ * The format should strictly be constructed by digits and ',' only.
+*/
+static int	check_rgb_format(char *rgba_str)
 {
 	while (*rgba_str != '\0')
 	{
@@ -35,13 +43,20 @@ static int	check_rgba_format(char *rgba_str)
 	return (1);
 }
 
+/**
+ * @brief Convert RGB str and store it as RGB values
+ * @details
+ * Check if the RGB is the accepted format. Split the str by ',' and
+ * convert each value into integer. The value should be in range of
+ * 0 and 255.
+*/
 static void	store_color(t_cub *cub, unsigned char color[4], char *rgb_str)
 {
 	int		i;
 	int		value;
 	char	**rgb_value;
 
-	if (check_rgba_format(rgb_str) == 0)
+	if (check_rgb_format(rgb_str) == 0)
 		exit_cub(cub, INVALID_RGB_FORMAT);
 	rgb_value = ft_split(rgb_str, ',');
 	if (ft_strarrsize(rgb_value) != 3)
@@ -64,7 +79,12 @@ static void	store_color(t_cub *cub, unsigned char color[4], char *rgb_str)
 }
 
 /**
- * mlx_xpm_file_to_image will return NULL if the initialization failed
+ * @brief Set elements (texture and color)
+ * 
+ * @details
+ * Compare the 1st string with the identifiers. For texture,
+ * initialize image. For color, store color as RGB. If there's
+ * an unknown identifier, throw error.
 */
 void	set_element(t_cub *cub, char **element_set)
 {
@@ -91,15 +111,22 @@ void	set_element(t_cub *cub, char **element_set)
 }
 
 /**
- * Current rules for elements
+ * Rules for elements
  * 1. Can accept duplicate identifier for element
  * 2. Format for element: [Identifier] [Path / Value]
  * 3. For RGB, the format should strictly be: R,G,B
  * 4. For RGB, the value for each should range from 0 to 255
  * 5. While parsing elements, if there's an unknown identifier, program should
  * 	  throw "Unknown element" error.
- * 
- * The process of parsing elements will stop when encounter map's content.
+*/
+/**
+ * @brief Parse elements and store them into struct
+ * @details
+ * Iterate through the info list. Convert each node's content into an
+ * element set. If the size of element set is 2, set element. If
+ * the size is 0, means empty line, should skip this node. If the
+ * size is not 2, it's an invalid format for element.
+ * The process will keep continue until it encounter map's content.
 */
 void	parse_elements(t_cub *cub, t_list **info_list)
 {
