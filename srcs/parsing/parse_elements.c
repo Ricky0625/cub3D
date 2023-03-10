@@ -6,26 +6,11 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/10 14:33:32 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:15:48 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/**
- * @brief Check if the target row is map content or not.
-*/
-static int	is_map_content(char *str)
-{
-	if (*str == '\0')
-		return (0);
-	while (*str != '\0')
-	{
-		if (ft_strchr("10NSWE ", *str++) == NULL)
-			return (0);
-	}
-	return (1);
-}
 
 /**
  * @brief Check the format of RGB
@@ -99,12 +84,12 @@ void	set_element(t_cub *cub, char **element_set)
 	else if (ft_strcmp(element_set[0], "C") == 0)
 	{
 		store_color(cub, cub->textures.ceil, element_set[1]);
-		cub->textures.info.ceil_set = 1;
+		cub->textures.ceil_set = 1;
 	}
 	else if (ft_strcmp(element_set[0], "F") == 0)
 	{
 		store_color(cub, cub->textures.floor, element_set[1]);
-		cub->textures.info.floor_set = 1;
+		cub->textures.floor_set = 1;
 	}
 	else
 		exit_cub(cub, UNKNOWN_ELEMENT);

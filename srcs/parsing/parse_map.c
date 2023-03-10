@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:34:40 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/03/09 22:25:15 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:16:16 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	parse_map(t_cub *cub, char *map_name)
 	if (info_list == NULL)
 		exit_cub(cub, EMPTY_FILE);
 	parse_elements(cub, &info_list);
+	if (check_elements_all_set(&cub->textures) == 0)
+		exit_cub(cub, MISSING_ELEMENT);
 	read_map(&cub->map, &info_list);
 	while (*cub->map.map)
 		printf("%s\n", *(cub->map.map++));

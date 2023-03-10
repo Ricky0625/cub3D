@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:21:01 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/09 21:50:14 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:13:06 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define INVALID_ELEMENT_FORMAT "Invalid element format!"
 # define INVALID_RGB_FORMAT "Invalid RGB value format"
 # define MISSING_RGB_VALUE "RGB value missing"
+# define MISSING_ELEMENT "Missing element definition!"
 # define RGB_OUT_OF_RANGE "RGB value out of range"
 
 #endif

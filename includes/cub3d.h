@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/09 21:26:54 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/10 15:10:31 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,20 +120,6 @@ typedef struct s_color
 }	t_color;
 
 /**
- * @brief Information about the textures.
- * @attention Use this to check if all of the texture are set.
-*/
-typedef struct s_texture_data
-{
-	int	no_tex_set;
-	int	so_tex_set;
-	int	we_tex_set;
-	int	ea_tex_set;	
-	int	ceil_set;
-	int	floor_set;
-}	t_texture_data;
-
-/**
  * @brief Store all the info about the texture
 */
 typedef struct s_texture
@@ -142,9 +128,10 @@ typedef struct s_texture
 	t_img			so_tex;
 	t_img			we_tex;
 	t_img			ea_tex;
+	int				ceil_set;
 	unsigned char	ceil[TOTAL_RGBA];
+	int				floor_set;
 	unsigned char	floor[TOTAL_RGBA];
-	t_texture_data	info;
 }	t_texture;
 
 /**
@@ -182,6 +169,8 @@ void	xpm_to_image(t_cub *cub, t_img *img, char *xpm);
 // Parse Map
 void	parse_map(t_cub *cub, char *map_name);
 void	parse_elements(t_cub *cub, t_list **info_list);
+int		is_map_content(char *str);
+int		check_elements_all_set(t_texture *textures);
 void	*llto2darr_func(void *content);
 
 // Utils
