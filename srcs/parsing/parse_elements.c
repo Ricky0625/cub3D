@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/09 22:28:20 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/10 13:51:57 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	set_element(t_cub *cub, char **element_set)
 
 /**
  * Current rules for elements
- * 1. Can accept duplicate identifier for element (?)
+ * 1. Can accept duplicate identifier for element
  * 2. Format for element: [Identifier] [Path / Value]
  * 3. For RGB, the format should strictly be: R,G,B
  * 4. For RGB, the value for each should range from 0 to 255
@@ -113,17 +113,14 @@ void	parse_elements(t_cub *cub, t_list **info_list)
 		element_set = ft_split_ws((char *)info->content);
 		size = ft_strarrsize(element_set);
 		if (size == 0)
-		{
-			info = info->next;
-			ft_freestrarr(element_set);
-			continue ;
-		}
+			;
 		else if (size != 2)
 		{
 			ft_freestrarr(element_set);
 			exit_cub(cub, INVALID_ELEMENT_FORMAT);
 		}
-		set_element(cub, element_set);
+		else
+			set_element(cub, element_set);
 		ft_freestrarr(element_set);
 		info = info->next;
 	}
