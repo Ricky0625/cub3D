@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:21:01 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/09 21:50:14 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/11 12:30:43 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,9 @@
 # define INVALID_RGB_FORMAT "Invalid RGB value format"
 # define MISSING_RGB_VALUE "RGB value missing"
 # define RGB_OUT_OF_RANGE "RGB value out of range"
+# define MAP_CONTENT_NOT_LAST "Map content is not the last element"
+# define NOT_SURROUNDED_BY_WALL "Map is not surrounded by wall"
+# define TOO_MANY_PLAYERS "More than one player exists in the map"
+# define NO_PLAYER "No player on the map"
 
 #endif

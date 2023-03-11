@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_elements.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/09 22:28:20 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/11 11:57:48 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int	is_map_content(char *str)
-{
-	if (*str == '\0')
-		return (0);
-	while (*str != '\0')
-	{
-		if (ft_strchr("10NSWE ", *str++) == NULL)
-			return (0);
-	}
-	return (1);
-}
 
 static int	check_rgba_format(char *rgba_str)
 {
