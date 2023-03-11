@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:34:40 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/03/11 12:52:32 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/11 13:03:11 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ static void	check_map(t_cub *cub, t_map *map)
 			if (ft_strchr("NSWE", map->map[i][j]) != NULL)
 				num_player++;
 			if (num_player > 1)
-				exit_cub(cub, TOO_MANY_PLAYERS);	
-			if (map->map[i][j] == '0' || ft_strchr("NSWE", map->map[i][j]) != NULL)
+				exit_cub(cub, TOO_MANY_PLAYERS);
+			if (map->map[i][j] == '0'
+				|| ft_strchr("NSWE", map->map[i][j]) != NULL)
 			{
 				if (check_surrounded(map, i, j) == 0)
 					exit_cub(cub, NOT_SURROUNDED_BY_WALL);
@@ -110,6 +111,7 @@ void	read_map(t_cub *cub, t_map *map, t_list **info_list)
 	}
 	map->size.y = i;
 }
+
 /**
  * @brief First get the mapfile content line by line into a linked list,
  * Then parse and load the elements (textures and colors),

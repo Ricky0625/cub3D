@@ -6,7 +6,7 @@
 #    By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
-#    Updated: 2023/03/10 15:05:48 by wricky-t         ###   ########.fr        #
+#    Updated: 2023/03/11 12:57:44 by wricky-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ endif
 SRCS		:= cub3d.c \
 			   init/init_textures.c \
 			   parsing/parse_map.c parsing/parse_elements.c parsing/parse_check.c\
-			   utils/error.c utils/img_utils.c utils/parsing_utils.c\
+			   utils/error.c utils/img_utils.c
 
 SRCS		:= $(SRCS:%=$(SRC_PATH)/%)
 
