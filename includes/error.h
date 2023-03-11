@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 21:21:01 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/10 15:13:06 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/11 12:53:13 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,9 @@
 # define MISSING_RGB_VALUE "RGB value missing"
 # define MISSING_ELEMENT "Missing element definition!"
 # define RGB_OUT_OF_RANGE "RGB value out of range"
+# define MAP_CONTENT_NOT_LAST "Map content is not the last element"
+# define NOT_SURROUNDED_BY_WALL "Map is not surrounded by wall"
+# define TOO_MANY_PLAYERS "More than one player exists in the map"
+# define NO_PLAYER "No player on the map"
 
 #endif

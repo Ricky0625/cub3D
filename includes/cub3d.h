@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/10 15:10:31 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/11 12:53:08 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,11 @@ void	parse_elements(t_cub *cub, t_list **info_list);
 int		is_map_content(char *str);
 int		check_elements_all_set(t_texture *textures);
 void	*llto2darr_func(void *content);
+int		is_map_content(char *str);
 
 // Utils
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
+int		check_surrounded(t_map *map, int y, int x);
 
 #endif
