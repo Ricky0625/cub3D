@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/13 14:54:38 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:20:57 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,28 @@ static int	check_rgb_format(char *rgba_str)
  * 0 and 255.
  * @attention Colors are stored as ARGB
 */
-static void	store_color(t_cub *cub, unsigned char color[4], char *rgb_str)
+static void	store_color(t_cub *cub, int *color, char *rgb_str)
 {
-	int		i;
-	int		value;
-	char	**rgb_value;
+	int				i;
+	int				value;
+	char			**rgb_value;
+	unsigned char	argb[TOTAL_RGBA];
 
 	if (check_rgb_format(rgb_str) == 0)
 		exit_cub(cub, INVALID_RGB_FORMAT);
 	rgb_value = ft_split(rgb_str, ',');
 	if (ft_strarrsize(rgb_value) != 3)
-	{
-		ft_freestrarr(rgb_value);
 		exit_cub(cub, MISSING_RGB_VALUE);
-	}
 	i = -1;
-	color[i + 1] = 1;
+	argb[i + 1] = 1;
 	while (rgb_value[++i] != NULL)
 	{
 		value = ft_atoi(rgb_value[i]);
 		if (value < 0 || value > 255)
-		{
-			ft_freestrarr(rgb_value);
 			exit_cub(cub, RGB_OUT_OF_RANGE);
-		}
-		color[i + 1] = (unsigned char)value;
+		argb[i + 1] = (unsigned char)value;
 	}
+	*color = create_rgba(cub, argb);
 	ft_freestrarr(rgb_value);
 }
 
@@ -85,12 +81,12 @@ void	set_element(t_cub *cub, char **element_set)
 		xpm_to_image(cub, &cub->textures.ea_tex, element_set[1]);
 	else if (ft_strcmp(element_set[0], "C") == 0)
 	{
-		store_color(cub, cub->textures.ceil, element_set[1]);
+		store_color(cub, &cub->textures.ceil, element_set[1]);
 		cub->textures.ceil_set = 1;
 	}
 	else if (ft_strcmp(element_set[0], "F") == 0)
 	{
-		store_color(cub, cub->textures.floor, element_set[1]);
+		store_color(cub, &cub->textures.floor, element_set[1]);
 		cub->textures.floor_set = 1;
 	}
 	else

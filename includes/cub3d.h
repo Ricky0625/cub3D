@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/13 14:10:55 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/13 15:17:18 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,14 +124,14 @@ typedef struct s_color
 */
 typedef struct s_texture
 {
-	t_img			no_tex;
-	t_img			so_tex;
-	t_img			we_tex;
-	t_img			ea_tex;
-	int				ceil_set;
-	unsigned char	ceil[TOTAL_RGBA];
-	int				floor_set;
-	unsigned char	floor[TOTAL_RGBA];
+	t_img	no_tex;
+	t_img	so_tex;
+	t_img	we_tex;
+	t_img	ea_tex;
+	int		ceil_set;
+	int		ceil;
+	int		floor_set;
+	int		floor;
 }	t_texture;
 
 /**
