@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/13 14:56:52 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/13 21:23:01 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
  * 2. Parse map
  * 3. Initialize images
  * 4. Draw
-*/
+ */
 
 static void	init_cub(t_cub *cub)
 {
 	cub->mlx = mlx_init();
-	cub->win = mlx_new_window(cub->mlx, WIN_WDITH, WIN_HEIGHT, "CUB3D");
+	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
 	cub->map.info_list = NULL;
-	new_image(cub, &cub->buffer, (t_vector){WIN_WDITH, WIN_HEIGHT});
+	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
 	init_textures(&cub->textures);
 }
 
@@ -39,5 +39,6 @@ int	main(int ac, char **av)
 		exit_cub(NULL, TOO_MANY_MAP);
 	init_cub(&cub);
 	parse_map(&cub, av[1]);
+	mlx_loop(cub.mlx);
 	return (1);
 }

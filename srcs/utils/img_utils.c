@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:56:01 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/09 12:54:11 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/13 21:22:42 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,48 @@ void	xpm_to_image(t_cub *cub, t_img *img, char *xpm)
 			&img->size.x, &img->size.y);
 	img->data = mlx_get_data_addr(img->ref, &img->bpp, &img->line_size,
 			&img->endian);
+}
+
+void	new_filled_rect(t_cub *cub, t_img *img, t_vector size, int color)
+{
+	int	x;
+	int	y;
+	int	pixel;
+
+	new_image(cub, img, size);
+	if (img->ref == NULL || img->data == NULL)
+		return ;
+	y = -1;
+	while (++y < size.y)
+	{
+		x = -1;
+		while (++x < size.x)
+		{
+			pixel = (y * img->line_size) + (x * 4);
+			ft_memcpy(&img->data[pixel], &color, sizeof(int));
+		}
+	}
+}
+
+void	copy_image(t_img *src, t_img *dst, t_vector d_pos)
+{
+	int	x;
+	int	y;
+	int	src_pixel;
+	int	dst_pixel;
+
+	if (src->ref == NULL || dst->ref == NULL)
+		return ;
+	y = -1;
+	while (++y < src->size.y)
+	{
+		x = -1;
+		while (++x < src->size.x)
+		{
+			src_pixel = (y * src->line_size) + (x * 4);
+			dst_pixel = ((d_pos.y + y) * dst->line_size) + ((d_pos.x + x) * 4);
+			ft_memcpy(&dst->data[dst_pixel], &src->data[src_pixel],
+				sizeof(int));
+		}
+	}
 }
