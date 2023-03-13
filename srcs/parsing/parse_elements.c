@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/11 12:52:57 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:54:38 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	check_rgb_format(char *rgba_str)
  * Check if the RGB is the accepted format. Split the str by ',' and
  * convert each value into integer. The value should be in range of
  * 0 and 255.
+ * @attention Colors are stored as ARGB
 */
 static void	store_color(t_cub *cub, unsigned char color[4], char *rgb_str)
 {
@@ -50,6 +51,7 @@ static void	store_color(t_cub *cub, unsigned char color[4], char *rgb_str)
 		exit_cub(cub, MISSING_RGB_VALUE);
 	}
 	i = -1;
+	color[i + 1] = 1;
 	while (rgb_value[++i] != NULL)
 	{
 		value = ft_atoi(rgb_value[i]);
@@ -58,7 +60,7 @@ static void	store_color(t_cub *cub, unsigned char color[4], char *rgb_str)
 			ft_freestrarr(rgb_value);
 			exit_cub(cub, RGB_OUT_OF_RANGE);
 		}
-		color[i] = (unsigned char)value;
+		color[i + 1] = (unsigned char)value;
 	}
 	ft_freestrarr(rgb_value);
 }

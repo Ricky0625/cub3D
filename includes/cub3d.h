@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/11 12:53:08 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/13 14:10:55 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ typedef enum e_dir
 
 typedef enum e_rgba
 {
+	A,
 	R,
 	G,
 	B,
-	A,
 	TOTAL_RGBA
 }	t_rgba;
 
@@ -175,6 +175,8 @@ void	*llto2darr_func(void *content);
 int		is_map_content(char *str);
 
 // Utils
+int		create_rgba(t_cub *cub, unsigned char color[4]);
+void	print_color(t_cub *cub, unsigned char color[4]);
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
 int		check_surrounded(t_map *map, int y, int x);
