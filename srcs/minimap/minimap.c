@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/15 15:36:34 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:38:59 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	init_minimap_texture(t_cub *cub)
 {
-	new_rect(cub, &cub->minimap, (t_vector){MM_WIDTH, MM_HEIGHT}, MM_VOID);
+	new_rect(cub, &cub->minimap,
+		(t_vector){cub->map.size.x * MM_SPT_SIZE, cub->map.size.y * MM_SPT_SIZE}, MM_VOID);
 	new_rect(cub, &cub->textures.mm_floor,
 		(t_vector){MM_SPT_SIZE, MM_SPT_SIZE}, MM_FLOOR);
 	new_rect(cub, &cub->textures.mm_wall,

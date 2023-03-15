@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/15 15:17:31 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:40:22 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define SPT_SIZE 64
 # define MM_WIDTH 360
 # define MM_HEIGHT 270
-# define MM_SPT_SIZE 30
+# define MM_SPT_SIZE 15
 # define MM_WALL 0x00B8B8B8
 # define MM_FLOOR 0x002E3357
 # define MM_VOID 0x0025131A
