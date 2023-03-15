@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:56:01 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/14 17:04:56 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:50:16 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	new_image(t_cub *cub, t_img *img, t_vector size)
 {
 	img->ref = mlx_new_image(cub->mlx, size.x, size.y);
 	img->size = size;
+	if (img->ref == NULL)
+		return ;
 	img->data = mlx_get_data_addr(img->ref, &img->bpp, &img->line_size,
 			&img->endian);
 }
@@ -30,6 +32,8 @@ void	xpm_to_image(t_cub *cub, t_img *img, char *xpm)
 {
 	img->ref = mlx_xpm_file_to_image(cub->mlx, xpm,
 			&img->size.x, &img->size.y);
+	if (img->ref == NULL)
+		return ;
 	img->data = mlx_get_data_addr(img->ref, &img->bpp, &img->line_size,
 			&img->endian);
 }
