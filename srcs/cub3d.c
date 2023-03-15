@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/13 21:23:01 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:17:20 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ int	main(int ac, char **av)
 		exit_cub(NULL, TOO_MANY_MAP);
 	init_cub(&cub);
 	parse_map(&cub, av[1]);
+	render_minimap(&cub);
+	mlx_put_image_to_window(cub.mlx, cub.win, cub.minimap.ref, 0, 0);
+	mlx_hook(cub.win, 2, 1L << 0, key_hook, &cub);
+	mlx_hook(cub.win, 187, 0L, close_cub, &cub);
 	mlx_loop(cub.mlx);
 	return (1);
 }

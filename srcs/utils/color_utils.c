@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 19:07:40 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/13 18:21:37 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/14 12:18:24 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * endian is (0 = small OR 1 = big). If it's small, reverse the array
  * before convert it into integer value.
 */
-int	create_rgba(t_cub *cub, unsigned char color[4])
+int	create_argb(t_cub *cub, unsigned char color[4])
 {
 	if (cub->buffer.ref != NULL && cub->buffer.endian == 0)
 		ft_revarr(color, TOTAL_RGBA, sizeof(unsigned char));

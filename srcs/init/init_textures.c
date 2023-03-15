@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 12:40:10 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/13 18:30:34 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/14 16:34:50 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	init_textures(t_texture *texture)
 	texture->so_tex.ref = NULL;
 	texture->we_tex.ref = NULL;
 	texture->ea_tex.ref = NULL;
+	texture->mm_floor.ref = NULL;
+	texture->mm_wall.ref = NULL;
 	texture->ceil_set = 0;
 	texture->floor_set = 0;
 }

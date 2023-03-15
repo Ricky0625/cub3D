@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:56:01 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/13 21:22:42 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/14 17:04:56 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	xpm_to_image(t_cub *cub, t_img *img, char *xpm)
 			&img->endian);
 }
 
-void	new_filled_rect(t_cub *cub, t_img *img, t_vector size, int color)
+void	new_rect(t_cub *cub, t_img *img, t_vector size, int color)
 {
 	int	x;
 	int	y;

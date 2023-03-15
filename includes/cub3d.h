@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/13 18:52:51 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/15 15:17:31 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 768
 # define SPT_SIZE 64
+# define MM_WIDTH 360
+# define MM_HEIGHT 270
+# define MM_SPT_SIZE 30
 # define MM_WALL 0x00B8B8B8
 # define MM_FLOOR 0x002E3357
 # define MM_VOID 0x0025131A
@@ -133,7 +136,7 @@ typedef struct s_texture
 	t_img	ea_tex;
 	t_img	mm_wall;
 	t_img	mm_floor;
-	t_img	mm_void;
+	t_img	mm_player;
 	int		ceil_set;
 	int		ceil;
 	int		floor_set;
@@ -159,6 +162,7 @@ typedef struct s_cub
 	void		*mlx;
 	void		*win;
 	t_img		buffer;
+	t_img		minimap;
 	t_texture	textures;
 	t_map		map;
 }	t_cub;
@@ -166,31 +170,34 @@ typedef struct s_cub
 /* ====== FUNCTION PROTOTYPES ====== */
 
 // Init
-void			init_textures(t_texture *texture);
+void	init_textures(t_texture *texture);
 
-// Draw utils
+// hook
+int		key_hook(int key, t_cub *cub);
+int		close_cub(t_cub *cub);
 
 // Img utils
-void			new_image(t_cub *cub, t_img *img, t_vector size);
-void			xpm_to_image(t_cub *cub, t_img *img, char *xpm);
-void			copy_image(t_img *src, t_img *dst, t_vector dst_pos);
-void			new_filled_rect(t_cub *cub, t_img *img,
-					t_vector size, int color);
+void	new_image(t_cub *cub, t_img *img, t_vector size);
+void	xpm_to_image(t_cub *cub, t_img *img, char *xpm);
+void	copy_image(t_img *src, t_img *dst, t_vector dst_pos);
+void	new_rect(t_cub *cub, t_img *img, t_vector size, int color);
 
 // Parse Map
-void			parse_map(t_cub *cub, char *map_name);
-void			parse_elements(t_cub *cub, t_list **info_list);
-int				is_map_content(char *str);
-int				check_elements_all_set(t_texture *textures);
-void			*llto2darr_func(void *content);
-int				is_map_content(char *str);
+void	parse_map(t_cub *cub, char *map_name);
+void	parse_elements(t_cub *cub, t_list **info_list);
+int		is_map_content(char *str);
+int		check_elements_all_set(t_texture *textures);
+void	*llto2darr_func(void *content);
+int		is_map_content(char *str);
+
+// Minimap
+void	render_minimap(t_cub *cub);
 
 // Utils
-int				create_rgba(t_cub *cub, unsigned char color[4]);
-unsigned char	get_a(t_cub *cub, int argb);
-void			print_color(t_cub *cub, unsigned char color[4]);
-int				show_error(char *err);
-void			exit_cub(t_cub *cub, char *err);
-int				check_surrounded(t_map *map, int y, int x);
+int		create_argb(t_cub *cub, unsigned char color[4]);
+void	print_color(t_cub *cub, unsigned char color[4]);
+int		show_error(char *err);
+void	exit_cub(t_cub *cub, char *err);
+int		check_surrounded(t_map *map, int y, int x);
 
 #endif
