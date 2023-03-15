@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/15 15:38:59 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/15 18:54:42 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_minimap_texture(t_cub *cub)
 {
 	new_rect(cub, &cub->minimap,
-		(t_vector){cub->map.size.x * MM_SPT_SIZE, cub->map.size.y * MM_SPT_SIZE}, MM_VOID);
+		(t_vector){WIN_WIDTH, WIN_HEIGHT}, MM_VOID);
 	new_rect(cub, &cub->textures.mm_floor,
 		(t_vector){MM_SPT_SIZE, MM_SPT_SIZE}, MM_FLOOR);
 	new_rect(cub, &cub->textures.mm_wall,
@@ -40,8 +40,13 @@ void	draw_minimap(t_cub *cub)
 			pos = (t_vector){col * MM_SPT_SIZE, row * MM_SPT_SIZE};
 			if (tile == '1')
 				copy_image(&cub->textures.mm_wall, &cub->minimap, pos);
-			else if (tile == '0' || ft_strchr("NSWE", tile) != NULL)
+			else if (tile == '0')
 				copy_image(&cub->textures.mm_floor, &cub->minimap, pos);
+			else if (ft_strchr("NSWE", tile) != NULL)
+			{
+				copy_image(&cub->textures.mm_floor, &cub->minimap, pos);
+				copy_image(&cub->textures.mm_player, &cub->minimap, (t_vector){pos.x + 3, pos.y + 2});
+			}
 		}
 	}
 }

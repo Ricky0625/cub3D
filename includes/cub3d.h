@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/15 15:40:22 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/15 19:12:06 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ void	render_minimap(t_cub *cub);
 
 // Utils
 int		create_argb(t_cub *cub, unsigned char color[4]);
+u_char	get_a(int argb, int endian);
 void	print_color(t_cub *cub, unsigned char color[4]);
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
