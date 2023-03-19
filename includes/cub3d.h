@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wangxuerui <wangxuerui@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:06 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:18:39 by wangxuerui       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,22 @@
 # define MM_WALL 0x00B8B8B8
 # define MM_FLOOR 0x002E3357
 # define MM_VOID 0x0025131A
+
+/*Events and Masks*/
+# define KEY_PRESS			2
+# define KEY_RELEASE		3
+# define MOUSE_PRESS		4
+# define MOUSE_RELEASE		5
+# define MOUSE_MOVE			6
+# define DESTROY			17
+
+# define KEYPRESS_MASK		1
+# define KEYRELEASE_MASK	2
+# define MOUSEPRESS_MASK	4
+# define MOUSERELEASE_MASK	8
+# define LEAVEWINDOW_MASK	32
+# define MOUSEMOVE_MASK		64
+# define NO_MASK			0
 
 /* ====== ENUMS ====== */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wangxuerui <wangxuerui@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/15 19:13:33 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:19:13 by wangxuerui       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int ac, char **av)
 	mlx_put_image_to_window(cub.mlx, cub.win, cub.minimap.ref, 0, 0);
 	mlx_hook(cub.win, 2, 1L << 0, key_hook, &cub);
 	mlx_hook(cub.win, 187, 0L, close_cub, &cub);
+	mlx_hook(cub.win, DESTROY, LEAVEWINDOW_MASK, close_cub, &cub);
 	mlx_loop(cub.mlx);
 	return (1);
 }
