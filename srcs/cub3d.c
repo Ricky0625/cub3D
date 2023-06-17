@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/16 15:22:09 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:54:02 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	init_cub(t_cub *cub)
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
 	cub->map.info_list = NULL;
+	init_player(&cub->player);
 }
 
 /**
@@ -47,5 +48,5 @@ int	main(int ac, char **av)
 		exit_cub(NULL, TOO_MANY_MAP);
 	init_cub(&cub);
 	parse_map(&cub, av[1]);
-	return (1);
+	return (0);
 }

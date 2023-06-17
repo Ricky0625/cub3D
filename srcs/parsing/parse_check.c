@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:59:17 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/16 15:41:31 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:29:42 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_map_content(char *str)
 		return (0);
 	while (*str != '\0')
 	{
-		if (ft_strchr("10NSWE ", *str++) == NULL)
+		if (ft_strchr(MAP_CHARS, *str++) == NULL)
 			return (0);
 	}
 	return (1);
@@ -68,8 +68,7 @@ void	*llto2darr_func(void *content)
  */
 int	check_surrounded(t_map *map, int y, int x)
 {
-	if (y == 0 || x == 0
-		|| y == map->size.y
+	if (y == 0 || x == 0 || y == map->size.y
 		|| x == (int)ft_strlen(map->map[y]))
 		return (0);
 	if (ft_strchr("10NSWE", map->map[y][x + 1]) == NULL)

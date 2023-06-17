@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:06 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/17 17:13:36 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,18 @@
 # define MM_FLOOR 0x002E3357
 # define MM_VOID 0x0025131A
 
+// PLAYER RELATED MACROS
+# define PLY_DIR "NSWE"
+
+// MAP RELATED MACROS
+# define MAP_CHARS "10NSWE "
+# define WALL '1'
+# define FLOOR '0'
+# define EMPTY ' '
+
+// FUNCTION RELATED MACROS
+# define MAP_ITERATOR_FUNC void (*func)(t_cub *cub, int row, int column)
+
 /* ====== ENUMS ====== */
 
 /**
@@ -66,11 +78,11 @@ typedef enum e_controls
 
 typedef enum e_dir
 {
-	NORTH,
-	SOUTH,
-	WEST,
-	EAST,
-	INVALID
+	NORTH = 'N',
+	SOUTH = 'S',
+	WEST = 'W',
+	EAST = 'E',
+	UNDEFINED
 }	t_dir;
 
 typedef enum e_rgba
@@ -92,6 +104,12 @@ typedef enum e_element
 	F,
 	UNKNOWN
 }	t_element;
+
+typedef enum e_iterate_type
+{
+	ROW,
+	COLUMN
+}	t_iterate_type;
 
 /* ====== STRUCTS ====== */
 
@@ -150,10 +168,17 @@ typedef struct s_map
 {
 	t_list		*info_list;
 	t_vector	size;
-	t_dir		player_dir;
 	char		**map;
 }	t_map;
 
+/**
+ * @brief Player data
+*/
+typedef struct s_player
+{
+	t_dir		dir;
+	t_vector	grid_pos; // grid coordinate
+}	t_player;
 /**
  * @brief The main struct for Cub3D.
 */
@@ -165,12 +190,15 @@ typedef struct s_cub
 	t_img		minimap;
 	t_texture	textures;
 	t_map		map;
+	t_player	player;
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */
 
 // Init
 void	init_textures(t_texture *texture);
+void	init_player(t_player *player);
+void	set_player_initial_state(t_cub *cub, int row, int column);
 
 // hook
 int		key_hook(int key, t_cub *cub);
@@ -200,5 +228,8 @@ void	print_color(t_cub *cub, unsigned char color[4]);
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
 int		check_surrounded(t_map *map, int y, int x);
+
+// Map utils
+void	map_iterator(t_cub *cub, MAP_ITERATOR_FUNC, t_iterate_type type);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/16 16:01:44 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/17 16:59:16 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	set_element(t_cub *cub, char **element_set)
 
 /**
  * Rules for elements
- * 1. Can accept duplicate identifier for element
+ * 1. Duplicate identifiers are allowed. The last one will be used.
  * 2. Format for element: [Identifier] [Path / Value]
- * 3. For RGB, the format should strictly be: R,G,B
+ * 3. For RGB, the format should strictly be: R,G,B. No spaces are allowed in between.
  * 4. For RGB, the value for each should range from 0 to 255
  * 5. While parsing elements, if there's an unknown identifier, program should
  * 	  throw "Unknown element" error.

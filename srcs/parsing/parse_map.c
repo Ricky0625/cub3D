@@ -6,54 +6,54 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:34:40 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/16 15:38:39 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/17 17:16:27 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /**
- * @brief Check the validity of the map
+ * @brief helper function for validate map (passing to map_iterator)
  * 
- * @param cub main struct 
- * @param map map struct
+ * @param cub	 main struct
+ * @param row	 row index
+ * @param column column index
  * 
  * @details
- * 1. Iterate through the map row by row
- * 2. In each row, iterate through each column
- * 		a. Increment num_player if player exists on the current row
- * 		b. While iterate through the columns, if number of players is greater
- * 		   than 1, exit with error
- * 		c. If the current column is '0' or player, check if it is surrounded
- * 		   by wall. If not, exit with error
- * 3. If number of players is 0, exit with error
- */
-static void	check_map(t_cub *cub, t_map *map)
+ * 1. If the grid is a player, set the player's initial state
+ * 2. If the grid is a floor or a player, check if it is surrounded by walls
+*/
+static void validate_map(t_cub *cub, int row, int column)
 {
-	int	i;
-	int	j;
-	int	num_player;
+	t_map		*map;
+	char		grid;
 
-	num_player = 0;
-	i = -1;
-	while (map->map[++i] != NULL)
+	map = &cub->map;
+	grid = map->map[row][column];
+	if (ft_strchr(PLY_DIR, grid) != NULL)
 	{
-		j = -1;
-		while (map->map[i][++j] != '\0')
-		{
-			if (ft_strchr("NSWE", map->map[i][j]) != NULL)
-				num_player++;
-			if (num_player > 1)
-				exit_cub(cub, TOO_MANY_PLAYERS);
-			if (map->map[i][j] == '0'
-				|| ft_strchr("NSWE", map->map[i][j]) != NULL)
-			{
-				if (check_surrounded(map, i, j) == 0)
-					exit_cub(cub, NOT_SURROUNDED_BY_WALL);
-			}
-		}
+		if (cub->player.dir != UNDEFINED)
+			exit_cub(cub, TOO_MANY_PLAYERS);
+		set_player_initial_state(cub, row, column);
 	}
-	if (num_player == 0)
+	if ((grid == FLOOR || ft_strchr(PLY_DIR, grid) != NULL)
+		&& check_surrounded(map, row, column) == 0)
+		exit_cub(cub, NOT_SURROUNDED_BY_WALL);
+}
+
+/**
+ * @brief Check the validity of the map
+ * 
+ * @param cub main struct
+ * 
+ * @details
+ * 1. Iterate through the map using map_iterator
+ * 2. If the player is not set, exit with error
+ */
+static void check_map(t_cub *cub)
+{
+	map_iterator(cub, validate_map, COLUMN);
+	if (cub->player.dir == UNDEFINED)
 		exit_cub(cub, NO_PLAYER);
 }
 
@@ -173,5 +173,5 @@ void	parse_map(t_cub *cub, char *map_name)
 	if (check_elements_all_set(&cub->textures) == 0)
 		exit_cub(cub, MISSING_ELEMENT);
 	read_map(cub, &cub->map, &info_list);
-	check_map(cub, &cub->map);
+	check_map(cub);
 }
