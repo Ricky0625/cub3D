@@ -6,25 +6,33 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:34:40 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/03/11 13:03:11 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:38:39 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /**
- * @brief Check if all 0s and player are surrounded by other 1 or 0
- * and only one player exists
+ * @brief Check the validity of the map
  * 
- * @param cub 
- * @param map
- * @return int 1 for true, 0 for false
+ * @param cub main struct 
+ * @param map map struct
+ * 
+ * @details
+ * 1. Iterate through the map row by row
+ * 2. In each row, iterate through each column
+ * 		a. Increment num_player if player exists on the current row
+ * 		b. While iterate through the columns, if number of players is greater
+ * 		   than 1, exit with error
+ * 		c. If the current column is '0' or player, check if it is surrounded
+ * 		   by wall. If not, exit with error
+ * 3. If number of players is 0, exit with error
  */
 static void	check_map(t_cub *cub, t_map *map)
 {
-	int	num_player;
 	int	i;
 	int	j;
+	int	num_player;
 
 	num_player = 0;
 	i = -1;
@@ -51,7 +59,16 @@ static void	check_map(t_cub *cub, t_map *map)
 
 /**
  * @brief Check file extension and open map file
- * @return Fd of map
+ * 
+ * @param cub      main struct
+ * @param map_name map file name
+ * 
+ * @details
+ * 1. Check if the file extension is .cub (as long as it ends with .cub)
+ * 2. Open the map file
+ * 3. If the file does not exist, exit with error
+ * 
+ * @return Fd of the map file
 */
 static int	open_file(t_cub *cub, char *map_name)
 {
@@ -67,6 +84,17 @@ static int	open_file(t_cub *cub, char *map_name)
 	return (map_fd);
 }
 
+/**
+ * @brief Get map info list
+ * 
+ * @param lst    The list to store map info
+ * @param map_fd The fd of map file
+ * 
+ * @details
+ * 1. Read each line of the map file
+ * 2. Remove the '\n' at the end of each line
+ * 3. Store each line as a node of the list
+*/
 static void	get_map_info_list(t_list **lst, int map_fd)
 {
 	t_list	*info_list;
@@ -85,13 +113,19 @@ static void	get_map_info_list(t_list **lst, int map_fd)
 }
 
 /**
- * @brief Read the map content into the 2darr in the map struct
+ * @brief Read the map content into a 2d array and get its metadata
  * 
- * @param cub 
- * @param map 
- * @param info_list 
+ * @param cub		main struct
+ * @param map 		map file name
+ * @param info_list map info list (pointer to the first node)
+ * 
+ * @details
+ * 1. Skip the empty lines at the beginning of the map file
+ * 2. Read the map content into the 2darr in the map struct
+ * 3. Check if the current line we are examine belongs to the map content
+ * 4. Update the width and height of the map
  */
-void	read_map(t_cub *cub, t_map *map, t_list **info_list)
+static void	read_map(t_cub *cub, t_map *map, t_list **info_list)
 {
 	int	i;
 	int	len;
@@ -113,13 +147,17 @@ void	read_map(t_cub *cub, t_map *map, t_list **info_list)
 }
 
 /**
- * @brief First get the mapfile content line by line into a linked list,
- * Then parse and load the elements (textures and colors),
- * Then parse the rest of the lines (which are the map contents),
- * Lastly check errors for this whole map
+ * @brief Map parser
  * 
- * @param cub 
- * @param map_name 
+ * @param cub      main struct
+ * @param map_name map file name
+ * 
+ * @details
+ * 1. Check file extension and open map file
+ * 2. Get map info list
+ * 3. Parse and load the elements (textures and colors)
+ * 4. Parse the rest of the lines (which are the map contents)
+ * 5. Check the validity of the map
  */
 void	parse_map(t_cub *cub, char *map_name)
 {

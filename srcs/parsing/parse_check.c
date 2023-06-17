@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:59:17 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/11 12:54:53 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:41:31 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 /**
  * @brief Check if the target row is map content or not.
+ * 
+ * @param str Target row
+ * 
+ * @return 1 if map content, 0 if not
 */
 int	is_map_content(char *str)
 {
@@ -29,6 +33,10 @@ int	is_map_content(char *str)
 
 /**
  * @brief Check if all the elements are all set
+ * 
+ * @param textures texture struct
+ * 
+ * @return 1 if all set, 0 if not
 */
 int	check_elements_all_set(t_texture *textures)
 {
@@ -51,12 +59,12 @@ void	*llto2darr_func(void *content)
 }
 
 /**
- * @brief Check if 0s and player is surrounded by walls
+ * @brief Check if floor tile and player is surrounded by walls
  * 
- * @param map 
- * @param y 
- * @param x 
- * @return int 
+ * @param map map struct
+ * @param y   y coordinate
+ * @param x   x coordinate
+ * @return 1 if surrounded, 0 if not
  */
 int	check_surrounded(t_map *map, int y, int x)
 {

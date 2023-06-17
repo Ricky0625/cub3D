@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/14 12:18:15 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/16 16:01:44 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
  * @brief Check the format of RGB
  * @attention
  * The format should strictly be constructed by digits and ',' only.
+ * @return 1 if the format is correct, 0 if not
 */
 static int	check_rgb_format(char *rgba_str)
 {
@@ -64,10 +65,13 @@ static void	store_color(t_cub *cub, int *color, char *rgb_str)
 /**
  * @brief Set elements (texture and color)
  * 
+ * @param cub main struct
+ * @param element_set element set
+ * 
  * @details
- * Compare the 1st string with the identifiers. For texture,
- * initialize image. For color, store color as RGB. If there's
- * an unknown identifier, throw error.
+ * 1. Compare the first element of the set with the valid identifiers.
+ * 2. If the identifier is matched, store the element.
+ * 3. If the identifier is not matched, exit the program. (Unknown identifier)
 */
 void	set_element(t_cub *cub, char **element_set)
 {
@@ -102,14 +106,21 @@ void	set_element(t_cub *cub, char **element_set)
  * 5. While parsing elements, if there's an unknown identifier, program should
  * 	  throw "Unknown element" error.
 */
+
 /**
  * @brief Parse elements and store them into struct
+ * 
+ * @param cub Main struct
+ * @param info_list map content in the form of a linked list
+ * 
  * @details
- * Iterate through the info list. Convert each node's content into an
- * element set. If the size of element set is 2, set element. If
- * the size is 0, means empty line, should skip this node. If the
- * size is not 2, it's an invalid format for element.
- * The process will keep continue until it encounter map's content.
+ * 1. Iterate through the linked list until it reaches the end or map content.
+ * 2. Split the content by whitespaces.
+ * 3. If the size of the split is 0, it means that the line is empty. Skip it.
+ * 4. If the size of the split is not 2, it means that the format is invalid. Exit.
+ * 5. If the size of the split is 2, set the element.
+ * 6. After the parsing, set the pointer to the first node to the node that
+ *    makes the parsing stop.
 */
 void	parse_elements(t_cub *cub, t_list **info_list)
 {
