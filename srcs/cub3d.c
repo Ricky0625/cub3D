@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 15:03:32 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 21:36:08 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	init_cub(t_cub *cub)
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
 	cub->map.info_list = NULL;
 	init_player(&cub->player);
+	init_projection_attribute(&cub->proj_attr);
 }
 
 /**
@@ -48,6 +49,19 @@ int	main(int ac, char **av)
 		exit_cub(NULL, TOO_MANY_MAP);
 	init_cub(&cub);
 	parse_map(&cub, av[1]);
+	raycaster(&cub);
 	cub3d_hooks(&cub);
 	return (0);
 }
+
+/**
+ * Projection attributes
+ * 
+ * 1. Player [DONE]
+ * 		- height (assume it's wall height / 2) [DONE]
+ * 		- FOV (assume it's 60 degree first) [DONE]
+ * 		- position [DONE]
+ * 2. Projection plane's dimension []
+ * 		* this is basically the window size
+ * 3. Relationship between player and projection plane []
+*/

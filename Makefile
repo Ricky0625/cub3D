@@ -6,7 +6,7 @@
 #    By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
-#    Updated: 2023/06/20 15:05:35 by wricky-t         ###   ########.fr        #
+#    Updated: 2023/06/20 18:10:37 by wricky-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,12 +58,14 @@ endif
 #------------------------------------------------------------------------------#
 
 SRCS		:= cub3d.c \
-			   init/init_textures.c init/init_player.c \
+			   init/init_textures.c init/init_player.c init/init_raycaster.c \
 			   hooks/hook.c hooks/key_hook.c \
 			   parsing/parse_map.c parsing/parse_elements.c parsing/parse_check.c \
 			   movement/horizontal_motion.c \
+			   render/raycaster.c \
 			   minimap/minimap.c \
 			   utils/error.c utils/img_utils.c utils/color_utils.c utils/draw_utils.c utils/map_utils.c \
+			   utils/angle_utils.c \
 
 SRCS		:= $(SRCS:%=$(SRC_PATH)/%)
 

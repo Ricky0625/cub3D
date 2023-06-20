@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 15:12:57 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 21:36:15 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 
 /* ====== MACROS ====== */
 # define FILE_EXT ".cub"
-# define WIN_WIDTH 1280
-# define WIN_HEIGHT 768
+# define WIN_WIDTH 1280 // Projection plane width
+# define WIN_HEIGHT 768 // Projection plane height
 # define GRID_SIZE 64
 # define MM_WIDTH 360
 # define MM_HEIGHT 270
@@ -112,6 +112,12 @@ typedef enum e_iterate_type
 	ROW,
 	COLUMN
 }	t_iterate_type;
+
+typedef enum e_orientaion
+{
+	HORIZONTAL,
+	VERTICAL
+}	t_orientation;
 
 /* ====== STRUCTS ====== */
 
@@ -192,18 +198,33 @@ typedef struct s_player
 	t_vector_d	unit_pos; // unit coordinate
 	t_vector_d	displacement; // displacement from the grid coordinate
 }	t_player;
+
+typedef struct	s_projection_attr
+{
+	double		dist_to_proj_plane; // distance to the projection plane
+	double		ray_angle_step; // angle between subsequent rays
+}	t_projection_attr;
+
+typedef struct	s_ray
+{
+	t_vector	intersection_point; // first will be used by the first intersection, then the checkpoints (unit coord)
+	double		dist; // distance of the ray (assuming now it's not the "corrected" ray distance)
+}	t_ray;
+
 /**
  * @brief The main struct for Cub3D.
 */
 typedef struct s_cub
 {
-	void		*mlx;
-	void		*win;
-	t_img		buffer;
-	t_img		minimap;
-	t_texture	textures;
-	t_map		map;
-	t_player	player;
+	void				*mlx;
+	void				*win;
+	t_img				buffer;
+	t_img				minimap;
+	t_texture			textures;
+	t_map				map;
+	t_player			player;
+	t_projection_attr	proj_attr;
+	t_ray				rays[WIN_WIDTH];
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */
@@ -213,6 +234,8 @@ typedef void	(*t_map_iterator_func)(t_cub *cub, int row, int column);
 
 // Init
 void	init_textures(t_texture *texture);
+void	init_projection_attribute(t_projection_attr *proj_attr);
+void	init_step_size(t_vector_d *step_size, double angle, t_step_type type);
 void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 
@@ -249,6 +272,11 @@ void	print_color(t_cub *cub, unsigned char color[4]);
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
 void	validate_map(t_cub *cub, int row, int column);
+double	deg_to_rad(double deg);
+double	rad_to_deg(double rad);
+
+// Render
+void	raycaster(t_cub *cub);
 
 // Map utils
 void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
