@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 11:46:22 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 14:47:25 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,5 +233,10 @@ int		check_surrounded(t_map *map, int y, int x);
 
 // Map utils
 void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
+
+// Draw utils
+void	draw_pixel(t_cub *cub, int x, int y, int color);
+void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color);
+void	draw_circle(t_cub *cub, t_vector center, float r, int color);
 
 #endif
