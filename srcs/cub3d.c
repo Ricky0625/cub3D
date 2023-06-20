@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/17 16:54:02 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/19 11:44:46 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int	main(int ac, char **av)
 		exit_cub(NULL, TOO_MANY_MAP);
 	init_cub(&cub);
 	parse_map(&cub, av[1]);
+	ft_printf("width: %d, height: %d\n", cub.map.size.x, cub.map.size.y);
 	return (0);
 }

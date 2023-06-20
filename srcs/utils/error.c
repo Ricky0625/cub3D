@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:28:34 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/17 16:47:45 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:38:01 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,5 @@ void	exit_cub(t_cub *cub, char *err)
 		ft_printf("[ERROR]: %s\n", err);
 		exit_status = EXIT_FAILURE;
 	}
-	printf("here?\n");
 	exit(exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/17 17:13:36 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:46:22 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,6 @@
 # define WALL '1'
 # define FLOOR '0'
 # define EMPTY ' '
-
-// FUNCTION RELATED MACROS
-# define MAP_ITERATOR_FUNC void (*func)(t_cub *cub, int row, int column)
 
 /* ====== ENUMS ====== */
 
@@ -163,6 +160,8 @@ typedef struct s_texture
 
 /**
  * @brief Map data
+ * 
+ * @attention size.x is width, size.y is height
 */
 typedef struct s_map
 {
@@ -194,6 +193,9 @@ typedef struct s_cub
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */
+
+// FUNCTION RELATED MACROS
+typedef void	(*t_map_iterator_func)(t_cub *cub, int row, int column);
 
 // Init
 void	init_textures(t_texture *texture);
@@ -230,6 +232,6 @@ void	exit_cub(t_cub *cub, char *err);
 int		check_surrounded(t_map *map, int y, int x);
 
 // Map utils
-void	map_iterator(t_cub *cub, MAP_ITERATOR_FUNC, t_iterate_type type);
+void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
 
 #endif
