@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 19:03:08 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 14:47:30 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/20 20:56:47 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	draw_pixel(t_cub *cub, int x, int y, int color)
 {
 	int		i;
 
-	if (x < 0 || y < 0)
+	if (x < 0 || y < 0
+		|| x > cub->map.size.x * GRID_SIZE || y > cub->map.size.y * GRID_SIZE)
 		return ;
 	i = (x * cub->buffer.bpp / 8) + (y * cub->buffer.line_size);
 	cub->buffer.data[i] = color;
@@ -71,5 +72,40 @@ void	draw_circle(t_cub *cub, t_vector center, float r, int color)
 		y = sqrt(pow(r, 2) - pow(x - center.x, 2)) + center.y;
 		draw_line(cub, center, (t_vector){x, roundf(y)}, color);
 		draw_line(cub, center, (t_vector){x, 2 * center.y - roundf(y)}, color);
+	}
+}
+
+void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill)
+{
+	t_vector	dir;
+	t_vector	delta;
+	int			error[2];
+
+	delta.x = abs(vects[2].x - vects[1].x);
+	delta.y = -abs(vects[2].y - vects[1].y);
+	dir.x = -1 + (2 * (vects[2].x >= vects[1].x));
+	dir.y = -1 + (2 * (vects[2].y >= vects[1].y));
+	error[0] = delta.x + delta.y;
+	// Draw the sides of the triangle
+	draw_line(cub, vects[0], vects[1], color);
+	draw_line(cub, vects[0], vects[2], color);
+	draw_line(cub, vects[1], vects[2], color);
+	if (fill) // if fill is true
+	{
+		while (vects[1].x != vects[2].x || vects[1].y != vects[2].y)
+		{
+			draw_line(cub, vects[0], vects[1], color);
+			error[1] = 2 * error[0];
+			if (error[1] >= delta.y)
+			{
+				vects[1].x += dir.x;
+				error[0] += delta.y;
+			}
+			else if (error[1] <= delta.x)
+			{
+				vects[1].y += dir.y;
+				error[0] += delta.x;
+			}
+		}
 	}
 }

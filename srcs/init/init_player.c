@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:49 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 18:34:20 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:44:51 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	set_player_initial_state(t_cub *cub, int row, int column)
 {
 	char		grid;
 	t_player	*player;
-	t_vector_d	unit_pos;
+	t_vector	unit_pos;
 
 	grid = cub->map.map[row][column];
 	player = &cub->player;

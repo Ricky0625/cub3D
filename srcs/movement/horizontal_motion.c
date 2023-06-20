@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 18:29:01 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/20 18:45:24 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	move_player(t_cub *cub, t_controls key)
 		cub->player.unit_pos.x -= cub->player.displacement.x;
 		cub->player.unit_pos.y -= cub->player.displacement.y;
 	}
-	printf("%f\n", cub->player.unit_pos.x);
-	printf("%f\n\n", cub->player.unit_pos.y);
+	printf("%d\n", cub->player.unit_pos.x);
+	printf("%d\n\n", cub->player.unit_pos.y);
 }
 
 /**

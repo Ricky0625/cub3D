@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 15:47:17 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/20 21:20:56 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 # define FILE_EXT ".cub"
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 768
-# define GRID_SIZE 64
 # define MM_WIDTH 360
 # define MM_HEIGHT 270
 # define MM_SPT_SIZE 15
@@ -49,10 +48,13 @@
 
 // RAYCASTING ENVIRONMENT MACROS
 # define FOV 60 // in degrees
+# define GRID_SIZE 100
+
+# define PLAYER_SIZE 10
 
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
-# define MOVE_SPEED 10 // NOTE: 10 is 10 units in unit coord, not grid coord
+# define MOVE_SPEED 5 // NOTE: 5 is 5 units in unit coord, not grid coord
 # define TURN_SPEED 0.1 // NOTE: 0.1 is 0.1 radian
 
 // MAP RELATED MACROS
@@ -189,7 +191,7 @@ typedef struct s_player
 	t_dir		dir;
 	double		viewing_angle; // should be in radian
 	t_vector	grid_pos; // grid coordinate
-	t_vector_d	unit_pos; // unit coordinate
+	t_vector	unit_pos; // unit coordinate
 	t_vector_d	displacement; // displacement from the grid coordinate
 }	t_player;
 /**
@@ -205,6 +207,8 @@ typedef struct s_cub
 	t_map		map;
 	t_player	player;
 }	t_cub;
+
+void	test_raycast(t_cub *cub);
 
 /* ====== FUNCTION PROTOTYPES ====== */
 
@@ -257,5 +261,6 @@ void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
 void	draw_pixel(t_cub *cub, int x, int y, int color);
 void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color);
 void	draw_circle(t_cub *cub, t_vector center, float r, int color);
+void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill);
 
 #endif
