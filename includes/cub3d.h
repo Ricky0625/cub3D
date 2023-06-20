@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 11:56:49 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:12:57 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define FILE_EXT ".cub"
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 768
-# define SPT_SIZE 64
+# define GRID_SIZE 64
 # define MM_WIDTH 360
 # define MM_HEIGHT 270
 # define MM_SPT_SIZE 15
@@ -47,8 +47,13 @@
 # define MM_FLOOR 0x002E3357
 # define MM_VOID 0x0025131A
 
+// RAYCASTING ENVIRONMENT MACROS
+# define FOV 60 // in degrees
+
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
+# define MOVE_SPEED 10 // NOTE: 10 is 10 units in unit coord, not grid coord
+# define TURN_SPEED 0.1 // NOTE: 0.1 is 0.1 radian
 
 // MAP RELATED MACROS
 # define MAP_CHARS "10NSWE "
@@ -64,10 +69,10 @@
 */
 typedef enum e_controls
 {
-	KEY_W = 13,
-	KEY_A = 0,
-	KEY_S = 1,
-	KEY_D = 2,
+	KEY_W = 13, // forward
+	KEY_A = 0, // turn left
+	KEY_S = 1, // backward
+	KEY_D = 2, // turn right
 	KEY_ESC = 53,
 	KEY_LEFT = 123,
 	KEY_RIGHT = 124
@@ -118,6 +123,12 @@ typedef struct s_vector
 	int	x;
 	int	y;
 }	t_vector;
+
+typedef struct s_vector_d
+{
+	double	x;
+	double	y;
+}	t_vector_d;
 
 /**
  * @brief Image and its metadata
@@ -176,7 +187,10 @@ typedef struct s_map
 typedef struct s_player
 {
 	t_dir		dir;
+	double		viewing_angle; // should be in radian
 	t_vector	grid_pos; // grid coordinate
+	t_vector_d	unit_pos; // unit coordinate
+	t_vector_d	displacement; // displacement from the grid coordinate
 }	t_player;
 /**
  * @brief The main struct for Cub3D.
@@ -203,6 +217,7 @@ void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 
 // hook
+void	cub3d_hooks(t_cub *cub);
 int		key_hook(int key, t_cub *cub);
 int		close_cub(t_cub *cub);
 
@@ -220,6 +235,10 @@ int		check_elements_all_set(t_texture *textures);
 void	*llto2darr_func(void *content);
 int		is_map_content(char *str);
 
+// Movement
+void	move_player(t_cub *cub, t_controls key);
+void	rotate_player(t_cub *cub, t_controls key);
+
 // Minimap
 void	render_minimap(t_cub *cub);
 
@@ -229,7 +248,6 @@ u_char	get_a(int argb, int endian);
 void	print_color(t_cub *cub, unsigned char color[4]);
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
-int		check_surrounded(t_map *map, int y, int x);
 void	validate_map(t_cub *cub, int row, int column);
 
 // Map utils

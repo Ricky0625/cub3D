@@ -1,31 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 18:28:34 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 14:33:52 by wricky-t         ###   ########.fr       */
+/*   Created: 2023/06/20 14:25:50 by wricky-t          #+#    #+#             */
+/*   Updated: 2023/06/20 14:29:19 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/**
- * @brief Free everything and exit
-*/
-void	exit_cub(t_cub *cub, char *err)
+void	cub3d_hooks(t_cub *cub)
 {
-	int	exit_status;
-
-	(void)cub;
-	exit_status = EXIT_SUCCESS;
-	if (err != NULL)
-	{
-		ft_printf("[ERROR]: %s\n", err);
-		exit_status = EXIT_FAILURE;
-	}
-	system("leaks -q cub3D");
-	exit(exit_status);
+	mlx_key_hook(cub->win, key_hook, cub);
+	mlx_loop(cub->mlx);
 }

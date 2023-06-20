@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:49 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 11:54:07 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 15:10:25 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ void	init_player(t_player *player)
 {
 	player->dir = UNDEFINED;
 	player->grid_pos = (t_vector){-1, -1};
+	player->viewing_angle = 0.0;
+}
+
+static void	set_player_viewing_angle(t_cub *cub)
+{
+	t_dir	player_facing_direction;
+
+	player_facing_direction = cub->player.dir;
+	if (player_facing_direction == NORTH)
+		cub->player.viewing_angle = 90 * M_PI / 180;
+	else if (player_facing_direction == SOUTH)
+		cub->player.viewing_angle = 270 * M_PI / 180;
+	else if (player_facing_direction == EAST)
+		cub->player.viewing_angle = 0;
+	else if (player_facing_direction == WEST)
+		cub->player.viewing_angle = M_PI;
 }
 
 /**
@@ -49,9 +65,14 @@ void	set_player_initial_state(t_cub *cub, int row, int column)
 {
 	char		grid;
 	t_player	*player;
+	t_vector_d	unit_pos;
 
 	grid = cub->map.map[row][column];
 	player = &cub->player;
 	player->dir = grid;
 	player->grid_pos = (t_vector){column, row};
+	unit_pos.x = column * GRID_SIZE + GRID_SIZE / 2;
+	unit_pos.y = row * GRID_SIZE + GRID_SIZE / 2;
+	player->unit_pos = unit_pos;
+	set_player_viewing_angle(cub);
 }
