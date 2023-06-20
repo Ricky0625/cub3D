@@ -6,40 +6,11 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 12:34:40 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/17 17:16:27 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:56:58 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/**
- * @brief helper function for validate map (passing to map_iterator)
- * 
- * @param cub	 main struct
- * @param row	 row index
- * @param column column index
- * 
- * @details
- * 1. If the grid is a player, set the player's initial state
- * 2. If the grid is a floor or a player, check if it is surrounded by walls
-*/
-static void validate_map(t_cub *cub, int row, int column)
-{
-	t_map		*map;
-	char		grid;
-
-	map = &cub->map;
-	grid = map->map[row][column];
-	if (ft_strchr(PLY_DIR, grid) != NULL)
-	{
-		if (cub->player.dir != UNDEFINED)
-			exit_cub(cub, TOO_MANY_PLAYERS);
-		set_player_initial_state(cub, row, column);
-	}
-	if ((grid == FLOOR || ft_strchr(PLY_DIR, grid) != NULL)
-		&& check_surrounded(map, row, column) == 0)
-		exit_cub(cub, NOT_SURROUNDED_BY_WALL);
-}
 
 /**
  * @brief Check the validity of the map
@@ -50,7 +21,7 @@ static void validate_map(t_cub *cub, int row, int column)
  * 1. Iterate through the map using map_iterator
  * 2. If the player is not set, exit with error
  */
-static void check_map(t_cub *cub)
+static void	check_map(t_cub *cub)
 {
 	map_iterator(cub, validate_map, COLUMN);
 	if (cub->player.dir == UNDEFINED)

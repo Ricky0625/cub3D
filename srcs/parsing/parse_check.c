@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 14:59:17 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/17 16:29:42 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:57:23 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	*llto2darr_func(void *content)
  * @param x   x coordinate
  * @return 1 if surrounded, 0 if not
  */
-int	check_surrounded(t_map *map, int y, int x)
+static int	check_surrounded(t_map *map, int y, int x)
 {
 	if (y == 0 || x == 0 || y == map->size.y
 		|| x == (int)ft_strlen(map->map[y]))
@@ -80,4 +80,33 @@ int	check_surrounded(t_map *map, int y, int x)
 	if (ft_strchr("10NSWE", map->map[y - 1][x]) == NULL)
 		return (0);
 	return (1);
+}
+
+/**
+ * @brief helper function for validate map (passing to map_iterator)
+ * 
+ * @param cub	 main struct
+ * @param row	 row index
+ * @param column column index
+ * 
+ * @details
+ * 1. If the grid is a player, set the player's initial state
+ * 2. If the grid is a floor or a player, check if it is surrounded by walls
+*/
+void	validate_map(t_cub *cub, int row, int column)
+{
+	t_map	*map;
+	char	grid;
+
+	map = &cub->map;
+	grid = map->map[row][column];
+	if (ft_strchr(PLY_DIR, grid) != NULL)
+	{
+		if (cub->player.dir != UNDEFINED)
+			exit_cub(cub, TOO_MANY_PLAYERS);
+		set_player_initial_state(cub, row, column);
+	}
+	if ((grid == FLOOR || ft_strchr(PLY_DIR, grid) != NULL)
+		&& check_surrounded(map, row, column) == 0)
+		exit_cub(cub, NOT_SURROUNDED_BY_WALL);
 }

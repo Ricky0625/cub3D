@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/17 16:59:16 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 11:55:47 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ void	set_element(t_cub *cub, char **element_set)
  * Rules for elements
  * 1. Duplicate identifiers are allowed. The last one will be used.
  * 2. Format for element: [Identifier] [Path / Value]
- * 3. For RGB, the format should strictly be: R,G,B. No spaces are allowed in between.
+ * 3. For RGB, the format should strictly be: R,G,B. No spaces are allowed.
  * 4. For RGB, the value for each should range from 0 to 255
- * 5. While parsing elements, if there's an unknown identifier, program should
- * 	  throw "Unknown element" error.
+ * 5. While parsing elements, if there's an unknown identifier, program
+ *    should throw "Unknown element" error.
 */
 
 /**
@@ -117,7 +117,7 @@ void	set_element(t_cub *cub, char **element_set)
  * 1. Iterate through the linked list until it reaches the end or map content.
  * 2. Split the content by whitespaces.
  * 3. If the size of the split is 0, it means that the line is empty. Skip it.
- * 4. If the size of the split is not 2, it means that the format is invalid. Exit.
+ * 4. If the size of the split is not 2, it means that the format is invalid.
  * 5. If the size of the split is 2, set the element.
  * 6. After the parsing, set the pointer to the first node to the node that
  *    makes the parsing stop.
