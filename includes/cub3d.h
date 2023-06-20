@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wangxuerui <wangxuerui@student.42.fr>      +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/19 18:18:39 by wangxuerui       ###   ########.fr       */
+/*   Updated: 2023/06/20 15:21:19 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,14 @@
 # define MM_FLOOR 0x002E3357
 # define MM_VOID 0x0025131A
 
-/*Events and Masks*/
-# define KEY_PRESS			2
-# define KEY_RELEASE		3
-# define MOUSE_PRESS		4
-# define MOUSE_RELEASE		5
-# define MOUSE_MOVE			6
-# define DESTROY			17
+// PLAYER RELATED MACROS
+# define PLY_DIR "NSWE"
 
-# define KEYPRESS_MASK		1
-# define KEYRELEASE_MASK	2
-# define MOUSEPRESS_MASK	4
-# define MOUSERELEASE_MASK	8
-# define LEAVEWINDOW_MASK	32
-# define MOUSEMOVE_MASK		64
-# define NO_MASK			0
+// MAP RELATED MACROS
+# define MAP_CHARS "10NSWE "
+# define WALL '1'
+# define FLOOR '0'
+# define EMPTY ' '
 
 /* ====== ENUMS ====== */
 
@@ -82,11 +75,11 @@ typedef enum e_controls
 
 typedef enum e_dir
 {
-	NORTH,
-	SOUTH,
-	WEST,
-	EAST,
-	INVALID
+	NORTH = 'N',
+	SOUTH = 'S',
+	WEST = 'W',
+	EAST = 'E',
+	UNDEFINED
 }	t_dir;
 
 typedef enum e_rgba
@@ -108,6 +101,12 @@ typedef enum e_element
 	F,
 	UNKNOWN
 }	t_element;
+
+typedef enum e_iterate_type
+{
+	ROW,
+	COLUMN
+}	t_iterate_type;
 
 /* ====== STRUCTS ====== */
 
@@ -161,15 +160,24 @@ typedef struct s_texture
 
 /**
  * @brief Map data
+ * 
+ * @attention size.x is width, size.y is height
 */
 typedef struct s_map
 {
 	t_list		*info_list;
 	t_vector	size;
-	t_dir		player_dir;
 	char		**map;
 }	t_map;
 
+/**
+ * @brief Player data
+*/
+typedef struct s_player
+{
+	t_dir		dir;
+	t_vector	grid_pos; // grid coordinate
+}	t_player;
 /**
  * @brief The main struct for Cub3D.
 */
@@ -181,12 +189,18 @@ typedef struct s_cub
 	t_img		minimap;
 	t_texture	textures;
 	t_map		map;
+	t_player	player;
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */
 
+// FUNCTION RELATED MACROS
+typedef void	(*t_map_iterator_func)(t_cub *cub, int row, int column);
+
 // Init
 void	init_textures(t_texture *texture);
+void	init_player(t_player *player);
+void	set_player_initial_state(t_cub *cub, int row, int column);
 
 // hook
 int		key_hook(int key, t_cub *cub);
@@ -216,5 +230,13 @@ void	print_color(t_cub *cub, unsigned char color[4]);
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
 int		check_surrounded(t_map *map, int y, int x);
+
+// Map utils
+void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
+
+// Draw utils
+void	draw_pixel(t_cub *cub, int x, int y, int color);
+void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color);
+void	draw_circle(t_cub *cub, t_vector center, float r, int color);
 
 #endif

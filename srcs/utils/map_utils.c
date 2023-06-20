@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/07 18:28:34 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/19 14:38:01 by wricky-t         ###   ########.fr       */
+/*   Created: 2023/06/17 15:11:45 by wricky-t          #+#    #+#             */
+/*   Updated: 2023/06/20 11:45:51 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/**
- * @brief Free everything and exit
-*/
-void	exit_cub(t_cub *cub, char *err)
+void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type)
 {
-	int	exit_status;
+	int		row;
+	int		column;
+	t_map	*map;
+	char	**map_content;
 
-	(void)cub;
-	exit_status = EXIT_SUCCESS;
-	if (err != NULL)
+	row = -1;
+	map = &cub->map;
+	map_content = map->map;
+	while (map_content[++row])
 	{
-		ft_printf("[ERROR]: %s\n", err);
-		exit_status = EXIT_FAILURE;
+		if (type == ROW)
+		{
+			f(cub, row, -1);
+			continue ;
+		}
+		column = -1;
+		while (map_content[row][++column])
+			f(cub, row, column);
 	}
-	exit(exit_status);
 }
