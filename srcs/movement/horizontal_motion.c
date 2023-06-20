@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   horizontal_motion.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 15:09:25 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/20 18:29:01 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	move_player(t_cub *cub, t_controls key)
 		cub->player.unit_pos.x -= cub->player.displacement.x;
 		cub->player.unit_pos.y -= cub->player.displacement.y;
 	}
+	printf("%f\n", cub->player.unit_pos.x);
+	printf("%f\n\n", cub->player.unit_pos.y);
 }
 
 /**
@@ -53,7 +55,7 @@ void	rotate_player(t_cub *cub, t_controls key)
 	else if (new_angle > 2 * M_PI)
 		new_angle -= 2 * M_PI;
 	cub->player.displacement.x = cos(new_angle) * MOVE_SPEED;
-	cub->player.displacement.y = sin(new_angle) * MOVE_SPEED;
+	cub->player.displacement.y = -sin(new_angle) * MOVE_SPEED;
 	printf("%f\n", new_angle);
 	cub->player.viewing_angle = new_angle;
 }
