@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 21:20:56 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/21 19:20:08 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@
 
 // RAYCASTING ENVIRONMENT MACROS
 # define FOV 60 // in degrees
-# define GRID_SIZE 100
+# define GRID_SIZE 64
 
 # define PLAYER_SIZE 10
 
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
 # define MOVE_SPEED 5 // NOTE: 5 is 5 units in unit coord, not grid coord
-# define TURN_SPEED 0.1 // NOTE: 0.1 is 0.1 radian
+# define TURN_SPEED M_PI / 20 // NOTE: 0.1 is 0.1 radian
 
 // MAP RELATED MACROS
 # define MAP_CHARS "10NSWE "
@@ -220,6 +220,9 @@ void	init_textures(t_texture *texture);
 void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 
+// Raycasting
+t_vector	get_ray(t_cub *cub, double offset_angle);
+
 // hook
 void	cub3d_hooks(t_cub *cub);
 int		key_hook(int key, t_cub *cub);
@@ -262,5 +265,8 @@ void	draw_pixel(t_cub *cub, int x, int y, int color);
 void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color);
 void	draw_circle(t_cub *cub, t_vector center, float r, int color);
 void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill);
+
+// Math utils
+double	get_distance(t_vector p1, t_vector p2);
 
 #endif

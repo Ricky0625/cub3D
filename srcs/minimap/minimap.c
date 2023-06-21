@@ -3,11 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/17 15:03:25 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/21 19:16:43 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+// void	render_minimap(t_cub *cub)
+// {
+	
+// }

@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 21:13:50 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/21 19:24:25 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	test_raycast(t_cub *cub)
 {
 	t_vector	player_vertices[3];
 	t_player	*player = &cub->player;
+	t_vector	ray_end;
 
 	// Render the background map
 	for (int y = 0; y < (int)(GRID_SIZE * cub->map.size.y); y++) {
@@ -30,7 +31,6 @@ void	test_raycast(t_cub *cub)
 	}
 
 	// Update player
-	// draw_circle(cub, cub->player.unit_pos, 5, 0x00ff00);
 	player_vertices[0].x = roundf(player->unit_pos.x + cos(player->viewing_angle) * GRID_SIZE / 2);
 	player_vertices[0].y = roundf(player->unit_pos.y + -sin(player->viewing_angle) * GRID_SIZE / 2);
 	player_vertices[1].x = roundf(player->unit_pos.x + cos(player->viewing_angle + M_PI / 1.5) * GRID_SIZE / 3);
@@ -41,9 +41,12 @@ void	test_raycast(t_cub *cub)
 	draw_triangle(cub, player_vertices, 0x52dee5, 1);
 
 	// 0xbffcc6 ray
-	// draw_line(cub, player->unit_pos, player_vertices[0], 0);
-
-
+	double offset = -M_PI / 6;
+	while (offset < M_PI / 6) {
+		offset += M_PI / 300;
+		ray_end = get_ray(cub, offset);
+		draw_line(cub, player_vertices[0], ray_end, 0xbffcc6);
+	}
 
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
 }
@@ -84,9 +87,12 @@ int	main(int ac, char **av)
 	else if (ac > 2)
 		exit_cub(NULL, TOO_MANY_MAP);
 	init_cub(&cub);
+	printf("%f\n", tan(M_PI * 11 / 6));
 	parse_map(&cub, av[1]);
 	new_image(&cub, &cub.buffer, (t_vector){GRID_SIZE * cub.map.size.x, GRID_SIZE * cub.map.size.y});
+	printf("sizex: %d, sizey: %d\n", cub.map.size.x, cub.map.size.y);
 	test_raycast(&cub);
+	// render_minimap(&cub);
 	cub3d_hooks(&cub);
 	return (0);
 }

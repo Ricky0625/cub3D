@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:49 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 18:44:51 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/21 15:24:27 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void	set_player_initial_state(t_cub *cub, int row, int column)
 	unit_pos.x = column * GRID_SIZE + GRID_SIZE / 2;
 	unit_pos.y = row * GRID_SIZE + GRID_SIZE / 2;
 	player->unit_pos = unit_pos;
+	printf("player: %d, %d\n", unit_pos.x, unit_pos.y);
 	set_player_viewing_angle(cub);
 }
