@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:25:50 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 20:57:54 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/21 14:08:28 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,6 @@
 void	cub3d_hooks(t_cub *cub)
 {
 	mlx_hook(cub->win, 2, 1L << 0, key_hook, cub);
+	mlx_hook(cub->win, 17, 0L, close_cub, cub);
 	mlx_loop(cub->mlx);
 }
