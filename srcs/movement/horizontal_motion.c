@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/22 13:08:27 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:40:18 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ void	move_player(t_cub *cub, t_controls key)
 		cub->player.unit_pos.x -= cub->player.displacement.x;
 		cub->player.unit_pos.y -= cub->player.displacement.y;
 	}
+	else if (key == KEY_A)
+	{
+		cub->player.unit_pos.x += cub->player.displacement.x * cos(M_PI_2) + cub->player.displacement.y * sin(M_PI_2);
+		cub->player.unit_pos.y += cub->player.displacement.x * -sin(M_PI_2) + cub->player.displacement.y * cos(M_PI_2);
+	}
+	else if (key == KEY_D)
+	{
+		cub->player.unit_pos.x += cub->player.displacement.x * cos(-M_PI_2) + cub->player.displacement.y * sin(-M_PI_2);
+		cub->player.unit_pos.y += cub->player.displacement.x * -sin(-M_PI_2) + cub->player.displacement.y * cos(-M_PI_2);
+	}
 	// printf("%d\n", cub->player.unit_pos.x);
 	// printf("%d\n\n", cub->player.unit_pos.y);
 }
@@ -46,9 +56,9 @@ void	rotate_player(t_cub *cub, t_controls key)
 	double	new_angle;
 
 	new_angle = cub->player.viewing_angle;
-	if (key == KEY_A || key == KEY_LEFT)
+	if (key == KEY_LEFT)
 		new_angle += TURN_SPEED;
-	else if (key == KEY_D || key == KEY_RIGHT)
+	else if (key == KEY_RIGHT)
 		new_angle -= TURN_SPEED;
 	if (new_angle < 0)
 		new_angle += 2 * M_PI;

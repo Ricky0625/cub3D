@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/22 13:09:59 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:39:11 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	test_raycast(t_cub *cub)
 	// 0xbffcc6 ray
 	double offset = -M_PI / 6;
 	while (offset < M_PI / 6) {
-		offset += M_PI / 300;
+		offset += M_PI / 3000;
 		ray_end = get_ray(cub, offset);
-		draw_line(cub, player_vertices[0], ray_end, 0xbffcc6);
+		draw_line(cub, player->unit_pos, ray_end, 0xbffcc6);
 	}
 
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);

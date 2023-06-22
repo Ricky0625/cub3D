@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/22 13:30:48 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 14:09:47 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,30 @@
 
 int	is_wall(t_cub *cub, t_vector p)
 {
-	return (cub->map.map[p.y / GRID_SIZE][p.x / GRID_SIZE] == '1');
+	// return (cub->map.map[p.y / GRID_SIZE][p.x / GRID_SIZE] == '1');
+	if (cub->map.map[p.y / GRID_SIZE][p.x / GRID_SIZE] == '1')
+		return (1);
+	if (cub->map.map[(p.y + 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
+		return (1);
+	if (cub->map.map[(p.y + 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
+		return (1);
+	if (cub->map.map[(p.y - 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
+		return (1);
+	if (cub->map.map[(p.y - 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
+		return (1);
+	// if (p.y / GRID_SIZE > 0 && p.x / GRID_SIZE > 0)
+	// 	if (cub->map.map[p.y / GRID_SIZE - 1][p.x / GRID_SIZE] == '1' && cub->map.map[p.y / GRID_SIZE][p.x / GRID_SIZE - 1] == '1')
+	// 		return (1);
+	// if (p.y / GRID_SIZE > 0 && p.x < (int)ft_strlen(cub->map.map[p.y / GRID_SIZE + 1]) - 1)
+	// 	if (cub->map.map[p.y / GRID_SIZE - 1][p.x / GRID_SIZE] == '1' && cub->map.map[p.y / GRID_SIZE][p.x / GRID_SIZE + 1] == '1')
+	// 		return (1);
+	// if (p.y / GRID_SIZE < cub->map.size.y - 1 && p.x / GRID_SIZE > 0)
+	// 	if (cub->map.map[p.y / GRID_SIZE + 1][p.x / GRID_SIZE] == '1' && cub->map.map[p.y / GRID_SIZE][p.x / GRID_SIZE - 1] == '1')
+	// 		return (1);
+	// if (p.y / GRID_SIZE < cub->map.size.y - 1 && p.x < (int)ft_strlen(cub->map.map[p.y / GRID_SIZE + 1]) - 1)
+	// 	if (cub->map.map[p.y / GRID_SIZE + 1][p.x / GRID_SIZE] == '1' && cub->map.map[p.y / GRID_SIZE][p.x / GRID_SIZE + 1] == '1')
+	// 		return (1);
+	return 0;
 }
 
 t_vector	check_by_horizontal_intersections(t_cub *cub, double offset_angle)
