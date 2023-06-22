@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/21 19:27:42 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:30:48 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,17 @@ int	is_wall(t_cub *cub, t_vector p)
 
 t_vector	check_by_horizontal_intersections(t_cub *cub, double offset_angle)
 {
+	if (cub->player.viewing_angle + offset_angle <= 0)
+		offset_angle += M_PI * 2;
+	else if (cub->player.viewing_angle + offset_angle >= M_PI * 2)
+		offset_angle -= M_PI * 2;
 	int		xa = roundf(GRID_SIZE / tan(cub->player.viewing_angle + offset_angle));
 	int		ya = -GRID_SIZE; // face up
 	t_player	*ply = &cub->player;
 	t_vector	p;
 
 	// printf("check horizontal\n");
-	if ((double)(ply->viewing_angle + offset_angle) <= M_PI) // face up
+	if ((double)(ply->viewing_angle + offset_angle) < M_PI) // face up
 		p.y = (ply->unit_pos.y / GRID_SIZE) * GRID_SIZE - 1;
 	else
 	{
@@ -55,13 +59,17 @@ t_vector	check_by_horizontal_intersections(t_cub *cub, double offset_angle)
 
 t_vector	check_by_vertical_intersections(t_cub *cub, double offset_angle)
 {
+	if (cub->player.viewing_angle + offset_angle < 0)
+		offset_angle += M_PI * 2;
+	else if (cub->player.viewing_angle + offset_angle >= M_PI * 2)
+		offset_angle -= M_PI * 2;
 	int		xa = GRID_SIZE; // face right
 	int		ya = roundf(GRID_SIZE * tan(cub->player.viewing_angle + offset_angle));
 	t_player	*ply = &cub->player;
 	t_vector	p;
 
 	// printf("check vertical\n");
-	if ((double)(ply->viewing_angle + offset_angle) <= M_PI_2 || (double)(ply->viewing_angle + offset_angle) >= M_PI_2 * 3) // face right
+	if ((double)(ply->viewing_angle + offset_angle) < M_PI_2 || (double)(ply->viewing_angle + offset_angle) > M_PI_2 * 3) // face right
 	{
 		p.x = (ply->unit_pos.x / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
 		ya = -ya;
@@ -95,13 +103,12 @@ t_vector	get_ray(t_cub *cub, double offset_angle)
 {	
 	t_vector	by_x = check_by_horizontal_intersections(cub, offset_angle);
 	t_vector	by_y = check_by_vertical_intersections(cub, offset_angle);
+	// draw_line(cub, cub->player.unit_pos, by_x, 0);
+	// draw_line(cub, cub->player.unit_pos, by_y, 0xff0000);
 	if (by_x.x == 0 && by_x.y == 0)
 		return by_y;
 	else if (by_y.x == 0 && by_y.y == 0)
 		return by_x;
-	// printf("angle: %f\n", cub->player.viewing_angle * 180 / M_PI);
-	// draw_line(cub, cub->player.unit_pos, by_x, 0);
-	// draw_line(cub, cub->player.unit_pos, by_y, 0xff0000);
 
 	if (get_distance(cub->player.unit_pos, by_x) < get_distance(cub->player.unit_pos, by_y))
 		return (by_x);

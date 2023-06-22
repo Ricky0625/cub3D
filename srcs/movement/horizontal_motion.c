@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/21 19:26:20 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:08:27 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	rotate_player(t_cub *cub, t_controls key)
 		new_angle -= 2 * M_PI;
 	cub->player.displacement.x = cos(new_angle) * MOVE_SPEED;
 	cub->player.displacement.y = -sin(new_angle) * MOVE_SPEED;
-	printf("%f\n", new_angle);
+	// printf("%f\n", new_angle);
 	cub->player.viewing_angle = new_angle;
 }
