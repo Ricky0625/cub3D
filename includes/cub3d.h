@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/22 15:32:38 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:54:21 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 
 // RAYCASTING ENVIRONMENT MACROS
 # define FOV 60 // in degrees
-# define GRID_SIZE 64
+# define GRID_SIZE 30
 
 # define PLAYER_SIZE 10
 
@@ -213,6 +213,7 @@ typedef struct s_cub
 	t_texture	textures;
 	t_map		map;
 	t_player	player;
+	t_ray		rays[WIN_WIDTH];
 }	t_cub;
 
 void	test_raycast(t_cub *cub);
@@ -228,7 +229,8 @@ void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 
 // Raycasting
-t_vector	get_ray(t_cub *cub, double offset_angle);
+t_ray	get_ray(t_cub *cub, double offset_angle);
+void		store_rays_to_cub(t_cub *cub);
 
 // hook
 void	cub3d_hooks(t_cub *cub);

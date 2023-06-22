@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/22 13:39:11 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 18:53:50 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	test_raycast(t_cub *cub)
 {
 	t_vector	player_vertices[3];
 	t_player	*player = &cub->player;
-	t_vector	ray_end;
 
 	// Render the background map
 	for (int y = 0; y < (int)(GRID_SIZE * cub->map.size.y); y++) {
@@ -40,12 +39,9 @@ void	test_raycast(t_cub *cub)
 
 	draw_triangle(cub, player_vertices, 0x52dee5, 1);
 
-	// 0xbffcc6 ray
-	double offset = -M_PI / 6;
-	while (offset < M_PI / 6) {
-		offset += M_PI / 3000;
-		ray_end = get_ray(cub, offset);
-		draw_line(cub, player->unit_pos, ray_end, 0xbffcc6);
+	store_rays_to_cub(cub);
+	for (int i = 0; i < WIN_WIDTH; i++) {
+		draw_line(cub, cub->player.unit_pos, cub->rays[i].p_intersection, 0xbffcc6);
 	}
 
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
