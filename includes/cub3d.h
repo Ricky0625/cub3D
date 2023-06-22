@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/22 18:54:21 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 22:29:37 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 
 // Raycasting
-t_ray	get_ray(t_cub *cub, double offset_angle);
+t_ray	get_ray(t_cub *cub, double angle);
 void		store_rays_to_cub(t_cub *cub);
 
 // hook
@@ -277,5 +277,11 @@ void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill);
 // Math utils
 double	get_distance(t_vector p1, t_vector p2);
 int		int_abs(int num);
+double	deg_to_rad(double deg);
+double	rad_to_deg(double rad);
+
+// Raycasting Utils
+int	is_wall(t_cub *cub, t_vector p);
+int	dda(t_cub *cub, t_vector *p, t_vector displacement);
 
 #endif

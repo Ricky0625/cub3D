@@ -6,124 +6,93 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/22 18:54:36 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 22:29:19 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	is_wall(t_cub *cub, t_vector p)
+t_vector	check_by_horizontal_intersections(t_cub *cub, double angle)
 {
-	if (cub->map.map[p.y / GRID_SIZE][p.x / GRID_SIZE] == '1')
-		return (1);
-	if (cub->map.map[(p.y + 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
-		return (1);
-	if (cub->map.map[(p.y + 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
-		return (1);
-	if (cub->map.map[(p.y - 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
-		return (1);
-	if (cub->map.map[(p.y - 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
-		return (1);
-	return 0;
-}
-
-t_vector	check_by_horizontal_intersections(t_cub *cub, double offset_angle)
-{
-	int		xa = roundf(GRID_SIZE / tan(cub->player.viewing_angle + offset_angle));
-	int		ya = -GRID_SIZE; // face up
-	t_player	*ply = &cub->player;
+	t_vector	displacement;
+	t_vector	pos;
 	t_vector	p;
 
-	if ((double)(ply->viewing_angle + offset_angle) < M_PI) // face up
-		p.y = (ply->unit_pos.y / GRID_SIZE) * GRID_SIZE - 1;
-	else
+	pos = cub->player.unit_pos;
+	// face down by default
+	displacement.x = -roundf(GRID_SIZE / tan(angle));
+	displacement.y = GRID_SIZE;
+	p.y = (pos.y / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
+	if (angle < M_PI) // face up
 	{
-		p.y = (ply->unit_pos.y / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
-		xa = -xa;
-		ya = GRID_SIZE;
+		displacement.x = -displacement.x;
+		p.y = (pos.y / GRID_SIZE) * GRID_SIZE - 1;
+		displacement.y = -GRID_SIZE;
 	}
-	p.x = ply->unit_pos.x + roundf((ply->unit_pos.y - p.y) / tan(ply->viewing_angle + offset_angle));
-	while (1)
-	{
-		if (p.x < 0 || p.x >= cub->map.size.x * GRID_SIZE)
-			return (t_vector){0, 0};
-		if (p.y < 0 || p.y >= cub->map.size.y * GRID_SIZE)
-			return (t_vector){0, 0};
-		if (is_wall(cub, p))
-			return (p);
-		p.x += xa;
-		p.y += ya;
-	}
-
+	p.x = pos.x + roundf((pos.y - p.y) / tan(angle));
+	if (dda(cub, &p, displacement) == 0)
+		return ((t_vector){-42, -42});
 	return (p);
 }
 
-t_vector	check_by_vertical_intersections(t_cub *cub, double offset_angle)
+t_vector	check_by_vertical_intersections(t_cub *cub, double angle)
 {
-	int		xa = GRID_SIZE; // face right
-	int		ya = roundf(GRID_SIZE * tan(cub->player.viewing_angle + offset_angle));
-	t_player	*ply = &cub->player;
+	t_vector	displacement;
+	t_vector	pos;
 	t_vector	p;
 
-	if ((double)(ply->viewing_angle + offset_angle) < M_PI_2 || (double)(ply->viewing_angle + offset_angle) > M_PI_2 * 3) // face right
+	pos = cub->player.unit_pos;
+	// face right by default
+	displacement.x = GRID_SIZE;
+	displacement.y = -roundf(GRID_SIZE * tan(angle));
+	p.x = (pos.x / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
+	if (angle > M_PI_2 && angle < M_PI_2 * 3) // face left
 	{
-		p.x = (ply->unit_pos.x / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
-		ya = -ya;
+		displacement.y = -displacement.y;
+		p.x = (pos.x / GRID_SIZE) * GRID_SIZE - 1;
+		displacement.x = -GRID_SIZE;
 	}
-	else
-	{
-		p.x = (ply->unit_pos.x / GRID_SIZE) * GRID_SIZE - 1;
-		xa = -GRID_SIZE;
-	}
-	p.y = ply->unit_pos.y + roundf((ply->unit_pos.x - p.x) * tan(ply->viewing_angle + offset_angle));
-
-	while (1)
-	{
-		if (p.x < 0 || p.x >= cub->map.size.x * GRID_SIZE)
-			return (t_vector){0, 0};
-		if (p.y < 0 || p.y >= cub->map.size.y * GRID_SIZE)
-			return (t_vector){0, 0};
-		if (is_wall(cub, p))
-			return (p);
-		p.x += xa;
-		p.y += ya;
-	}
-
+	p.y = pos.y + roundf((pos.x - p.x) * tan(angle));
+	if (dda(cub, &p, displacement) == 0)
+		return ((t_vector){-42, -42});
 	return (p);
 }
 
-t_ray	get_ray(t_cub *cub, double offset_angle)
+t_ray	get_ray(t_cub *cub, double angle)
 {
-	if (cub->player.viewing_angle + offset_angle < 0)
-		offset_angle += M_PI * 2;
-	else if (cub->player.viewing_angle + offset_angle >= M_PI * 2)
-		offset_angle -= M_PI * 2;
-	t_vector	by_x = check_by_horizontal_intersections(cub, offset_angle);
-	t_vector	by_y = check_by_vertical_intersections(cub, offset_angle);
-	// draw_line(cub, cub->player.unit_pos, by_x, 0);
-	// draw_line(cub, cub->player.unit_pos, by_y, 0xff0000);
-	if (by_x.x == 0 && by_x.y == 0)
-		return (t_ray){by_y, get_distance(cub->player.unit_pos, by_y), cub->player.viewing_angle + offset_angle};
-	else if (by_y.x == 0 && by_y.y == 0)
-		return (t_ray){by_x, get_distance(cub->player.unit_pos, by_x), cub->player.viewing_angle + offset_angle};
+	t_vector	by_x;
+	t_vector	by_y;
+	double		dists[2];
 
-	if (get_distance(cub->player.unit_pos, by_x) < get_distance(cub->player.unit_pos, by_y))
-		return ((t_ray){by_x, get_distance(cub->player.unit_pos, by_x), cub->player.viewing_angle + offset_angle});
-	return ((t_ray){by_y, get_distance(cub->player.unit_pos, by_y), cub->player.viewing_angle + offset_angle});
+	if (angle < 0)
+		angle += M_PI * 2;
+	else if (angle >= M_PI * 2)
+		angle -= M_PI * 2;
+	by_x = check_by_horizontal_intersections(cub, angle);
+	by_y = check_by_vertical_intersections(cub, angle);
+	dists[0] = get_distance(cub->player.unit_pos, by_x);
+	dists[1] = get_distance(cub->player.unit_pos, by_y);
+	if (by_y.x == -42 && by_y.y == -42)
+		return ((t_ray){by_x, dists[0], angle});
+	else if (by_x.x == -42 && by_x.y == -42)
+		return ((t_ray){by_y, dists[1], angle});
+	if (dists[0] < dists[1])
+		return ((t_ray){by_x, dists[0], angle});
+	return ((t_ray){by_y, dists[1], angle});
 }
 
 void	store_rays_to_cub(t_cub *cub)
 {
 	t_ray	ray;
+	double	offset;
 	int		i;
 
-	// 0xbffcc6 ray
-	double offset = -M_PI / 6;
+	offset = deg_to_rad(FOV) / 2;
 	i = -1;
-	while (++i < WIN_WIDTH) {
-		offset += M_PI / WIN_WIDTH / 3;
-		ray = get_ray(cub, offset);
-		// draw_line(cub, cub->player.unit_pos, ray, 0xbffcc6);
+	while (++i < WIN_WIDTH)
+	{
+		offset -= deg_to_rad(FOV) / WIN_WIDTH;
+		ray = get_ray(cub, cub->player.viewing_angle + offset);
 		cub->rays[i] = ray;
 	}
 }
