@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/21 19:20:08 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:25:15 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,12 @@ typedef struct s_vector
 	int	x;
 	int	y;
 }	t_vector;
+
+typedef struct s_ray
+{
+	t_vector	p_intersection;
+	double		dist;
+}	t_ray;
 
 typedef struct s_vector_d
 {
@@ -263,10 +269,10 @@ void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
 // Draw utils
 void	draw_pixel(t_cub *cub, int x, int y, int color);
 void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color);
-void	draw_circle(t_cub *cub, t_vector center, float r, int color);
 void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill);
 
 // Math utils
 double	get_distance(t_vector p1, t_vector p2);
+int		int_abs(int num);
 
 #endif
