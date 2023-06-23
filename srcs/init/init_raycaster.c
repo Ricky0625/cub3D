@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:19:15 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 15:52:30 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:06:18 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,5 @@ void	init_render_option(t_render_option *render_opt)
 {
 	render_opt->fisheye = 0;
 	render_opt->minimap = 1;
+	render_opt->using_mouse = 0;
 }

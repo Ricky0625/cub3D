@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 15:56:13 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/23 16:49:37 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@
  * ESC - exit
  * LEFT - turn left
  * RIGHT - turn right
+ * LSHIFT - toggle mouse (use mouse to rotate player viewing angle)
 */
 typedef enum e_controls
 {
@@ -106,6 +107,7 @@ typedef enum e_controls
 	KEY_R = 15,
 	KEY_PLUS = 24,
 	KEY_MINUS = 27,
+	KEY_LSHIFT = 257,
 	KEY_ESC = 53,
 	KEY_LEFT = 123,
 	KEY_RIGHT = 124
@@ -251,6 +253,7 @@ typedef struct s_render_option
 {
 	int	fisheye;
 	int	minimap;
+	int	using_mouse;
 }	t_render_option;
 
 /**
@@ -304,6 +307,10 @@ int		is_map_content(char *str);
 int		check_elements_all_set(t_texture *textures);
 void	*llto2darr_func(void *content);
 int		is_map_content(char *str);
+
+// Mouse Controls
+void	toggle_mouse(t_cub *cub);
+int		mouse_hook(int x, int y, t_cub *cub);
 
 // Controls
 void	adjust_fov(t_cub *cub, int key);
