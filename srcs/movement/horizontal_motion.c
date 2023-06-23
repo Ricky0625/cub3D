@@ -6,18 +6,67 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 12:30:07 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/23 12:50:12 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * Move separately on x and y axis
+ * and move only when it doesn't run into a wall after move.
+*/
 void	move(t_cub *cub, t_vector_d displacement)
 {
-	if (!is_wall(cub, (t_vector){cub->player.unit_pos.x + displacement.x, cub->player.unit_pos.y}))
+	t_vector	temp_pos;
+
+	temp_pos.x = cub->player.unit_pos.x + roundf(displacement.x);
+	temp_pos.y = cub->player.unit_pos.y;
+	if (!is_wall(cub, temp_pos))
 		cub->player.unit_pos.x += displacement.x;
-	if (!is_wall(cub, (t_vector){cub->player.unit_pos.x, cub->player.unit_pos.y + displacement.y}))
+	temp_pos.x = cub->player.unit_pos.x;
+	temp_pos.y = cub->player.unit_pos.y + displacement.y;
+	if (!is_wall(cub, temp_pos))
 		cub->player.unit_pos.y += displacement.y;
+}
+
+void	move_x(t_cub *cub, t_controls key)
+{
+	t_vector_d	displacement;
+
+	if (key == KEY_A)
+	{
+		displacement.x = roundf(cub->player.displacement.x * cos(M_PI_2)
+				+ cub->player.displacement.y * sin(M_PI_2));
+		displacement.y = roundf(cub->player.displacement.x * -sin(M_PI_2)
+				+ cub->player.displacement.y * cos(M_PI_2));
+		move(cub, displacement);
+	}
+	else if (key == KEY_D)
+	{
+		displacement.x = roundf(cub->player.displacement.x * cos(-M_PI_2)
+				+ cub->player.displacement.y * sin(-M_PI_2));
+		displacement.y = roundf(cub->player.displacement.x * -sin(-M_PI_2)
+				+ cub->player.displacement.y * cos(-M_PI_2));
+		move(cub, displacement);
+	}
+}
+
+void	move_y(t_cub *cub, t_controls key)
+{
+	t_vector_d	displacement;
+
+	if (key == KEY_W)
+	{
+		displacement = cub->player.displacement;
+		move(cub, displacement);
+	}
+	else if (key == KEY_S)
+	{
+		displacement.x = -cub->player.displacement.x;
+		displacement.y = -cub->player.displacement.y;
+		move(cub, displacement);
+	}
 }
 
 /**
@@ -34,33 +83,10 @@ void	move(t_cub *cub, t_vector_d displacement)
 
 void	move_player(t_cub *cub, t_controls key)
 {
-	t_vector_d	displacement;
-
-	if (key == KEY_W)
-	{
-		displacement = cub->player.displacement;
-		move(cub, displacement);
-	}
-	else if (key == KEY_S)
-	{
-		displacement.x = -cub->player.displacement.x;
-		displacement.y = -cub->player.displacement.y;
-		move(cub, displacement);
-	}
-	else if (key == KEY_A)
-	{
-		displacement.x = cub->player.displacement.x * cos(M_PI_2) + cub->player.displacement.y * sin(M_PI_2);
-		displacement.y = cub->player.displacement.x * -sin(M_PI_2) + cub->player.displacement.y * cos(M_PI_2);
-		move(cub, displacement);
-	}
-	else if (key == KEY_D)
-	{
-		displacement.x = cub->player.displacement.x * cos(-M_PI_2) + cub->player.displacement.y * sin(-M_PI_2);
-		displacement.y = cub->player.displacement.x * -sin(-M_PI_2) + cub->player.displacement.y * cos(-M_PI_2);
-		move(cub, displacement);
-	}
-	// printf("%d\n", cub->player.unit_pos.x);
-	// printf("%d\n\n", cub->player.unit_pos.y);
+	if (key == KEY_A || key == KEY_D)
+		move_x(cub, key);
+	else if (key == KEY_W || key == KEY_S)
+		move_y(cub, key);
 }
 
 /**
@@ -81,6 +107,5 @@ void	rotate_player(t_cub *cub, t_controls key)
 		new_angle -= 2 * M_PI;
 	cub->player.displacement.x = cos(new_angle) * MOVE_SPEED;
 	cub->player.displacement.y = -sin(new_angle) * MOVE_SPEED;
-	// printf("%f\n", new_angle);
 	cub->player.viewing_angle = new_angle;
 }
