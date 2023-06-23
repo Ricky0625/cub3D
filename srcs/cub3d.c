@@ -6,7 +6,7 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 11:43:06 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/23 12:35:47 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,10 @@
 
 int	rendering(t_cub *cub)
 {
-	t_vector	player_vertices[3];
-	t_player	*player = &cub->player;
-
-	// Render the background map
-	for (int y = 0; y < (int)(GRID_SIZE * cub->map.size.y); y++) {
-		for (int x = 0; x < (int)(GRID_SIZE * ft_strlen(cub->map.map[y / GRID_SIZE])); x++) {
-			if (cub->map.map[y / GRID_SIZE][x / GRID_SIZE] == '0' || ft_strchr(PLY_DIR, cub->map.map[y / GRID_SIZE][x / GRID_SIZE]))
-				draw_pixel(cub, x, y, 0xf6f6eb);
-			else if (cub->map.map[y / GRID_SIZE][x / GRID_SIZE] == '1')
-				draw_pixel(cub, x, y, 0xd5d6ea);
-			else
-				draw_pixel(cub, x, y, 0);
-		}
-	}
-
-	// Update player
-	player_vertices[0].x = roundf(player->unit_pos.x + cos(player->viewing_angle) * GRID_SIZE / 2);
-	player_vertices[0].y = roundf(player->unit_pos.y + -sin(player->viewing_angle) * GRID_SIZE / 2);
-	player_vertices[1].x = roundf(player->unit_pos.x + cos(player->viewing_angle + M_PI / 1.5) * GRID_SIZE / 3);
-	player_vertices[1].y = roundf(player->unit_pos.y + -sin(player->viewing_angle + M_PI / 1.5) * GRID_SIZE / 3);
-	player_vertices[2].x = roundf(player->unit_pos.x + cos(player->viewing_angle - M_PI / 1.5) * GRID_SIZE / 3);
-	player_vertices[2].y = roundf(player->unit_pos.y + -sin(player->viewing_angle - M_PI / 1.5) * GRID_SIZE / 3);
-
-	draw_triangle(cub, player_vertices, 0x52dee5, 1);
-
 	store_rays_to_cub(cub);
-	for (int i = 0; i < WIN_WIDTH; i++) {
-		draw_line(cub, cub->player.unit_pos, cub->rays[i].p_intersection, 0xbffcc6);
-	}
+
+	// For Ricky: 3D rendering
+	render_minimap(cub);
 
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
 	return (0);
