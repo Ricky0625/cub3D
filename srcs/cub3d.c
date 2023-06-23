@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 13:26:23 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:28:15 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 int	rendering(t_cub *cub)
 {
 	store_rays_to_cub(cub);
-
-	// For Ricky: 3D rendering
 	render_minimap(cub);
-
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
 	return (0);
 }
@@ -60,12 +57,8 @@ int	main(int ac, char **av)
 	else if (ac > 2)
 		exit_cub(NULL, TOO_MANY_MAP);
 	init_cub(&cub);
-	printf("%f\n", tan(M_PI * 11 / 6));
 	parse_map(&cub, av[1]);
-	printf("sizex: %d, sizey: %d\n", cub.map.size.x, cub.map.size.y);
 	mlx_loop_hook(cub.mlx, rendering, &cub);
-	// test_raycast(&cub);
-	// render_minimap(&cub);
 	cub3d_hooks(&cub);
 	return (0);
 }

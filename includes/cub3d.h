@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 13:27:02 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:28:07 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@
 
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
-# define MOVE_SPEED 5 // NOTE: 5 is 5 units in unit coord, not grid coord
-# define TURN_SPEED M_PI / 20 // NOTE: 0.1 is 0.1 radian
+# define MOVE_SPEED 5
+// NOTE: 5 is 5 units in unit coord, not grid coord
+# define TURN_SPEED 0.1
+// NOTE: 0.1 is 0.1 radian
 
 // MAP RELATED MACROS
 # define MAP_CHARS "10NSWE "
@@ -71,10 +73,10 @@
 */
 typedef enum e_controls
 {
-	KEY_W = 13, // forward
-	KEY_A = 0, // turn left
-	KEY_S = 1, // backward
-	KEY_D = 2, // turn right
+	KEY_W = 13,
+	KEY_A = 0,
+	KEY_S = 1,
+	KEY_D = 2,
 	KEY_ESC = 53,
 	KEY_LEFT = 123,
 	KEY_RIGHT = 124
@@ -202,10 +204,10 @@ typedef struct s_map
 typedef struct s_player
 {
 	t_dir		dir;
-	double		viewing_angle; // should be in radian
-	t_vector	grid_pos; // grid coordinate
-	t_vector	unit_pos; // unit coordinate
-	t_vector_d	displacement; // displacement from the grid coordinate
+	double		viewing_angle;
+	t_vector	grid_pos;
+	t_vector	unit_pos;
+	t_vector_d	displacement;
 }	t_player;
 
 typedef struct	s_projection_attr
@@ -249,7 +251,7 @@ void	set_player_initial_state(t_cub *cub, int row, int column);
 
 // Raycasting
 t_ray	get_ray(t_cub *cub, double angle);
-void		store_rays_to_cub(t_cub *cub);
+void	store_rays_to_cub(t_cub *cub);
 
 // hook
 void	cub3d_hooks(t_cub *cub);
@@ -305,7 +307,7 @@ double	deg_to_rad(double deg);
 double	rad_to_deg(double rad);
 
 // Raycasting Utils
-int	is_wall(t_cub *cub, t_vector p);
-int	dda(t_cub *cub, t_vector *p, t_vector displacement);
+int		is_wall(t_cub *cub, t_vector p);
+int		dda(t_cub *cub, t_vector *p, t_vector displacement);
 
 #endif
