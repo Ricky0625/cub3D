@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/22 22:29:37 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:43:15 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,8 +215,6 @@ typedef struct s_cub
 	t_player	player;
 	t_ray		rays[WIN_WIDTH];
 }	t_cub;
-
-void	test_raycast(t_cub *cub);
 
 /* ====== FUNCTION PROTOTYPES ====== */
 

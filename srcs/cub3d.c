@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/22 18:53:50 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:43:06 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	test_raycast(t_cub *cub)
+int	rendering(t_cub *cub)
 {
 	t_vector	player_vertices[3];
 	t_player	*player = &cub->player;
@@ -45,6 +45,7 @@ void	test_raycast(t_cub *cub)
 	}
 
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
+	return (0);
 }
 
 /**
@@ -59,6 +60,7 @@ static void	init_cub(t_cub *cub)
 {
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
+	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
 	cub->map.info_list = NULL;
 	init_player(&cub->player);
 }
@@ -85,9 +87,9 @@ int	main(int ac, char **av)
 	init_cub(&cub);
 	printf("%f\n", tan(M_PI * 11 / 6));
 	parse_map(&cub, av[1]);
-	new_image(&cub, &cub.buffer, (t_vector){GRID_SIZE * cub.map.size.x, GRID_SIZE * cub.map.size.y});
 	printf("sizex: %d, sizey: %d\n", cub.map.size.x, cub.map.size.y);
-	test_raycast(&cub);
+	mlx_loop_hook(cub.mlx, rendering, &cub);
+	// test_raycast(&cub);
 	// render_minimap(&cub);
 	cub3d_hooks(&cub);
 	return (0);

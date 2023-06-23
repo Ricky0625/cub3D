@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:05:31 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/22 14:39:57 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/23 11:42:56 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ int	key_hook(int key, t_cub *cub)
 	else if (key == KEY_W || key == KEY_S
 		|| key == KEY_A || key == KEY_D)
 		move_player(cub, key);
-	test_raycast(cub);
 	return (0);
 }
