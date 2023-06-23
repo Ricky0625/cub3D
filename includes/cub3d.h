@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 13:28:07 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:56:13 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@
 
 // RAYCASTING ENVIRONMENT MACROS
 # define FOV 60 // in degrees
+# define FOV_MIN 10
+# define FOV_MAX 170
+# define CENTER_OFFSET_MAX 50
 # define GRID_SIZE 30
-
 # define PLAYER_SIZE 10
 
 // PLAYER RELATED MACROS
@@ -58,6 +60,10 @@
 // NOTE: 5 is 5 units in unit coord, not grid coord
 # define TURN_SPEED 0.1
 // NOTE: 0.1 is 0.1 radian
+# define FOV_STEP 2
+// NOTE: 5 is 5 degrees
+# define CENTER_OFFSET_STEP 5
+// NOTE: 5 is 5 units in unit coord, not grid coord
 
 // MAP RELATED MACROS
 # define MAP_CHARS "10NSWE "
@@ -70,6 +76,22 @@
 /**
  * @brief Enum for control key's keycodes.
  * @attention It's for macos only.
+ * 
+ * @details
+ * W - move up
+ * A - move left
+ * S - move down
+ * D - move right
+ * F - toggle fisheye effect
+ * M - toggle minimap
+ * Q - look up
+ * E - look down
+ * R - reset raycasting environment
+ * + - increase FOV
+ * - - decrease FOV
+ * ESC - exit
+ * LEFT - turn left
+ * RIGHT - turn right
 */
 typedef enum e_controls
 {
@@ -77,6 +99,13 @@ typedef enum e_controls
 	KEY_A = 0,
 	KEY_S = 1,
 	KEY_D = 2,
+	KEY_F = 3,
+	KEY_M = 46,
+	KEY_Q = 12,
+	KEY_E = 14,
+	KEY_R = 15,
+	KEY_PLUS = 24,
+	KEY_MINUS = 27,
 	KEY_ESC = 53,
 	KEY_LEFT = 123,
 	KEY_RIGHT = 124
@@ -210,31 +239,35 @@ typedef struct s_player
 	t_vector_d	displacement;
 }	t_player;
 
-typedef struct	s_projection_attr
+typedef struct s_projection_attr
 {
-	double		dist_to_proj_plane; // distance to the projection plane
-	double		ray_angle_step; // angle between subsequent rays
+	double		dist_to_proj_plane;
+	double		ray_angle_step;
+	int			fov;
+	int			center_offset;
 }	t_projection_attr;
 
-typedef struct	s_ray
+typedef struct s_render_option
 {
-	t_vector	intersection_point; // first will be used by the first intersection, then the checkpoints (unit coord)
-	double		dist; // distance of the ray (assuming now it's not the "corrected" ray distance)
-}	t_ray;
+	int	fisheye;
+	int	minimap;
+}	t_render_option;
 
 /**
  * @brief The main struct for Cub3D.
 */
 typedef struct s_cub
 {
-	void		*mlx;
-	void		*win;
-	t_img		buffer;
-	t_img		minimap;
-	t_texture	textures;
-	t_map		map;
-	t_player	player;
-	t_ray		rays[WIN_WIDTH];
+	void				*mlx;
+	void				*win;
+	t_img				buffer;
+	t_img				minimap;
+	t_texture			textures;
+	t_map				map;
+	t_player			player;
+	t_projection_attr	proj_attr;
+	t_render_option		render_opt;
+	t_ray				rays[WIN_WIDTH];
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */
@@ -245,7 +278,7 @@ typedef void	(*t_map_iterator_func)(t_cub *cub, int row, int column);
 // Init
 void	init_textures(t_texture *texture);
 void	init_projection_attribute(t_projection_attr *proj_attr);
-void	init_step_size(t_vector_d *step_size, double angle, t_step_type type);
+void	init_render_option(t_render_option *render_opt);
 void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 
@@ -271,6 +304,12 @@ int		is_map_content(char *str);
 int		check_elements_all_set(t_texture *textures);
 void	*llto2darr_func(void *content);
 int		is_map_content(char *str);
+
+// Controls
+void	adjust_fov(t_cub *cub, int key);
+void	adjust_center_offset(t_cub *cub, int key);
+void	change_raycasting_option(t_cub *cub, int key);
+void	reset_raycasting_environment(t_cub *cub);
 
 // Movement
 void	move_player(t_cub *cub, t_controls key);

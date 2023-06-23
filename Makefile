@@ -6,7 +6,7 @@
 #    By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
-#    Updated: 2023/06/23 13:26:13 by wricky-t         ###   ########.fr        #
+#    Updated: 2023/06/23 15:16:59 by wricky-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ SRCS		:= cub3d.c \
 			   init/init_textures.c init/init_player.c init/init_raycaster.c \
 			   hooks/hook.c hooks/key_hook.c \
 			   parsing/parse_map.c parsing/parse_elements.c parsing/parse_check.c \
-			   movement/horizontal_motion.c \
+			   controls/player_movement.c controls/controls.c \
 			   raycasting/get_rays.c raycasting/get_rays_utils.c \
 			   minimap/minimap.c \
 			   utils/error.c utils/img_utils.c utils/color_utils.c utils/draw_utils.c utils/map_utils.c utils/math_utils.c \

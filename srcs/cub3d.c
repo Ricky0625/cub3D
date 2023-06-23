@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 13:28:15 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/23 15:51:20 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 int	rendering(t_cub *cub)
 {
+	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
 	store_rays_to_cub(cub);
-	render_minimap(cub);
+	if (cub->render_opt.minimap)
+		render_minimap(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
+	mlx_destroy_image(cub->mlx, cub->buffer.ref);
 	return (0);
 }
 
@@ -32,10 +35,10 @@ static void	init_cub(t_cub *cub)
 {
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
-	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
 	cub->map.info_list = NULL;
 	init_player(&cub->player);
-	// init_projection_attribute(&cub->proj_attr);
+	init_projection_attribute(&cub->proj_attr);
+	init_render_option(&cub->render_opt);
 }
 
 /**

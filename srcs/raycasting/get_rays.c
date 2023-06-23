@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rays.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/22 22:29:19 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:32:33 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,16 @@ t_ray	get_ray(t_cub *cub, double angle)
 
 void	store_rays_to_cub(t_cub *cub)
 {
-	t_ray	ray;
-	double	offset;
 	int		i;
+	int		fov;
+	double	cast_angle;
 
-	offset = deg_to_rad(FOV) / 2;
 	i = -1;
+	fov = cub->proj_attr.fov;
+	cast_angle = cub->player.viewing_angle + deg_to_rad(fov) / 2;
 	while (++i < WIN_WIDTH)
 	{
-		offset -= deg_to_rad(FOV) / WIN_WIDTH;
-		ray = get_ray(cub, cub->player.viewing_angle + offset);
-		cub->rays[i] = ray;
+		cub->rays[i] = get_ray(cub, cast_angle);
+		cast_angle -= cub->proj_attr.ray_angle_step;
 	}
 }
