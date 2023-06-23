@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:49 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 15:10:25 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:24:27 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,15 @@ static void	set_player_viewing_angle(t_cub *cub)
 
 	player_facing_direction = cub->player.dir;
 	if (player_facing_direction == NORTH)
-		cub->player.viewing_angle = 90 * M_PI / 180;
+		cub->player.viewing_angle = M_PI_2;
 	else if (player_facing_direction == SOUTH)
-		cub->player.viewing_angle = 270 * M_PI / 180;
+		cub->player.viewing_angle = 3 * M_PI_2;
 	else if (player_facing_direction == EAST)
 		cub->player.viewing_angle = 0;
 	else if (player_facing_direction == WEST)
 		cub->player.viewing_angle = M_PI;
+	cub->player.displacement.x = cos(cub->player.viewing_angle) * MOVE_SPEED;
+	cub->player.displacement.y = -sin(cub->player.viewing_angle) * MOVE_SPEED;
 }
 
 /**
@@ -65,7 +67,7 @@ void	set_player_initial_state(t_cub *cub, int row, int column)
 {
 	char		grid;
 	t_player	*player;
-	t_vector_d	unit_pos;
+	t_vector	unit_pos;
 
 	grid = cub->map.map[row][column];
 	player = &cub->player;
@@ -74,5 +76,6 @@ void	set_player_initial_state(t_cub *cub, int row, int column)
 	unit_pos.x = column * GRID_SIZE + GRID_SIZE / 2;
 	unit_pos.y = row * GRID_SIZE + GRID_SIZE / 2;
 	player->unit_pos = unit_pos;
+	printf("player: %d, %d\n", unit_pos.x, unit_pos.y);
 	set_player_viewing_angle(cub);
 }

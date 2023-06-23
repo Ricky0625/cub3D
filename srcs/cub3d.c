@@ -6,11 +6,22 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 21:36:08 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/23 13:26:23 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	rendering(t_cub *cub)
+{
+	store_rays_to_cub(cub);
+
+	// For Ricky: 3D rendering
+	render_minimap(cub);
+
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
+	return (0);
+}
 
 /**
  * @brief Initialize main struct
@@ -24,9 +35,10 @@ static void	init_cub(t_cub *cub)
 {
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
+	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
 	cub->map.info_list = NULL;
 	init_player(&cub->player);
-	init_projection_attribute(&cub->proj_attr);
+	// init_projection_attribute(&cub->proj_attr);
 }
 
 /**
@@ -48,8 +60,12 @@ int	main(int ac, char **av)
 	else if (ac > 2)
 		exit_cub(NULL, TOO_MANY_MAP);
 	init_cub(&cub);
+	printf("%f\n", tan(M_PI * 11 / 6));
 	parse_map(&cub, av[1]);
-	raycaster(&cub);
+	printf("sizex: %d, sizey: %d\n", cub.map.size.x, cub.map.size.y);
+	mlx_loop_hook(cub.mlx, rendering, &cub);
+	// test_raycast(&cub);
+	// render_minimap(&cub);
 	cub3d_hooks(&cub);
 	return (0);
 }
