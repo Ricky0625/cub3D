@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:06:53 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 16:28:54 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 16:39:53 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	adjust_fov(t_cub *cub, int key)
 	else if (key == KEY_MINUS && proj_attr->fov > FOV_MIN)
 		new_fov -= FOV_STEP;
 	proj_attr->fov = new_fov;
-	proj_attr->dist_to_proj_plane = (WIN_WIDTH / 2) / tan(deg_to_rad(FOV / 2));
+	proj_attr->dist_to_plane = (WIN_WIDTH / 2) / tan(deg_to_rad(FOV / 2));
 	proj_attr->ray_angle_step = deg_to_rad((double)new_fov / WIN_WIDTH);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:56:10 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 16:39:32 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,7 +242,7 @@ typedef struct s_player
 
 typedef struct s_projection_attr
 {
-	double		dist_to_proj_plane;
+	double		dist_to_plane;
 	double		ray_angle_step;
 	int			fov;
 	int			center_offset;
@@ -335,7 +335,7 @@ double	deg_to_rad(double deg);
 double	rad_to_deg(double rad);
 
 // Render
-void	raycaster(t_cub *cub);
+void	render_world(t_cub *cub);
 
 // Map utils
 void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
