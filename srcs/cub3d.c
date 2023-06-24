@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:32:54 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:39:14 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	init_cub(t_cub *cub)
 	init_player(&cub->player);
 	init_projection_attribute(&cub->proj_attr);
 	init_render_option(&cub->render_opt);
+	cub->mm_scale = (double)MM_TILE_SIZE / GRID_SIZE;
 }
 
 /**

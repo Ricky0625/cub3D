@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 16:49:37 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:43:04 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,19 @@
 # define FILE_EXT ".cub"
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 768
-# define MM_WIDTH 360
-# define MM_HEIGHT 270
-# define MM_SPT_SIZE 15
-# define MM_WALL 0x00B8B8B8
-# define MM_FLOOR 0x002E3357
-# define MM_VOID 0x0025131A
+# define MM_TILE_SIZE 20
+# define MM_COLOR_WALL 0x00d5d6ea
+# define MM_COLOR_FLOOR 0x00f6f6eb
+# define MM_COLOR_VOID 0x0025131A
+# define MM_COLOR_PLAYER 0x0052dee5
+# define MM_COLOR_RAY 0x00bffcc6
 
 // RAYCASTING ENVIRONMENT MACROS
 # define FOV 60 // in degrees
 # define FOV_MIN 10
 # define FOV_MAX 170
 # define CENTER_OFFSET_MAX 50
-# define GRID_SIZE 30
-# define PLAYER_SIZE 10
+# define GRID_SIZE 64
 
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
@@ -264,13 +263,13 @@ typedef struct s_cub
 	void				*mlx;
 	void				*win;
 	t_img				buffer;
-	t_img				minimap;
 	t_texture			textures;
 	t_map				map;
 	t_player			player;
 	t_projection_attr	proj_attr;
 	t_render_option		render_opt;
 	t_ray				rays[WIN_WIDTH];
+	double				mm_scale;
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */
