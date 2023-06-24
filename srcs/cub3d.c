@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:39:14 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:56:18 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	init_cub(t_cub *cub)
 	init_player(&cub->player);
 	init_projection_attribute(&cub->proj_attr);
 	init_render_option(&cub->render_opt);
-	cub->mm_scale = (double)MM_TILE_SIZE / GRID_SIZE;
 }
 
 /**

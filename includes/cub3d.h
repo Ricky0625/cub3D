@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:43:04 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:56:10 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ typedef struct s_projection_attr
 	double		ray_angle_step;
 	int			fov;
 	int			center_offset;
+	double		mm_scale;
 }	t_projection_attr;
 
 typedef struct s_render_option
@@ -269,7 +270,6 @@ typedef struct s_cub
 	t_projection_attr	proj_attr;
 	t_render_option		render_opt;
 	t_ray				rays[WIN_WIDTH];
-	double				mm_scale;
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */

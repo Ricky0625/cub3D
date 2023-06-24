@@ -6,7 +6,7 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 11:58:52 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 13:57:26 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ void	mm_draw_rays(t_cub *cub, t_player *player, double scale)
 void	render_minimap(t_cub *cub)
 {
 	mm_render_background(cub, cub->map.map, cub->map.size);
-	mm_put_player(cub, &cub->player, cub->mm_scale);
-	mm_draw_rays(cub, &cub->player, cub->mm_scale);
+	mm_put_player(cub, &cub->player, cub->proj_attr.mm_scale);
+	mm_draw_rays(cub, &cub->player, cub->proj_attr.mm_scale);
 }
