@@ -6,12 +6,15 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 19:03:08 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 12:52:18 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 10:29:11 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * Draw a pixel with color specified at (x, y).
+*/
 void	draw_pixel(t_cub *cub, int x, int y, int color)
 {
 	int		i;
@@ -24,6 +27,11 @@ void	draw_pixel(t_cub *cub, int x, int y, int color)
 	cub->buffer.data[++i] = color >> 16;
 }
 
+/**
+ * Draw a line on the screen using the Brehensam's algorithm.
+ * Which only uses simple addition and subtraction,
+ * instead of expensive calculations such as multiplication and division.
+*/
 void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color)
 {
 	t_vector	dir;
@@ -52,6 +60,11 @@ void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color)
 	}
 }
 
+/**
+ * With vertices A, B and C, draw line from A to B.
+ * While B gradually transform to C using the brehensam algo, draw lines too.
+ * Kind of like how integration calculates area under curve btw.
+*/
 void	fill_triangle(t_cub *cub, t_vector *vects, int color)
 {
 	t_vector	dir;
@@ -80,12 +93,15 @@ void	fill_triangle(t_cub *cub, t_vector *vects, int color)
 	}
 }
 
+/**
+ * Draw a triangle with color specified.
+ * First draw 3 sides, then fill it if param fill is true.
+*/
 void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill)
 {
-	// Draw the sides of the triangle
 	draw_line(cub, vects[0], vects[1], color);
 	draw_line(cub, vects[0], vects[2], color);
 	draw_line(cub, vects[1], vects[2], color);
-	if (fill) // if fill is true
+	if (fill)
 		fill_triangle(cub, vects, color);
 }

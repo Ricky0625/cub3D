@@ -6,7 +6,7 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 12:52:37 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 11:27:47 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	init_cub(t_cub *cub)
 	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
 	cub->map.info_list = NULL;
 	init_player(&cub->player);
+	cub->mm_scale = (double)MM_TILE_SIZE / GRID_SIZE;
 }
 
 /**

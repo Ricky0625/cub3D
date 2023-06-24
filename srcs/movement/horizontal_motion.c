@@ -6,7 +6,7 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 12:50:12 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 10:50:50 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	move(t_cub *cub, t_vector_d displacement)
 	temp_pos.x = cub->player.unit_pos.x + roundf(displacement.x);
 	temp_pos.y = cub->player.unit_pos.y;
 	if (!is_wall(cub, temp_pos))
-		cub->player.unit_pos.x += displacement.x;
+		cub->player.unit_pos.x += roundf(displacement.x);
 	temp_pos.x = cub->player.unit_pos.x;
-	temp_pos.y = cub->player.unit_pos.y + displacement.y;
+	temp_pos.y = cub->player.unit_pos.y + roundf(displacement.y);
 	if (!is_wall(cub, temp_pos))
-		cub->player.unit_pos.y += displacement.y;
+		cub->player.unit_pos.y += roundf(displacement.y);
 }
 
 void	move_x(t_cub *cub, t_controls key)
@@ -36,18 +36,18 @@ void	move_x(t_cub *cub, t_controls key)
 
 	if (key == KEY_A)
 	{
-		displacement.x = roundf(cub->player.displacement.x * cos(M_PI_2)
-				+ cub->player.displacement.y * sin(M_PI_2));
-		displacement.y = roundf(cub->player.displacement.x * -sin(M_PI_2)
-				+ cub->player.displacement.y * cos(M_PI_2));
+		displacement.x = cub->player.displacement.x * cos(M_PI_2)
+				+ cub->player.displacement.y * sin(M_PI_2);
+		displacement.y = cub->player.displacement.x * -sin(M_PI_2)
+				+ cub->player.displacement.y * cos(M_PI_2);
 		move(cub, displacement);
 	}
 	else if (key == KEY_D)
 	{
-		displacement.x = roundf(cub->player.displacement.x * cos(-M_PI_2)
-				+ cub->player.displacement.y * sin(-M_PI_2));
-		displacement.y = roundf(cub->player.displacement.x * -sin(-M_PI_2)
-				+ cub->player.displacement.y * cos(-M_PI_2));
+		displacement.x = cub->player.displacement.x * cos(-M_PI_2)
+				+ cub->player.displacement.y * sin(-M_PI_2);
+		displacement.y = cub->player.displacement.x * -sin(-M_PI_2)
+				+ cub->player.displacement.y * cos(-M_PI_2);
 		move(cub, displacement);
 	}
 }
