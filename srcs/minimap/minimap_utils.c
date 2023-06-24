@@ -6,13 +6,13 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:11:09 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/24 18:38:25 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 18:54:34 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	mm_adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end)
+static void	adjust_x(t_cub *cub, t_vector *start, t_vector *end)
 {
 	if (start->x < 0)
 	{
@@ -30,6 +30,10 @@ void	mm_adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end)
 			start->x = 0;
 		end->x = cub->map.size.x * MM_TILE_SIZE;
 	}
+}
+
+static void	adjust_y(t_cub *cub, t_vector *start, t_vector *end)
+{
 	if (start->y < 0)
 	{
 		if (end->y + (-start->y) <= cub->map.size.y * MM_TILE_SIZE)
@@ -46,6 +50,16 @@ void	mm_adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end)
 			start->y = 0;
 		end->y = cub->map.size.y * MM_TILE_SIZE;
 	}
+}
+
+/**
+ * If start or end exceeds the minimap, make them back inside,
+ * and the other end will be extended if there is enough map space.
+*/
+void	mm_adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end)
+{
+	adjust_x(cub, start, end);
+	adjust_y(cub, start, end);
 }
 
 void	mm_draw_ray(t_cub *cub, t_vector p1, t_vector p2, int color)

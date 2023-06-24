@@ -6,12 +6,15 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 19:03:08 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 18:27:26 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 18:48:35 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * The algorithm that determines whether should move on x or y direction.
+*/
 void	brehensam_algo(t_vector *p, t_vector delta, t_vector dir, int *error)
 {
 	error[1] = 2 * error[0];
