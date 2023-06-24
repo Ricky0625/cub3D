@@ -6,7 +6,7 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:56:10 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 16:13:52 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define WIN_WIDTH 1280
 # define WIN_HEIGHT 768
 # define MM_TILE_SIZE 20
+# define MM_SIZE 10 // in number of tiles
 # define MM_COLOR_WALL 0x00d5d6ea
 # define MM_COLOR_FLOOR 0x00f6f6eb
 # define MM_COLOR_VOID 0x0025131A
@@ -323,6 +324,9 @@ void	rotate_player(t_cub *cub, t_controls key);
 
 // Minimap
 void	render_minimap(t_cub *cub);
+
+// Minimap Utils
+void	adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end);
 
 // Utils
 int		create_argb(t_cub *cub, unsigned char color[4]);
