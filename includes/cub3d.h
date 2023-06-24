@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 16:39:32 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:27:11 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ typedef struct s_projection_attr
 	double		ray_angle_step;
 	int			fov;
 	int			center_offset;
+	t_vector	center_pos;
 	double		mm_scale;
 }	t_projection_attr;
 
@@ -325,8 +326,8 @@ void	rotate_player(t_cub *cub, t_controls key);
 void	render_minimap(t_cub *cub);
 
 // Utils
-int		create_argb(t_cub *cub, unsigned char color[4]);
-u_char	get_a(int argb, int endian);
+int		create_argb(unsigned char color[4]);
+u_char	get_a(int argb);
 void	print_color(t_cub *cub, unsigned char color[4]);
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
