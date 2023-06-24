@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:05:31 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 16:10:01 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:37:34 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	key_hook(int key, t_cub *cub)
 		adjust_center_offset(cub, key);
 	else if (key == KEY_F || key == KEY_M)
 		change_raycasting_option(cub, key);
-	else if (!cub->render_opt.using_mouse && (key == KEY_LEFT || key == KEY_RIGHT))
+	else if (!cub->render_opt.using_mouse
+		&& (key == KEY_LEFT || key == KEY_RIGHT))
 		rotate_player(cub, key);
 	else if (key == KEY_LSHIFT)
 		cub->render_opt.using_mouse = !cub->render_opt.using_mouse;
