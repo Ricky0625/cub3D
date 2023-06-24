@@ -6,22 +6,11 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 15:51:20 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 13:32:54 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	rendering(t_cub *cub)
-{
-	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
-	store_rays_to_cub(cub);
-	if (cub->render_opt.minimap)
-		render_minimap(cub);
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
-	mlx_destroy_image(cub->mlx, cub->buffer.ref);
-	return (0);
-}
 
 /**
  * @brief Initialize main struct
@@ -61,7 +50,6 @@ int	main(int ac, char **av)
 		exit_cub(NULL, TOO_MANY_MAP);
 	init_cub(&cub);
 	parse_map(&cub, av[1]);
-	mlx_loop_hook(cub.mlx, rendering, &cub);
 	cub3d_hooks(&cub);
 	return (0);
 }

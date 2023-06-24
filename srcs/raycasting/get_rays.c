@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/23 15:32:33 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:16:25 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,17 @@ void	store_rays_to_cub(t_cub *cub)
 	int		i;
 	int		fov;
 	double	cast_angle;
+	t_ray	ray;
 
 	i = -1;
 	fov = cub->proj_attr.fov;
 	cast_angle = cub->player.viewing_angle + deg_to_rad(fov) / 2;
 	while (++i < WIN_WIDTH)
 	{
-		cub->rays[i] = get_ray(cub, cast_angle);
+		ray = get_ray(cub, cast_angle);
+		if (cub->render_opt.fisheye == 0)
+			ray.dist *= cos(cub->player.viewing_angle - cast_angle);
+		cub->rays[i] = ray;
 		cast_angle -= cub->proj_attr.ray_angle_step;
 	}
 }
