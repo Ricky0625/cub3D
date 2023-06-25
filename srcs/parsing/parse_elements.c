@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 17:26:32 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:57:25 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ static void	store_color(t_cub *cub, int *color, char *rgb_str)
 		argb[i + 1] = (unsigned char)value;
 	}
 	*color = create_argb(argb);
-	printf("color: %06x\n", *color);
 	ft_freestrarr(rgb_value);
 }
 

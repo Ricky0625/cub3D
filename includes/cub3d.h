@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 17:27:11 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 18:07:47 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@
 /* ====== MACROS ====== */
 # define FILE_EXT ".cub"
 # define WIN_WIDTH 1280
+// # define WIN_WIDTH 320
 # define WIN_HEIGHT 768
+// # define WIN_HEIGHT 200
 # define MM_TILE_SIZE 20
+# define MM_SIZE 10 // in number of tiles
 # define MM_COLOR_WALL 0x00d5d6ea
 # define MM_COLOR_FLOOR 0x00f6f6eb
 # define MM_COLOR_VOID 0x0025131A
@@ -55,7 +58,7 @@
 
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
-# define MOVE_SPEED 5
+# define MOVE_SPEED 10
 // NOTE: 5 is 5 units in unit coord, not grid coord
 # define TURN_SPEED 0.1
 // NOTE: 0.1 is 0.1 radian
@@ -324,6 +327,9 @@ void	rotate_player(t_cub *cub, t_controls key);
 
 // Minimap
 void	render_minimap(t_cub *cub);
+
+// Minimap Utils
+void	adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end);
 
 // Utils
 int		create_argb(unsigned char color[4]);
