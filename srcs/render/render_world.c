@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:07:32 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 18:11:33 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:18:46 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
  * 
  * Actual slice height / ray distance = slice height / distance to plane
 */
-int		get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
+int	get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
 {
 	int	slice_height;
 
@@ -42,18 +42,19 @@ int		get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
  * 		b. if the slice height is less than the window height, the slice will be filled with ceiling, slice then floor.
 */
 // NOTE: col_index will be the y-axis
+// NOTE: now it's just drawing color lines
 void	draw_slice(t_cub *cub, t_ray *ray, int col_index)
 {
 	int	slice_height;
 
 	slice_height = get_slice_height(ray, &cub->proj_attr);
 	if (slice_height >= WIN_HEIGHT)
-		draw_line(cub, (t_vector){col_index, 0}, (t_vector){col_index, WIN_HEIGHT - 1}, cub->textures.ceil);
+		draw_line(cub, (t_vector){col_index, 0}, (t_vector){col_index, WIN_HEIGHT - 1}, MM_COLOR_VOID);
 	else
-	{
-		// draw_line(cub, (t_vector){col_index, 0}, (t_vector){col_index, (WIN_HEIGHT - slice_height) / 2}, cub->textures.ceil);
-		draw_line(cub, (t_vector){col_index, (WIN_HEIGHT - slice_height) / 2}, (t_vector){col_index, (WIN_HEIGHT - slice_height) / 2 + slice_height}, cub->textures.ceil);
-		// draw_line(cub, (t_vector){col_index, (WIN_HEIGHT - slice_height) / 2 + slice_height}, (t_vector){col_index, WIN_HEIGHT - 1}, cub->textures.floor);
+	{	
+		draw_line(cub, (t_vector){col_index, 0}, (t_vector){col_index, (WIN_HEIGHT - slice_height) / 2}, cub->textures.ceil);
+		draw_line(cub, (t_vector){col_index, (WIN_HEIGHT - slice_height) / 2}, (t_vector){col_index, (WIN_HEIGHT - slice_height) / 2 + slice_height}, MM_COLOR_VOID);
+		draw_line(cub, (t_vector){col_index, (WIN_HEIGHT - slice_height) / 2 + slice_height}, (t_vector){col_index, WIN_HEIGHT - 1}, cub->textures.floor);
 	}
 }
 

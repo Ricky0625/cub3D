@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 18:07:47 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:18:29 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@
 
 /* ====== MACROS ====== */
 # define FILE_EXT ".cub"
-# define WIN_WIDTH 1280
-// # define WIN_WIDTH 320
-# define WIN_HEIGHT 768
-// # define WIN_HEIGHT 200
+// # define WIN_WIDTH 1280
+# define WIN_WIDTH 640
+// # define WIN_HEIGHT 768
+# define WIN_HEIGHT 480
 # define MM_TILE_SIZE 20
 # define MM_SIZE 10 // in number of tiles
 # define MM_COLOR_WALL 0x00d5d6ea
@@ -153,7 +153,8 @@ typedef enum e_iterate_type
 typedef enum e_orientaion
 {
 	HORIZONTAL,
-	VERTICAL
+	VERTICAL,
+	NONE
 }	t_orientation;
 
 /* ====== STRUCTS ====== */
@@ -169,9 +170,10 @@ typedef struct s_vector
 
 typedef struct s_ray
 {
-	t_vector	p_intersection;
-	double		dist;
-	double		angle;
+	t_vector		p_intersection;
+	double			dist;
+	double			angle;
+	t_orientation	orientation;
 }	t_ray;
 
 typedef struct s_vector_d
