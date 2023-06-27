@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rays.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/23 17:16:25 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/27 14:37:46 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 t_vector	check_by_horizontal_intersections(t_cub *cub, double angle)
 {
-	t_vector	displacement;
+	t_vector_d	displacement;
 	t_vector	pos;
-	t_vector	p;
+	t_vector_d	p;
 
 	pos = cub->player.unit_pos;
 	// face down by default
-	displacement.x = -roundf(GRID_SIZE / tan(angle));
+	displacement.x = -(GRID_SIZE / tan(angle));
 	displacement.y = GRID_SIZE;
 	p.y = (pos.y / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
 	if (angle < M_PI) // face up
@@ -29,22 +29,22 @@ t_vector	check_by_horizontal_intersections(t_cub *cub, double angle)
 		p.y = (pos.y / GRID_SIZE) * GRID_SIZE - 1;
 		displacement.y = -GRID_SIZE;
 	}
-	p.x = pos.x + roundf((pos.y - p.y) / tan(angle));
+	p.x = pos.x + (pos.y - p.y) / tan(angle);
 	if (dda(cub, &p, displacement) == 0)
 		return ((t_vector){-42, -42});
-	return (p);
+	return ((t_vector){p.x, p.y});
 }
 
 t_vector	check_by_vertical_intersections(t_cub *cub, double angle)
 {
-	t_vector	displacement;
+	t_vector_d	displacement;
 	t_vector	pos;
-	t_vector	p;
+	t_vector_d	p;
 
 	pos = cub->player.unit_pos;
 	// face right by default
 	displacement.x = GRID_SIZE;
-	displacement.y = -roundf(GRID_SIZE * tan(angle));
+	displacement.y = -(GRID_SIZE * tan(angle));
 	p.x = (pos.x / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
 	if (angle > M_PI_2 && angle < M_PI_2 * 3) // face left
 	{
@@ -52,10 +52,10 @@ t_vector	check_by_vertical_intersections(t_cub *cub, double angle)
 		p.x = (pos.x / GRID_SIZE) * GRID_SIZE - 1;
 		displacement.x = -GRID_SIZE;
 	}
-	p.y = pos.y + roundf((pos.x - p.x) * tan(angle));
+	p.y = pos.y + ((pos.x - p.x) * tan(angle));
 	if (dda(cub, &p, displacement) == 0)
 		return ((t_vector){-42, -42});
-	return (p);
+	return ((t_vector){p.x, p.y});
 }
 
 t_ray	get_ray(t_cub *cub, double angle)
@@ -70,8 +70,8 @@ t_ray	get_ray(t_cub *cub, double angle)
 		angle -= M_PI * 2;
 	by_x = check_by_horizontal_intersections(cub, angle);
 	by_y = check_by_vertical_intersections(cub, angle);
-	dists[0] = get_distance(cub->player.unit_pos, by_x);
-	dists[1] = get_distance(cub->player.unit_pos, by_y);
+	dists[0] = get_distance((t_vector_d){cub->player.unit_pos.x, cub->player.unit_pos.y}, (t_vector_d){by_x.x, by_x.y});
+	dists[1] = get_distance((t_vector_d){cub->player.unit_pos.x, cub->player.unit_pos.y}, (t_vector_d){by_y.x, by_y.y});
 	if (by_y.x == -42 && by_y.y == -42)
 		return ((t_ray){by_x, dists[0], angle});
 	else if (by_x.x == -42 && by_x.y == -42)

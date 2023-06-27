@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 12:04:35 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 14:36:48 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,18 +167,18 @@ typedef struct s_vector
 	int	y;
 }	t_vector;
 
+typedef struct s_vector_d
+{
+	double	x;
+	double	y;
+}	t_vector_d;
+
 typedef struct s_ray
 {
 	t_vector	p_intersection;
 	double		dist;
 	double		angle;
 }	t_ray;
-
-typedef struct s_vector_d
-{
-	double	x;
-	double	y;
-}	t_vector_d;
 
 /**
  * @brief Image and its metadata
@@ -353,13 +353,13 @@ void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill);
 void	brehensam_algo(t_vector *p, t_vector delta, t_vector dir, int *error);
 
 // Math utils
-double	get_distance(t_vector p1, t_vector p2);
+double	get_distance(t_vector_d p1, t_vector_d p2);
 int		int_abs(int num);
 double	deg_to_rad(double deg);
 double	rad_to_deg(double rad);
 
 // Raycasting Utils
 int		is_wall(t_cub *cub, t_vector p);
-int		dda(t_cub *cub, t_vector *p, t_vector displacement);
+int		dda(t_cub *cub, t_vector_d *p, t_vector_d displacement);
 
 #endif

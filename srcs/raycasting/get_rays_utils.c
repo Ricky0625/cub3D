@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:26:20 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/27 11:46:59 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 14:31:14 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,19 @@ int	is_wall(t_cub *cub, t_vector p)
 	return (0);
 }
 
-int	dda(t_cub *cub, t_vector *p, t_vector displacement)
+int	dda(t_cub *cub, t_vector_d *p, t_vector_d displacement)
 {
+	t_vector	temp_p;
+
 	while (1)
 	{
 		if (p->x < 0 || p->x >= cub->map.size.x * GRID_SIZE)
 			return (0);
 		if (p->y < 0 || p->y >= cub->map.size.y * GRID_SIZE)
 			return (0);
-		if (is_wall(cub, *p))
+		temp_p.x = p->x;
+		temp_p.y = p->y;
+		if (is_wall(cub, temp_p))
 			return (1);
 		p->x += displacement.x;
 		p->y += displacement.y;
