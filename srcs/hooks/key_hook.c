@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:05:31 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:37:34 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/27 11:38:37 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	key_hook(int key, t_cub *cub)
 		change_raycasting_option(cub, key);
 	else if (!cub->render_opt.using_mouse
 		&& (key == KEY_LEFT || key == KEY_RIGHT))
-		rotate_player(cub, key);
+		rotate_player(cub, key, TURN_SPEED);
 	else if (key == KEY_LSHIFT)
 		cub->render_opt.using_mouse = !cub->render_opt.using_mouse;
 	else if (key == KEY_R)

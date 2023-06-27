@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 17:53:43 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:02:24 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * 
  * All x and y are offset by their start to make them at the top left corner.
 */
-void	mm_render_background(t_cub *cub, char **map, t_vector start, t_vector end)
+void	mm_put_background(t_cub *cub, char **map, t_vector start, t_vector end)
 {
 	int	x;
 	int	y;
@@ -30,7 +30,8 @@ void	mm_render_background(t_cub *cub, char **map, t_vector start, t_vector end)
 	while (++y < end.y)
 	{
 		x = start.x - 1;
-		while (++x < MM_TILE_SIZE * (int)ft_strlen(map[y / MM_TILE_SIZE]) && x < end.x)
+		while (++x < MM_TILE_SIZE * (int)ft_strlen(map[y / MM_TILE_SIZE])
+			&& x < end.x)
 		{
 			if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == '1')
 				draw_pixel(cub, x - start.x, y - start.y, MM_COLOR_WALL);
@@ -74,9 +75,10 @@ void	mm_put_player(t_cub *cub, t_vector start, double scale)
 }
 
 /**
- * 
+ * Scale the player upos and every single ray.
+ * Use the dedicated mm_draw_ray function to avoid ray exceeding the minimap.
 */
-void	mm_draw_rays(t_cub *cub, t_vector start, double scale)
+void	mm_put_rays(t_cub *cub, t_vector start, double scale)
 {
 	t_vector	scaled_player_upos;
 	t_vector	scaled_ray_p_inter;
@@ -89,23 +91,30 @@ void	mm_draw_rays(t_cub *cub, t_vector start, double scale)
 	{
 		scaled_ray_p_inter.x = cub->rays[i].p_intersection.x * scale - start.x;
 		scaled_ray_p_inter.y = cub->rays[i].p_intersection.y * scale - start.y;
-		draw_line(cub, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_RAY);
+		mm_draw_ray(cub, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_RAY);
 	}
 }
 
+/**
+ * Start and End are for transforming pixels for later use.
+ * The pixels will be all at the top left corner to form a minimap.
+ * Offset is for start and end to get their relative position in the minimap.
+*/
 void	render_minimap(t_cub *cub)
 {
 	t_vector	start;
 	t_vector	end;
 	double		scale;
+	int			offset;
 
 	scale = cub->proj_attr.mm_scale;
-	start.x = (int)roundf(cub->player.unit_pos.x * scale) - MM_SIZE / 2 * MM_TILE_SIZE;
-	start.y = (int)roundf(cub->player.unit_pos.y * scale) - MM_SIZE / 2 * MM_TILE_SIZE;
-	end.x = (int)roundf(cub->player.unit_pos.x * scale) + MM_SIZE / 2 * MM_TILE_SIZE;
-	end.y = (int)roundf(cub->player.unit_pos.y * scale) + MM_SIZE / 2 * MM_TILE_SIZE;
-	adjust_start_and_end(cub, &start, &end);
-	mm_render_background(cub, cub->map.map, start, end);
+	offset = MM_SIZE / 2 * MM_TILE_SIZE;
+	start.x = (int)roundf(cub->player.unit_pos.x * scale) - offset;
+	start.y = (int)roundf(cub->player.unit_pos.y * scale) - offset;
+	end.x = (int)roundf(cub->player.unit_pos.x * scale) + offset;
+	end.y = (int)roundf(cub->player.unit_pos.y * scale) + offset;
+	mm_adjust_start_and_end(cub, &start, &end);
+	mm_put_background(cub, cub->map.map, start, end);
 	mm_put_player(cub, start, cub->proj_attr.mm_scale);
-	mm_draw_rays(cub, start, cub->proj_attr.mm_scale);
+	mm_put_rays(cub, start, cub->proj_attr.mm_scale);
 }

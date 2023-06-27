@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/26 18:18:29 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:25:42 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,13 +325,12 @@ void	reset_raycasting_environment(t_cub *cub);
 
 // Movement
 void	move_player(t_cub *cub, t_controls key);
-void	rotate_player(t_cub *cub, t_controls key);
+void	rotate_player(t_cub *cub, t_controls key, double angle);
 
 // Minimap
 void	render_minimap(t_cub *cub);
-
-// Minimap Utils
-void	adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end);
+void	mm_draw_ray(t_cub *cub, t_vector p1, t_vector p2, int color);
+void	mm_adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end);
 
 // Utils
 int		create_argb(unsigned char color[4]);
@@ -353,6 +352,7 @@ void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
 void	draw_pixel(t_cub *cub, int x, int y, int color);
 void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color);
 void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill);
+void	brehensam_algo(t_vector *p, t_vector delta, t_vector dir, int *error);
 
 // Math utils
 double	get_distance(t_vector p1, t_vector p2);

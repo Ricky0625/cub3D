@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:43:33 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/27 11:39:27 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,15 @@ void	move_player(t_cub *cub, t_controls key)
 /**
  * XDisplacement and YDisplacement should be calculated when angle changed
 */
-void	rotate_player(t_cub *cub, t_controls key)
+void	rotate_player(t_cub *cub, t_controls key, double angle)
 {
 	double	new_angle;
 
 	new_angle = cub->player.viewing_angle;
 	if (key == KEY_LEFT)
-		new_angle += TURN_SPEED;
+		new_angle += angle;
 	else if (key == KEY_RIGHT)
-		new_angle -= TURN_SPEED;
+		new_angle -= angle;
 	if (new_angle < 0)
 		new_angle += 2 * M_PI;
 	else if (new_angle >= 2 * M_PI)

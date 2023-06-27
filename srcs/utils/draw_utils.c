@@ -6,11 +6,29 @@
 /*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 19:03:08 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 10:29:11 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 18:48:35 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+/**
+ * The algorithm that determines whether should move on x or y direction.
+*/
+void	brehensam_algo(t_vector *p, t_vector delta, t_vector dir, int *error)
+{
+	error[1] = 2 * error[0];
+	if (error[1] >= delta.y)
+	{
+		p->x += dir.x;
+		error[0] += delta.y;
+	}
+	else if (error[1] <= delta.x)
+	{
+		p->y += dir.y;
+		error[0] += delta.x;
+	}
+}
 
 /**
  * Draw a pixel with color specified at (x, y).
@@ -46,62 +64,39 @@ void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color)
 	while (p1.x != p2.x || p1.y != p2.y)
 	{
 		draw_pixel(cub, p1.x, p1.y, color);
-		error[1] = 2 * error[0];
-		if (error[1] >= delta.y)
-		{
-			p1.x += dir.x;
-			error[0] += delta.y;
-		}
-		else if (error[1] <= delta.x)
-		{
-			p1.y += dir.y;
-			error[0] += delta.x;
-		}
-	}
-}
-
-/**
- * With vertices A, B and C, draw line from A to B.
- * While B gradually transform to C using the brehensam algo, draw lines too.
- * Kind of like how integration calculates area under curve btw.
-*/
-void	fill_triangle(t_cub *cub, t_vector *vects, int color)
-{
-	t_vector	dir;
-	t_vector	delta;
-	int			error[2];
-
-	delta.x = int_abs(vects[2].x - vects[1].x);
-	delta.y = -int_abs(vects[2].y - vects[1].y);
-	dir.x = -1 + (2 * (vects[2].x >= vects[1].x));
-	dir.y = -1 + (2 * (vects[2].y >= vects[1].y));
-	error[0] = delta.x + delta.y;
-	while (vects[1].x != vects[2].x || vects[1].y != vects[2].y)
-	{
-		draw_line(cub, vects[0], vects[1], color);
-		error[1] = 2 * error[0];
-		if (error[1] >= delta.y)
-		{
-			vects[1].x += dir.x;
-			error[0] += delta.y;
-		}
-		else if (error[1] <= delta.x)
-		{
-			vects[1].y += dir.y;
-			error[0] += delta.x;
-		}
+		brehensam_algo(&p1, delta, dir, error);
 	}
 }
 
 /**
  * Draw a triangle with color specified.
  * First draw 3 sides, then fill it if param fill is true.
+ * 
+ * Filling:
+ * With vertices A, B and C, draw line from A to B.
+ * While B gradually transform to C using the brehensam algo, draw lines too.
+ * Kind of like how integration calculates area under curve btw.
 */
 void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill)
 {
+	t_vector	dir;
+	t_vector	delta;
+	int			error[2];
+
 	draw_line(cub, vects[0], vects[1], color);
 	draw_line(cub, vects[0], vects[2], color);
 	draw_line(cub, vects[1], vects[2], color);
 	if (fill)
-		fill_triangle(cub, vects, color);
+	{
+		delta.x = int_abs(vects[2].x - vects[1].x);
+		delta.y = -int_abs(vects[2].y - vects[1].y);
+		dir.x = -1 + (2 * (vects[2].x >= vects[1].x));
+		dir.y = -1 + (2 * (vects[2].y >= vects[1].y));
+		error[0] = delta.x + delta.y;
+		while (vects[1].x != vects[2].x || vects[1].y != vects[2].y)
+		{
+			draw_line(cub, vects[0], vects[1], color);
+			brehensam_algo(&(vects[1]), delta, dir, error);
+		}
+	}
 }
