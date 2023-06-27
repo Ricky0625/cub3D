@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 17:23:07 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/20 11:55:47 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:57:25 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static void	store_color(t_cub *cub, int *color, char *rgb_str)
 	rgb_value = ft_split(rgb_str, ',');
 	if (ft_strarrsize(rgb_value) != 3)
 		exit_cub(cub, MISSING_RGB_VALUE);
+	argb[0] = 0;
 	i = -1;
-	argb[i + 1] = 100;
 	while (rgb_value[++i] != NULL)
 	{
 		value = ft_atoi(rgb_value[i]);
@@ -58,7 +58,7 @@ static void	store_color(t_cub *cub, int *color, char *rgb_str)
 			exit_cub(cub, RGB_OUT_OF_RANGE);
 		argb[i + 1] = (unsigned char)value;
 	}
-	*color = create_argb(cub, argb);
+	*color = create_argb(argb);
 	ft_freestrarr(rgb_value);
 }
 

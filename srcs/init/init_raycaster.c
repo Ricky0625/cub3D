@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_raycaster.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:19:15 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:56:49 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/24 16:52:17 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@
 */
 void	init_projection_attribute(t_projection_attr *proj_attr)
 {
-	proj_attr->dist_to_proj_plane = (WIN_WIDTH / 2) / tan(deg_to_rad(FOV / 2));
+	proj_attr->dist_to_plane = (WIN_WIDTH / 2) / tan(deg_to_rad(FOV / 2));
 	proj_attr->ray_angle_step = deg_to_rad((double)FOV / WIN_WIDTH);
 	proj_attr->fov = FOV;
 	proj_attr->center_offset = 0;
+	proj_attr->center_pos = (t_vector){WIN_HEIGHT / 2, WIN_WIDTH / 2};
 	proj_attr->mm_scale = (double)MM_TILE_SIZE / GRID_SIZE;
 }
 

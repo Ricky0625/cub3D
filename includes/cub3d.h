@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 11:39:13 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 12:01:57 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@
 /* ====== MACROS ====== */
 # define FILE_EXT ".cub"
 # define WIN_WIDTH 1280
+// # define WIN_WIDTH 320
 # define WIN_HEIGHT 768
+// # define WIN_HEIGHT 200
 # define MM_TILE_SIZE 20
 # define MM_SIZE 10 // in number of tiles
 # define MM_COLOR_WALL 0x00d5d6ea
@@ -243,10 +245,11 @@ typedef struct s_player
 
 typedef struct s_projection_attr
 {
-	double		dist_to_proj_plane;
+	double		dist_to_plane;
 	double		ray_angle_step;
 	int			fov;
 	int			center_offset;
+	t_vector	center_pos;
 	double		mm_scale;
 }	t_projection_attr;
 
@@ -325,13 +328,9 @@ void	rotate_player(t_cub *cub, t_controls key, double angle);
 // Minimap
 void	render_minimap(t_cub *cub);
 
-// Minimap Utils
-void	mm_adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end);
-void	mm_draw_ray(t_cub *cub, t_vector p1, t_vector p2, int color);
-
 // Utils
-int		create_argb(t_cub *cub, unsigned char color[4]);
-u_char	get_a(int argb, int endian);
+int		create_argb(unsigned char color[4]);
+u_char	get_a(int argb);
 void	print_color(t_cub *cub, unsigned char color[4]);
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
@@ -340,7 +339,7 @@ double	deg_to_rad(double deg);
 double	rad_to_deg(double rad);
 
 // Render
-void	raycaster(t_cub *cub);
+void	render_world(t_cub *cub);
 
 // Map utils
 void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);

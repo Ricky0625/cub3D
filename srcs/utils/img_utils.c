@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:56:01 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:58 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:26:54 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	copy_image(t_img *src, t_img *dst, t_vector d_pos)
 			src_pixel = (y * src->line_size) + (x * 4);
 			dst_pixel = ((d_pos.y + y) * dst->line_size) + ((d_pos.x + x) * 4);
 			ft_memcpy(&color, &src->data[src_pixel], sizeof(int));
-			if (get_a(color, src->endian) != 255)
+			if (get_a(color) != 255)
 				ft_memcpy(&dst->data[dst_pixel], &src->data[src_pixel],
 					sizeof(int));
 		}
