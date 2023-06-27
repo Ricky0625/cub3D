@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 14:56:03 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 18:32:42 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ typedef struct s_player
 	t_dir		dir;
 	double		viewing_angle;
 	t_vector	grid_pos;
-	t_vector	unit_pos;
+	t_vector_d	unit_pos;
 	t_vector_d	displacement;
 }	t_player;
 

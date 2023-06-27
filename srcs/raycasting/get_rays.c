@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/27 18:25:18 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 18:34:18 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,18 @@
 t_vector_d	check_by_horizontal_intersections(t_cub *cub, double angle)
 {
 	t_vector_d	displacement;
-	t_vector	pos;
+	t_vector_d	pos;
 	t_vector_d	p;
 
 	pos = cub->player.unit_pos;
 	// face down by default
 	displacement.x = -(GRID_SIZE / tan(angle));
 	displacement.y = GRID_SIZE;
-	p.y = (pos.y / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
-	// printf("%f\n", p.y);
+	p.y = ((int)pos.y / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
 	if (angle < M_PI) // face up
 	{
 		displacement.x = -displacement.x;
-		p.y = (pos.y / GRID_SIZE) * GRID_SIZE - 1;
+		p.y = ((int)pos.y / GRID_SIZE) * GRID_SIZE - 1;
 		displacement.y = -GRID_SIZE;
 	}
 	p.x = pos.x + ((pos.y - p.y) / tan(angle));
@@ -39,18 +38,18 @@ t_vector_d	check_by_horizontal_intersections(t_cub *cub, double angle)
 t_vector_d	check_by_vertical_intersections(t_cub *cub, double angle)
 {
 	t_vector_d	displacement;
-	t_vector	pos;
+	t_vector_d	pos;
 	t_vector_d	p;
 
 	pos = cub->player.unit_pos;
 	// face right by default
 	displacement.x = GRID_SIZE;
 	displacement.y = -(GRID_SIZE * tan(angle));
-	p.x = (pos.x / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
+	p.x = ((int)pos.x / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
 	if (angle > M_PI_2 && angle < M_PI_2 * 3) // face left
 	{
 		displacement.y = -displacement.y;
-		p.x = (pos.x / GRID_SIZE) * GRID_SIZE - 1;
+		p.x = ((int)pos.x / GRID_SIZE) * GRID_SIZE - 1;
 		displacement.x = -GRID_SIZE;
 	}
 	p.y = pos.y + ((pos.x - p.x) * tan(angle));
@@ -71,8 +70,8 @@ t_ray	get_ray(t_cub *cub, double angle)
 		angle -= M_PI * 2;
 	by_x = check_by_horizontal_intersections(cub, angle);
 	by_y = check_by_vertical_intersections(cub, angle);
-	dists[0] = get_distance((t_vector_d){cub->player.unit_pos.x, cub->player.unit_pos.y}, by_x);
-	dists[1] = get_distance((t_vector_d){cub->player.unit_pos.x, cub->player.unit_pos.y}, by_y);
+	dists[0] = get_distance(cub->player.unit_pos, by_x);
+	dists[1] = get_distance(cub->player.unit_pos, by_y);
 	if (by_y.x == -42 && by_y.y == -42)
 		return ((t_ray){by_x, dists[0], angle});
 	else if (by_x.x == -42 && by_x.y == -42)
