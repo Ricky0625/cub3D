@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 18:38:34 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 11:39:13 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,7 +320,7 @@ void	reset_raycasting_environment(t_cub *cub);
 
 // Movement
 void	move_player(t_cub *cub, t_controls key);
-void	rotate_player(t_cub *cub, t_controls key);
+void	rotate_player(t_cub *cub, t_controls key, double angle);
 
 // Minimap
 void	render_minimap(t_cub *cub);
