@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:26:20 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/27 19:07:35 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 19:08:55 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,6 @@ int	is_wall(t_cub *cub, t_vector p)
 			&& map[(p.y - 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
 			return (1);
 	}
-	// if (p.y > 0
-	// 	&& (p.x + 1) / GRID_SIZE < (int)ft_strlen(map[(p.y - 1) / GRID_SIZE]))
-	// 	if (map[(p.y - 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
-	// 		return (1);
-	// if (p.y > 0 && p.x > 0)
-	// 	if (map[(p.y - 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
-	// 		return (1);
 	return (0);
 }
 

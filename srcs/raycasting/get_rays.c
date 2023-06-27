@@ -6,12 +6,18 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/27 18:34:18 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 19:09:48 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * Check if the ray collides with a horizontal wall.
+ * Since every checking of the ray is when it reaches a horizontal boundary,
+ * so the displacement Y of the ray casted is either + or - GRID_SIZE.
+ * displacement X is 
+*/
 t_vector_d	check_by_horizontal_intersections(t_cub *cub, double angle)
 {
 	t_vector_d	displacement;
