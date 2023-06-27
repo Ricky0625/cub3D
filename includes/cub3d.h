@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 12:01:57 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 12:04:35 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,6 +327,8 @@ void	rotate_player(t_cub *cub, t_controls key, double angle);
 
 // Minimap
 void	render_minimap(t_cub *cub);
+void	mm_draw_ray(t_cub *cub, t_vector p1, t_vector p2, int color);
+void	mm_adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end);
 
 // Utils
 int		create_argb(unsigned char color[4]);
