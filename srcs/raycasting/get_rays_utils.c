@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:26:20 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/27 11:46:59 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 18:30:06 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,24 @@ int	is_wall(t_cub *cub, t_vector p)
 		return (0);
 	if (map[p.y / GRID_SIZE][p.x / GRID_SIZE] == '1')
 		return (1);
-	if (map[(p.y + 1) / GRID_SIZE]
-		&& (p.x + 1) / GRID_SIZE < (int)ft_strlen(map[(p.y + 1) / GRID_SIZE]))
-		if (map[(p.y + 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
-			return (1);
-	if (map[(p.y + 1) / GRID_SIZE] && p.x > 0)
-		if (map[(p.y + 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
-			return (1);
-	if (p.y > 0
-		&& (p.x + 1) / GRID_SIZE < (int)ft_strlen(map[(p.y - 1) / GRID_SIZE]))
-		if (map[(p.y - 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
-			return (1);
-	if (p.y > 0 && p.x > 0)
-		if (map[(p.y - 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
-			return (1);
+	// if (map[(p.y + 1) / GRID_SIZE]
+	// 	&& (p.x + 1) / GRID_SIZE < (int)ft_strlen(map[(p.y + 1) / GRID_SIZE]))
+	// 	if (map[(p.y + 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
+	// 		return (1);
+	// if (map[(p.y + 1) / GRID_SIZE] && p.x > 0)
+	// 	if (map[(p.y + 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
+	// 		return (1);
+	// if (p.y > 0
+	// 	&& (p.x + 1) / GRID_SIZE < (int)ft_strlen(map[(p.y - 1) / GRID_SIZE]))
+	// 	if (map[(p.y - 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
+	// 		return (1);
+	// if (p.y > 0 && p.x > 0)
+	// 	if (map[(p.y - 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
+	// 		return (1);
 	return (0);
 }
 
-int	dda(t_cub *cub, t_vector *p, t_vector displacement)
+int	dda(t_cub *cub, t_vector_d *p, t_vector_d displacement)
 {
 	while (1)
 	{
@@ -48,8 +48,9 @@ int	dda(t_cub *cub, t_vector *p, t_vector displacement)
 			return (0);
 		if (p->y < 0 || p->y >= cub->map.size.y * GRID_SIZE)
 			return (0);
-		if (is_wall(cub, *p))
-			return (1);
+		if (is_wall(cub, (t_vector){p->x, p->y}))
+			if (is_wall(cub, (t_vector){ceil(p->x), ceil(p->y)}))
+				return (1);
 		p->x += displacement.x;
 		p->y += displacement.y;
 	}

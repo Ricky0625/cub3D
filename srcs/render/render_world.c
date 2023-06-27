@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:07:32 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/26 18:18:46 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:38:54 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
 {
 	int	slice_height;
 
-	slice_height = ceil((GRID_SIZE / ray->dist) * proj_attr->dist_to_plane);
+	slice_height = (GRID_SIZE / ray->dist) * proj_attr->dist_to_plane;
 	return (slice_height);
 }
 
