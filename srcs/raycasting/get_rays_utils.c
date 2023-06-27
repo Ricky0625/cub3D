@@ -6,12 +6,31 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:26:20 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/27 18:30:06 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 19:07:35 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * First if the point is out of range, return 0.
+ * 
+ * Second if the point is right in a wall, return 1.
+ * 
+ * Third check special case:
+ *     if the point is on a corner, either:
+ *         map[y + 1][x + 1] and map[y - 1][x - 1] are wall, return 1.
+ *         1100
+ *         11↙0     For these 2 situations (The arrow is the ray)
+ *         0↗11
+ *         0011
+ * 
+ *         map[y + 1][x - 1] and map[y - 1][x + 1] are wall, return 1.
+ *         0011
+ *         0↘11     For these 2 situations (The arrow is the ray)
+ *         11↖0
+ *         1100
+*/
 int	is_wall(t_cub *cub, t_vector p)
 {
 	char	**map;
@@ -23,13 +42,17 @@ int	is_wall(t_cub *cub, t_vector p)
 		return (0);
 	if (map[p.y / GRID_SIZE][p.x / GRID_SIZE] == '1')
 		return (1);
-	// if (map[(p.y + 1) / GRID_SIZE]
-	// 	&& (p.x + 1) / GRID_SIZE < (int)ft_strlen(map[(p.y + 1) / GRID_SIZE]))
-	// 	if (map[(p.y + 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
-	// 		return (1);
-	// if (map[(p.y + 1) / GRID_SIZE] && p.x > 0)
-	// 	if (map[(p.y + 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
-	// 		return (1);
+	if (map[(p.y + 1) / GRID_SIZE]
+		&& (p.x + 1) / GRID_SIZE < (int)ft_strlen(map[(p.y + 1) / GRID_SIZE])
+		&& map[(p.y + 1) / GRID_SIZE] && p.x > 0)
+	{
+		if (map[(p.y + 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1'
+			&& map[(p.y - 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
+			return (1);
+		else if (map[(p.y + 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1'
+			&& map[(p.y - 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
+			return (1);
+	}
 	// if (p.y > 0
 	// 	&& (p.x + 1) / GRID_SIZE < (int)ft_strlen(map[(p.y - 1) / GRID_SIZE]))
 	// 	if (map[(p.y - 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
