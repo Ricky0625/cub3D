@@ -6,13 +6,13 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/27 14:37:46 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 15:12:11 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_vector	check_by_horizontal_intersections(t_cub *cub, double angle)
+t_vector_d	check_by_horizontal_intersections(t_cub *cub, double angle)
 {
 	t_vector_d	displacement;
 	t_vector	pos;
@@ -31,11 +31,11 @@ t_vector	check_by_horizontal_intersections(t_cub *cub, double angle)
 	}
 	p.x = pos.x + (pos.y - p.y) / tan(angle);
 	if (dda(cub, &p, displacement) == 0)
-		return ((t_vector){-42, -42});
-	return ((t_vector){p.x, p.y});
+		return ((t_vector_d){-42, -42});
+	return (p);
 }
 
-t_vector	check_by_vertical_intersections(t_cub *cub, double angle)
+t_vector_d	check_by_vertical_intersections(t_cub *cub, double angle)
 {
 	t_vector_d	displacement;
 	t_vector	pos;
@@ -54,14 +54,14 @@ t_vector	check_by_vertical_intersections(t_cub *cub, double angle)
 	}
 	p.y = pos.y + ((pos.x - p.x) * tan(angle));
 	if (dda(cub, &p, displacement) == 0)
-		return ((t_vector){-42, -42});
-	return ((t_vector){p.x, p.y});
+		return ((t_vector_d){-42, -42});
+	return (p);
 }
 
 t_ray	get_ray(t_cub *cub, double angle)
 {
-	t_vector	by_x;
-	t_vector	by_y;
+	t_vector_d	by_x;
+	t_vector_d	by_y;
 	double		dists[2];
 
 	if (angle < 0)

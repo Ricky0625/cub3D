@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 14:36:48 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 14:56:03 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ typedef struct s_vector_d
 
 typedef struct s_ray
 {
-	t_vector	p_intersection;
+	t_vector_d	p_intersection;
 	double		dist;
 	double		angle;
 }	t_ray;

@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 11:39:27 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/06/27 15:00:14 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	move(t_cub *cub, t_vector_d displacement)
 {
 	t_vector	temp_pos;
 
-	temp_pos.x = cub->player.unit_pos.x + roundf(displacement.x);
+	temp_pos.x = cub->player.unit_pos.x + (displacement.x);
 	temp_pos.y = cub->player.unit_pos.y;
 	if (!is_wall(cub, temp_pos))
-		cub->player.unit_pos.x += roundf(displacement.x);
+		cub->player.unit_pos.x += (displacement.x);
 	temp_pos.x = cub->player.unit_pos.x;
-	temp_pos.y = cub->player.unit_pos.y + roundf(displacement.y);
+	temp_pos.y = cub->player.unit_pos.y + (displacement.y);
 	if (!is_wall(cub, temp_pos))
-		cub->player.unit_pos.y += roundf(displacement.y);
+		cub->player.unit_pos.y += (displacement.y);
 }
 
 void	move_x(t_cub *cub, t_controls key)
