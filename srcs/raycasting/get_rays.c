@@ -6,62 +6,62 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/26 18:17:50 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:38:58 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_vector	check_by_horizontal_intersections(t_cub *cub, double angle)
+t_vector_d	check_by_horizontal_intersections(t_cub *cub, double angle)
 {
-	t_vector	displacement;
-	t_vector	pos;
-	t_vector	p;
+	t_vector_d	displacement;
+	t_vector_d	pos;
+	t_vector_d	p;
 
 	pos = cub->player.unit_pos;
 	// face down by default
-	displacement.x = -roundf(GRID_SIZE / tan(angle));
+	displacement.x = -(GRID_SIZE / tan(angle));
 	displacement.y = GRID_SIZE;
-	p.y = (pos.y / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
+	p.y = ((int)pos.y / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
 	if (angle < M_PI) // face up
 	{
 		displacement.x = -displacement.x;
-		p.y = (pos.y / GRID_SIZE) * GRID_SIZE - 1;
+		p.y = ((int)pos.y / GRID_SIZE) * GRID_SIZE - 1;
 		displacement.y = -GRID_SIZE;
 	}
-	p.x = pos.x + roundf((pos.y - p.y) / tan(angle));
+	p.x = pos.x + ((pos.y - p.y) / tan(angle));
 	if (dda(cub, &p, displacement) == 0)
-		return ((t_vector){-42, -42});
+		return ((t_vector_d){-42, -42});
 	return (p);
 }
 
-t_vector	check_by_vertical_intersections(t_cub *cub, double angle)
+t_vector_d	check_by_vertical_intersections(t_cub *cub, double angle)
 {
-	t_vector	displacement;
-	t_vector	pos;
-	t_vector	p;
+	t_vector_d	displacement;
+	t_vector_d	pos;
+	t_vector_d	p;
 
 	pos = cub->player.unit_pos;
 	// face right by default
 	displacement.x = GRID_SIZE;
-	displacement.y = -roundf(GRID_SIZE * tan(angle));
-	p.x = (pos.x / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
+	displacement.y = -(GRID_SIZE * tan(angle));
+	p.x = ((int)pos.x / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
 	if (angle > M_PI_2 && angle < M_PI_2 * 3) // face left
 	{
 		displacement.y = -displacement.y;
-		p.x = (pos.x / GRID_SIZE) * GRID_SIZE - 1;
+		p.x = ((int)pos.x / GRID_SIZE) * GRID_SIZE - 1;
 		displacement.x = -GRID_SIZE;
 	}
-	p.y = pos.y + roundf((pos.x - p.x) * tan(angle));
+	p.y = pos.y + ((pos.x - p.x) * tan(angle));
 	if (dda(cub, &p, displacement) == 0)
-		return ((t_vector){-42, -42});
+		return ((t_vector_d){-42, -42});
 	return (p);
 }
 
 t_ray	get_ray(t_cub *cub, double angle)
 {
-	t_vector	by_x;
-	t_vector	by_y;
+	t_vector_d	by_x;
+	t_vector_d	by_y;
 	double		dists[2];
 
 	if (angle < 0)
