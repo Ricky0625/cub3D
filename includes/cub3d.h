@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 18:42:35 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/28 20:51:01 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@
 
 /* ====== MACROS ====== */
 # define FILE_EXT ".cub"
-// # define WIN_WIDTH 1280
-# define WIN_WIDTH 640
-// # define WIN_HEIGHT 768
-# define WIN_HEIGHT 480
+# define WIN_WIDTH 1280
+// # define WIN_WIDTH 640
+# define WIN_HEIGHT 768
+// # define WIN_HEIGHT 480
 # define MM_TILE_SIZE 20
 # define MM_SIZE 10 // in number of tiles
 # define MM_COLOR_WALL 0x00d5d6ea
@@ -150,12 +150,12 @@ typedef enum e_iterate_type
 	COLUMN
 }	t_iterate_type;
 
-typedef enum e_orientaion
+typedef enum e_ortt
 {
 	HORIZONTAL,
 	VERTICAL,
 	NONE
-}	t_orientation;
+}	t_ortt;
 
 /* ====== STRUCTS ====== */
 
@@ -179,6 +179,7 @@ typedef struct s_ray
 	t_vector_d	p_intersection;
 	double		dist;
 	double		angle;
+	t_ortt		ray_ortt;
 }	t_ray;
 
 /**
@@ -193,6 +194,19 @@ typedef struct s_img
 	int			line_size;
 	int			endian;
 }	t_img;
+
+/**
+ * @brief Helper struct to draw textures
+*/
+typedef struct s_slice
+{
+	double		height;
+	t_vector	tex_pos; // the starting position to copy from the texture
+	t_vector	des_pos; // the destination position to copy to the image
+	int			end_pos_y; // copy until which row of the texture
+	double		tex_step; // to increment the texture pixel position
+	t_img		*texture; // the texture to be copied
+}	t_slice;
 
 /**
  * @brief Store value of RGBA
@@ -344,12 +358,17 @@ double	rad_to_deg(double rad);
 // Render
 void	render_world(t_cub *cub);
 
+// Render utils
+void	get_wall_texture(t_cub *cub, t_ray *ray, t_slice *slice);
+void	get_tex_offset(t_ray *ray, t_slice *slice, int col_index);
+
 // Map utils
 void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
 
 // Draw utils
 void	draw_pixel(t_cub *cub, int x, int y, int color);
 void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color);
+void	draw_slice(t_cub *cub, t_slice *slice);
 void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill);
 void	brehensam_algo(t_vector *p, t_vector delta, t_vector dir, int *error);
 

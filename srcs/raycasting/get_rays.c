@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/27 19:11:01 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:21:41 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ t_ray	get_ray(t_cub *cub, double angle)
 	dists[0] = get_distance(cub->player.unit_pos, by_x);
 	dists[1] = get_distance(cub->player.unit_pos, by_y);
 	if (by_y.x == -42 && by_y.y == -42)
-		return ((t_ray){by_x, dists[0], angle});
+		return ((t_ray){by_x, dists[0], angle, HORIZONTAL});
 	else if (by_x.x == -42 && by_x.y == -42)
-		return ((t_ray){by_y, dists[1], angle});
+		return ((t_ray){by_y, dists[1], angle, VERTICAL});
 	if (dists[0] < dists[1])
-		return ((t_ray){by_x, dists[0], angle});
-	return ((t_ray){by_y, dists[1], angle});
+		return ((t_ray){by_x, dists[0], angle, HORIZONTAL});
+	return ((t_ray){by_y, dists[1], angle, VERTICAL});
 }
 
 void	store_rays_to_cub(t_cub *cub)
