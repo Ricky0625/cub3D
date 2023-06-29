@@ -18,13 +18,20 @@ int	close_cub(t_cub *cub)
 	return (0);
 }
 
-static void	change_key_state(int key, t_cub *cub, int state)
+void	change_key_state(int key, t_cub *cub, int state)
 {
-	if (key == KEY_UP)
-		cub->active_key.up = state;
-	else if (key == KEY_DOWN)
-		cub->active_key.down = state;
-	else if (key == KEY_W)
+	if (!cub->render_opt.using_mouse)
+	{
+		if (key == KEY_UP)
+			cub->active_key.up = state;
+		else if (key == KEY_DOWN)
+			cub->active_key.down = state;
+		else if (key == KEY_LEFT)
+			cub->active_key.left = state;
+		else if (key == KEY_RIGHT)
+			cub->active_key.right = state;
+	}
+	if (key == KEY_W)
 		cub->active_key.w = state;
 	else if (key == KEY_S)
 		cub->active_key.s = state;
@@ -32,13 +39,6 @@ static void	change_key_state(int key, t_cub *cub, int state)
 		cub->active_key.a = state;
 	else if (key == KEY_D)
 		cub->active_key.d = state;
-	if (!cub->render_opt.using_mouse)
-	{
-		if (key == KEY_LEFT)
-			cub->active_key.left = state;
-		else if (key == KEY_RIGHT)
-			cub->active_key.right = state;
-	}
 }
 
 int	key_up_hook(int key, t_cub *cub)

@@ -41,4 +41,6 @@ void	init_render_option(t_render_option *render_opt)
 	render_opt->fisheye = 0;
 	render_opt->minimap = 1;
 	render_opt->using_mouse = 0;
+	render_opt->times_to_rotate_horz = 0;
+	render_opt->mouse_rotate_speed = 0;
 }

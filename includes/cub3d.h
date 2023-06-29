@@ -273,6 +273,8 @@ typedef struct s_render_option
 	int	fisheye;
 	int	minimap;
 	int	using_mouse;
+	double	times_to_rotate_horz;
+	double	mouse_rotate_speed;
 }	t_render_option;
 
 typedef struct s_active_key
@@ -327,6 +329,7 @@ void	cub3d_hooks(t_cub *cub);
 int		key_down_hook(int key, t_cub *cub);
 int		key_up_hook(int key, t_cub *cub);
 int		close_cub(t_cub *cub);
+void	change_key_state(int key, t_cub *cub, int state);
 
 // Img utils
 void	new_image(t_cub *cub, t_img *img, t_vector size);

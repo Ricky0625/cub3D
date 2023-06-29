@@ -91,7 +91,12 @@ void	draw_slice(t_cub *cub, t_slice *slice, int col_index)
 	texture = slice->texture;
 	texture_data = (int *)texture->data;
 	texture_start = 0;
-	while (slice->des_start_y < slice->des_end_y)
+	if (slice->des_start_y < 0)
+	{
+		texture_start = -slice->des_start_y * slice->tex_step;
+		slice->des_start_y = 0;
+	}
+	while (slice->des_start_y < slice->des_end_y && slice->des_start_y < WIN_HEIGHT)
 	{
 		if (slice->des_start_y >= 0 && slice->des_start_y < WIN_HEIGHT)
 		{

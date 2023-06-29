@@ -30,6 +30,14 @@ static void	update_player_state(t_cub *cub)
 		adjust_center_offset(cub, KEY_UP);
 	if (cub->active_key.down)
 		adjust_center_offset(cub, KEY_DOWN);
+	if (cub->render_opt.mouse_rotate_speed)
+	{
+		if (cub->render_opt.mouse_rotate_speed > 0)
+			rotate_player(cub, KEY_RIGHT, cub->render_opt.mouse_rotate_speed);
+		else
+			rotate_player(cub, KEY_LEFT, -cub->render_opt.mouse_rotate_speed);
+		cub->render_opt.mouse_rotate_speed = 0;
+	}
 }
 
 static int	rendering(t_cub *cub)
