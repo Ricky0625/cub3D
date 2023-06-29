@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:42:09 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/28 15:56:16 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:48:35 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,46 @@
 */
 void	get_wall_texture(t_cub *cub, t_ray *ray, t_slice *slice)
 {
-	slice->texture = &cub->textures.no_tex;
-}
-
-void	get_tex_offset(t_ray *ray, t_slice *slice, int col_index)
-{
 	if (ray->ray_ortt == HORIZONTAL)
 	{
-		slice->tex_pos.x = col_index * 4;
-		slice->tex_pos.y = ((int)ray->p_intersection.y % GRID_SIZE) * slice->texture->line_size;
+		if (ray->angle > 0 && ray->angle < M_PI)
+			slice->texture = &cub->textures.no_tex;
+		else
+			slice->texture = &cub->textures.so_tex;
 	}
 	else if (ray->ray_ortt == VERTICAL)
 	{
-		slice->tex_pos.x = ((int)ray->p_intersection.x % slice->texture->size.x) * 4;
-		slice->tex_pos.y = col_index * slice->texture->line_size;
+		if (ray->angle > M_PI_2 && ray->angle < M_PI_2 * 3)
+			slice->texture = &cub->textures.we_tex;
+		else
+			slice->texture = &cub->textures.ea_tex;
+	}
+}
+
+/**
+ * @brief Determine the offset of the texture.
+ * 
+ * @param ray the ray struct (each individual ray)
+ * @param slice the slice struct (each individual slice)
+ * @param col_index the index of the column (y-axis)
+ * 
+ * @details
+ * Based on the orientation of the ray, calculate the texture offset.
+*/
+void	get_tex_offset(t_ray *ray, t_slice *slice)
+{
+	t_img	*tex;
+	double	grid_offset;
+
+	tex = slice->texture;
+	if (ray->ray_ortt == HORIZONTAL)
+	{
+		grid_offset = fmod(ray->p_intersection.x, GRID_SIZE);
+		slice->offset = grid_offset / GRID_SIZE * tex->size.x;
+	}
+	else if (ray->ray_ortt == VERTICAL)
+	{
+		grid_offset = fmod(ray->p_intersection.y, GRID_SIZE);
+		slice->offset = grid_offset / GRID_SIZE * tex->size.y;
 	}
 }

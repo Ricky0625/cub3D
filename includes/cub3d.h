@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/28 20:51:01 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:43:02 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define WIN_HEIGHT 768
 // # define WIN_HEIGHT 480
 # define MM_TILE_SIZE 20
-# define MM_SIZE 10 // in number of tiles
+# define MM_SIZE 10
 # define MM_COLOR_WALL 0x00d5d6ea
 # define MM_COLOR_FLOOR 0x00f6f6eb
 # define MM_COLOR_VOID 0x0025131A
@@ -50,7 +50,7 @@
 # define MM_COLOR_RAY 0x00bffcc6
 
 // RAYCASTING ENVIRONMENT MACROS
-# define FOV 60 // in degrees
+# define FOV 60
 # define FOV_MIN 10
 # define FOV_MAX 170
 # define CENTER_OFFSET_MAX 50
@@ -58,13 +58,13 @@
 
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
-# define MOVE_SPEED 10
+# define MOVE_SPEED 8
 // NOTE: 5 is 5 units in unit coord, not grid coord
-# define TURN_SPEED 0.1
+# define TURN_SPEED 0.05
 // NOTE: 0.1 is 0.1 radian
 # define FOV_STEP 2
 // NOTE: 5 is 5 degrees
-# define CENTER_OFFSET_STEP 5
+# define CENTER_OFFSET_STEP 30
 // NOTE: 5 is 5 units in unit coord, not grid coord
 
 // MAP RELATED MACROS
@@ -104,13 +104,13 @@ typedef enum e_controls
 	KEY_D = 2,
 	KEY_F = 3,
 	KEY_M = 46,
-	KEY_Q = 12,
-	KEY_E = 14,
 	KEY_R = 15,
 	KEY_PLUS = 24,
 	KEY_MINUS = 27,
 	KEY_LSHIFT = 257,
 	KEY_ESC = 53,
+	KEY_UP = 126,
+	KEY_DOWN = 125,
 	KEY_LEFT = 123,
 	KEY_RIGHT = 124
 }	t_controls;
@@ -200,12 +200,12 @@ typedef struct s_img
 */
 typedef struct s_slice
 {
-	double		height;
-	t_vector	tex_pos; // the starting position to copy from the texture
-	t_vector	des_pos; // the destination position to copy to the image
-	int			end_pos_y; // copy until which row of the texture
-	double		tex_step; // to increment the texture pixel position
-	t_img		*texture; // the texture to be copied
+	double	height;
+	t_img	*texture;
+	int		offset;
+	int		des_start_y;
+	int		des_end_y;
+	double	tex_step;
 }	t_slice;
 
 /**
@@ -275,6 +275,20 @@ typedef struct s_render_option
 	int	using_mouse;
 }	t_render_option;
 
+typedef struct s_active_key
+{
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	q;
+	int	e;
+	int	left;
+	int	right;
+	int	up;
+	int	down;
+}	t_active_key;
+
 /**
  * @brief The main struct for Cub3D.
 */
@@ -284,6 +298,7 @@ typedef struct s_cub
 	void				*win;
 	t_img				buffer;
 	t_texture			textures;
+	t_active_key		active_key;
 	t_map				map;
 	t_player			player;
 	t_projection_attr	proj_attr;
@@ -309,14 +324,13 @@ void	store_rays_to_cub(t_cub *cub);
 
 // hook
 void	cub3d_hooks(t_cub *cub);
-int		key_hook(int key, t_cub *cub);
+int		key_down_hook(int key, t_cub *cub);
+int		key_up_hook(int key, t_cub *cub);
 int		close_cub(t_cub *cub);
 
 // Img utils
 void	new_image(t_cub *cub, t_img *img, t_vector size);
 void	xpm_to_image(t_cub *cub, t_img *img, char *xpm);
-void	copy_image(t_img *src, t_img *dst, t_vector dst_pos);
-void	new_rect(t_cub *cub, t_img *img, t_vector size, int color);
 
 // Parse Map
 void	parse_map(t_cub *cub, char *map_name);
@@ -348,6 +362,9 @@ void	mm_adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end);
 // Utils
 int		create_argb(unsigned char color[4]);
 u_char	get_a(int argb);
+u_char	get_r(int argb);
+u_char	get_g(int argb);
+u_char	get_b(int argb);
 void	print_color(t_cub *cub, unsigned char color[4]);
 int		show_error(char *err);
 void	exit_cub(t_cub *cub, char *err);
@@ -360,7 +377,7 @@ void	render_world(t_cub *cub);
 
 // Render utils
 void	get_wall_texture(t_cub *cub, t_ray *ray, t_slice *slice);
-void	get_tex_offset(t_ray *ray, t_slice *slice, int col_index);
+void	get_tex_offset(t_ray *ray, t_slice *slice);
 
 // Map utils
 void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
@@ -368,8 +385,9 @@ void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
 // Draw utils
 void	draw_pixel(t_cub *cub, int x, int y, int color);
 void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color);
-void	draw_slice(t_cub *cub, t_slice *slice);
+void	draw_slice(t_cub *cub, t_slice *slice, int col_index);
 void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill);
+void	draw_vertical_line(t_cub *cub, t_vector start, int len, int color);
 void	brehensam_algo(t_vector *p, t_vector delta, t_vector dir, int *error);
 
 // Math utils

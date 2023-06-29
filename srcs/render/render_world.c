@@ -6,16 +6,30 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:07:32 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/28 21:18:45 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:43:56 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /**
- * Formula:
+ * @brief Get the height of the slice.
  * 
- * Actual slice height / ray distance = slice height / distance to plane
+ * @param ray the ray struct (each individual ray)
+ * @param proj_attr the projection attribute struct
+ * 
+ * @return double the height of the slice
+ * 
+ * @details
+ * Below is the formula of the slice height:
+ * 
+ *  slice height     texture height
+ * -------------- = ----------------
+ *  dist to plane     dist of ray
+ * 
+ * Simplify the formula:
+ * 
+ * slice height = (texture height / dist of ray) / dist to plane
 */
 double	get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
 {
@@ -26,47 +40,36 @@ double	get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
 }
 
 /**
- * Flow for draw slice:
+ * @brief Setup everything that needed to draw the slice.
  * 
- * 1. Get slice height.
- * 2. Need to check the height of the slice.
- * 		a. if the slice height is greater than the window height, the whole column will be filled.
- * 		b. if the slice height is less than the window height, the slice will be filled with ceiling, slice then floor.
-*/
-// NOTE: col_index will be the y-axis
-// NOTE: now it's just drawing color lines
-// void	draw_slice(t_cub *cub, t_slice *slice)
-// {
-// 	if (slice->height >= WIN_HEIGHT)
-// 		printf("slice greater than win height\n");
-// 	else
-// 	{
-// 		draw_line(cub, slice->des_pos, (t_vector){slice->des_pos.x, (WIN_HEIGHT - slice->height) / 2}, cub->textures.ceil);
-// 		draw_line(cub, (t_vector){slice->des_pos.x, (WIN_HEIGHT - slice->height) / 2 + slice->height},
-// 			(t_vector){slice->des_pos.x, WIN_HEIGHT - 1}, cub->textures.floor);
-// 	}
-// }
-
-/**
- * NOTE: use NORTH texture for all now
+ * @param cub the main struct
+ * @param ray the ray struct (each individual ray)
+ * @param col_index the index of the column (y-axis)
  * 
- * Texture mapping flow:
- * 0. Determine the texture to use. [DONE]
- * 1. Determine the texture offset. [DONE]
- * 2. Determine the texture step. [DONE]
- * 4. Perform texture mapping.
+ * @return t_slice the slice struct (each individual slice)
+ * 
+ * @details
+ * 0. Get the height of the slice.
+ * 1. Determine which texture to use for the wall.
+ * 2. Determine the offset of the texture. Offset is basically the starting pixel to
+ *    copy from the texture.
+ * 3. Calculate the starting & ending row where the pixel should copy to.
+ * 4. Calculate the step of the texture. Step is basically the number of pixels to
+ * 	  skip/repeat when copying the texture.
 */
-
 t_slice	setup_slice(t_cub *cub, t_ray *ray, int col_index)
 {
-	t_slice	slice;
+	t_slice		slice;
+	t_vector	center;
+	int			center_offset;
 
-	get_wall_texture(cub, ray, &slice); // assuming all is NORTH texture
-	get_tex_offset(ray, &slice, col_index);
-	slice.end_pos_y = WIN_HEIGHT - 1; // always end at the bottom of the screen (row) [HARD CODED]
-	// y is row, x is col
-	slice.des_pos = (t_vector){col_index, 0}; // always start from row 0, no need to times 4 (ARGB) or line size
+	center = cub->proj_attr.center_pos;
+	center_offset = cub->proj_attr.center_offset;
 	slice.height = get_slice_height(ray, &cub->proj_attr);
+	get_wall_texture(cub, ray, &slice);
+	get_tex_offset(ray, &slice);
+	slice.des_start_y = (center.x - (int)(slice.height / 2)) + center_offset;
+	slice.des_end_y = (int)(slice.des_start_y + slice.height);
 	slice.tex_step = slice.texture->size.y / get_slice_height(ray, &cub->proj_attr);
 	return (slice);
 }
@@ -82,9 +85,10 @@ void	render_world(t_cub *cub)
 	{
 		ray = &cub->rays[col_index];
 		slice = setup_slice(cub, ray, col_index);
-		draw_slice(cub, &slice);
-		exit(0);
+		if (slice.des_start_y > 0)
+			draw_vertical_line(cub, (t_vector){col_index, 0}, slice.des_start_y, cub->textures.ceil);
+		draw_slice(cub, &slice, col_index);
+		if (slice.des_end_y < WIN_HEIGHT)
+			draw_vertical_line(cub, (t_vector){col_index, slice.des_end_y}, WIN_HEIGHT - 1 - slice.des_end_y, cub->textures.floor);
 	}
-	// exit(0);
 }
-		// printf("Orientation: %s\n", ray->ray_ortt == HORIZONTAL ? "HORIZONTAL" : (ray->ray_ortt == VERTICAL ? "VERTICAL" : "NONE"));

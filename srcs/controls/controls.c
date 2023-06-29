@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:06:53 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 16:39:53 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:56:22 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	adjust_center_offset(t_cub *cub, int key)
 	t_projection_attr	*proj_attr;
 
 	proj_attr = &cub->proj_attr;
-	if ((key == KEY_Q && proj_attr->center_offset == CENTER_OFFSET_MAX)
-		|| (key == KEY_E && proj_attr->center_offset == -CENTER_OFFSET_MAX))
+	if ((key == KEY_UP && proj_attr->center_offset >= WIN_HEIGHT / 2)
+		|| (key == KEY_DOWN && proj_attr->center_offset <= -WIN_HEIGHT / 2))
 		return ;
-	if (key == KEY_Q && proj_attr->center_offset < CENTER_OFFSET_MAX)
+	if (key == KEY_UP)
 		proj_attr->center_offset += CENTER_OFFSET_STEP;
-	else if (key == KEY_E && proj_attr->center_offset > -CENTER_OFFSET_MAX)
+	else if (key == KEY_DOWN)
 		proj_attr->center_offset -= CENTER_OFFSET_STEP;
 }
 

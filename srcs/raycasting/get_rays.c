@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 19:11:42 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/28 14:21:41 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:44:14 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ t_vector_d	check_by_horizontal_intersections(t_cub *cub, double angle)
 	t_vector_d	p;
 
 	pos = cub->player.unit_pos;
-	// face down by default
 	displacement.x = -(GRID_SIZE / tan(angle));
 	displacement.y = GRID_SIZE;
 	p.y = ((int)pos.y / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
-	if (angle < M_PI) // face up
+	if (angle < M_PI)
 	{
 		displacement.x = -displacement.x;
 		p.y = ((int)pos.y / GRID_SIZE) * GRID_SIZE - 1;
@@ -48,11 +47,10 @@ t_vector_d	check_by_vertical_intersections(t_cub *cub, double angle)
 	t_vector_d	p;
 
 	pos = cub->player.unit_pos;
-	// face right by default
 	displacement.x = GRID_SIZE;
 	displacement.y = -(GRID_SIZE * tan(angle));
 	p.x = ((int)pos.x / GRID_SIZE) * GRID_SIZE + GRID_SIZE;
-	if (angle > M_PI_2 && angle < M_PI_2 * 3) // face left
+	if (angle > M_PI_2 && angle < M_PI_2 * 3)
 	{
 		displacement.y = -displacement.y;
 		p.x = ((int)pos.x / GRID_SIZE) * GRID_SIZE - 1;
