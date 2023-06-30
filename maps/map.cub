@@ -1,7 +1,7 @@
-NO ./assets/vwall1.xpm
-SO ./assets/vwall1.xpm
-WE ./assets/vwall1.xpm
-EA ./assets/vwall1.xpm
+NO ./assets/mofyduck.xpm
+SO ./assets/duck.xpm
+WE ./assets/final.xpm
+EA ./assets/final.xpm
 F 220,100,0
 C 225,30,0
 

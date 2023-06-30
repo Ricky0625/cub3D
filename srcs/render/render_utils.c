@@ -61,11 +61,15 @@ void	get_tex_offset(t_ray *ray, t_slice *slice)
 	if (ray->ray_ortt == HORIZONTAL)
 	{
 		grid_offset = fmod(ray->p_intersection.x, GRID_SIZE);
+		if (ray->angle > M_PI)
+			grid_offset = GRID_SIZE - grid_offset;
 		slice->offset = grid_offset / GRID_SIZE * tex->size.x;
 	}
 	else if (ray->ray_ortt == VERTICAL)
 	{
 		grid_offset = fmod(ray->p_intersection.y, GRID_SIZE);
+		if (ray->angle > M_PI_2 && ray->angle < M_PI_2 * 3)
+			grid_offset = GRID_SIZE - grid_offset;
 		slice->offset = grid_offset / GRID_SIZE * tex->size.y;
 	}
 }
