@@ -22,11 +22,11 @@ void	move(t_cub *cub, t_vector_d displacement)
 
 	temp_pos.x = cub->player.unit_pos.x + roundf(displacement.x);
 	temp_pos.y = cub->player.unit_pos.y;
-	if (!is_wall(cub, temp_pos))
+	if (!collide(cub, temp_pos))
 		cub->player.unit_pos.x += roundf(displacement.x);
 	temp_pos.x = cub->player.unit_pos.x;
 	temp_pos.y = cub->player.unit_pos.y + roundf(displacement.y);
-	if (!is_wall(cub, temp_pos))
+	if (!collide(cub, temp_pos))
 		cub->player.unit_pos.y += roundf(displacement.y);
 }
 

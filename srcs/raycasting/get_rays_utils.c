@@ -12,6 +12,14 @@
 
 #include "cub3d.h"
 
+static int	is_wall_or_door(char **map, t_vector p)
+{
+	return (
+		map[p.y / GRID_SIZE][p.x / GRID_SIZE] == WALL
+		|| map[p.y / GRID_SIZE][p.x / GRID_SIZE] == DOOR
+	);
+}
+
 /**
  * First if the point is out of range, return 0.
  * 
@@ -31,7 +39,7 @@
  *         11↖0
  *         1100
 */
-int	is_wall(t_cub *cub, t_vector p)
+int	collide(t_cub *cub, t_vector p)
 {
 	char	**map;
 
@@ -39,15 +47,15 @@ int	is_wall(t_cub *cub, t_vector p)
 	if (p.y < 0 || p.x < 0
 		|| !map[p.y / GRID_SIZE])
 		return (0);
-	if (map[p.y / GRID_SIZE][p.x / GRID_SIZE] == '1')
+	if (is_wall_or_door(map, p))
 		return (1);
 	if ((p.y + 1) / GRID_SIZE < cub->map.size.y && p.y > 0 && p.x > 0)
 	{
-		if (map[(p.y + 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1'
-			&& map[(p.y - 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1')
+		if (is_wall_or_door(map, (t_vector){p.x + 1, p.y + 1})
+			&& is_wall_or_door(map, (t_vector){p.x - 1, p.y - 1}))
 			return (1);
-		else if (map[(p.y + 1) / GRID_SIZE][(p.x - 1) / GRID_SIZE] == '1'
-			&& map[(p.y - 1) / GRID_SIZE][(p.x + 1) / GRID_SIZE] == '1')
+		else if (is_wall_or_door(map, (t_vector){p.x - 1, p.y + 1})
+			&& is_wall_or_door(map, (t_vector){p.x + 1, p.y - 1}))
 			return (1);
 	}
 	return (0);
@@ -61,9 +69,9 @@ int	dda(t_cub *cub, t_vector_d *p, t_vector_d displacement)
 			return (0);
 		if (p->y < 0 || p->y >= cub->map.size.y * GRID_SIZE)
 			return (0);
-		if (is_wall(cub, (t_vector){p->x, p->y}))
-			if (is_wall(cub, (t_vector){ceil(p->x), ceil(p->y)}))
-				return (1);
+		if (collide(cub, (t_vector){p->x, p->y})
+			&& collide(cub, (t_vector){ceil(p->x), ceil(p->y)}))
+			return (1);
 		p->x += displacement.x;
 		p->y += displacement.y;
 	}

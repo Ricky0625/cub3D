@@ -49,7 +49,7 @@
 # define MM_COLOR_VOID 0x2225131A
 # define MM_COLOR_PLAYER 0x2252dee5
 # define MM_COLOR_RAY 0x22bffcc6
-# define MM_COLOR_DOOR 0x22f6f6eb
+# define MM_COLOR_DOOR 0x22008080
 
 // RAYCASTING ENVIRONMENT MACROS
 # define FOV 60
@@ -419,7 +419,7 @@ double	deg_to_rad(double deg);
 double	rad_to_deg(double rad);
 
 // Raycasting Utils
-int		is_wall(t_cub *cub, t_vector p);
+int		collide(t_cub *cub, t_vector p);
 int		dda(t_cub *cub, t_vector_d *p, t_vector_d displacement);
 
 #endif

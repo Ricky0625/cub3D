@@ -33,10 +33,12 @@ void	mm_put_background(t_img *minimap, char **map, t_vector start, t_vector end)
 		while (++x < MM_TILE_SIZE * (int)ft_strlen(map[y / MM_TILE_SIZE])
 			&& x < end.x)
 		{
-			if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == '1')
+			if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == WALL)
 				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_WALL);
-			else if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == ' ')
+			else if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == EMPTY)
 				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_VOID);
+			else if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == DOOR)
+				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_DOOR);
 			else
 				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_FLOOR);
 		}
