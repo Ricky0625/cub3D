@@ -145,4 +145,6 @@ void	parse_map(t_cub *cub, char *map_name)
 		exit_cub(cub, MISSING_ELEMENT);
 	read_map(cub, &cub->map, &info_list);
 	check_map(cub);
+
+	printf("doors: %d\n", ft_lstsize(cub->doors));
 }

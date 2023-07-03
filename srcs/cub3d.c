@@ -25,6 +25,7 @@ static void	init_cub(t_cub *cub)
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
 	cub->map.info_list = NULL;
+	cub->doors = NULL;
 	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
 	new_image(cub, &cub->minimap, (t_vector){MM_IMG_SIZE, MM_IMG_SIZE});
 	init_player(&cub->player);

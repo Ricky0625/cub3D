@@ -29,5 +29,7 @@
 # define NOT_SURROUNDED_BY_WALL "Map is not surrounded by wall"
 # define TOO_MANY_PLAYERS "More than one player exists in the map"
 # define NO_PLAYER "No player on the map"
+# define NO_DOOR_TEXTURE "Door texture not found"
+# define MALLOC_FAIL "Malloc failed"
 
 #endif

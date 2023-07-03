@@ -67,19 +67,24 @@ void	*llto2darr_func(void *content)
  * @param x   x coordinate
  * @return 1 if surrounded, 0 if not
  */
-static int	check_surrounded(t_map *map, int y, int x)
+static int	check_surrounded(t_cub *cub, int y, int x)
 {
-	if (y == 0 || x == 0 || y == map->size.y
-		|| x == (int)ft_strlen(map->map[y]))
+	t_map	*map;
+
+	map = &cub->map;
+	if (y == 0 || x == 0 || y == map->size.y - 1
+		|| x == (int)ft_strlen(map->map[y]) - 1)
 		return (0);
-	if (ft_strchr("10NSWE", map->map[y][x + 1]) == NULL)
+	if (ft_strchr("10NSWED", map->map[y][x + 1]) == NULL)
 		return (0);
-	if (ft_strchr("10NSWE", map->map[y][x - 1]) == NULL)
+	if (ft_strchr("10NSWED", map->map[y][x - 1]) == NULL)
 		return (0);
-	if (ft_strchr("10NSWE", map->map[y + 1][x]) == NULL)
+	if (ft_strchr("10NSWED", map->map[y + 1][x]) == NULL)
 		return (0);
-	if (ft_strchr("10NSWE", map->map[y - 1][x]) == NULL)
+	if (ft_strchr("10NSWED", map->map[y - 1][x]) == NULL)
 		return (0);
+	if (map->map[y][x] == DOOR)
+		add_door(cub, y, x);
 	return (1);
 }
 
@@ -107,7 +112,9 @@ void	validate_map(t_cub *cub, int row, int column)
 			exit_cub(cub, TOO_MANY_PLAYERS);
 		set_player_initial_state(cub, row, column);
 	}
-	if ((grid == FLOOR || ft_strchr(PLY_DIR, grid) != NULL)
-		&& check_surrounded(map, row, column) == 0)
+	if (grid == DOOR && cub->textures.door_tex.ref == NULL)
+		exit_cub(cub, NO_DOOR_TEXTURE);
+	if ((grid == FLOOR || ft_strchr(PLY_DIR, grid) != NULL || grid == DOOR)
+		&& check_surrounded(cub, row, column) == 0)
 		exit_cub(cub, NOT_SURROUNDED_BY_WALL);
 }

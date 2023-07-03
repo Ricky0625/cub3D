@@ -49,6 +49,7 @@
 # define MM_COLOR_VOID 0x2225131A
 # define MM_COLOR_PLAYER 0x2252dee5
 # define MM_COLOR_RAY 0x22bffcc6
+# define MM_COLOR_DOOR 0x22f6f6eb
 
 // RAYCASTING ENVIRONMENT MACROS
 # define FOV 60
@@ -69,10 +70,11 @@
 // NOTE: 5 is 5 units in unit coord, not grid coord
 
 // MAP RELATED MACROS
-# define MAP_CHARS "10NSWE "
+# define MAP_CHARS "10NSWED "
 # define WALL '1'
 # define FLOOR '0'
 # define EMPTY ' '
+# define DOOR 'D'
 
 /* ====== ENUMS ====== */
 
@@ -157,6 +159,12 @@ typedef enum e_ortt
 	VERTICAL,
 	NONE
 }	t_ortt;
+
+typedef enum e_door_state
+{
+	OPEN,
+	CLOSED
+}	t_door_state;
 
 /* ====== STRUCTS ====== */
 
@@ -260,6 +268,12 @@ typedef struct s_player
 	t_vector_d	displacement;
 }	t_player;
 
+typedef struct s_door
+{
+	t_vector		grid_pos;
+	t_door_state	state;
+}	t_door;
+
 typedef struct s_projection_attr
 {
 	double		dist_to_plane;
@@ -305,6 +319,7 @@ typedef struct s_cub
 	t_texture			textures;
 	t_active_key		active_key;
 	t_map				map;
+	t_list				*doors;
 	t_player			player;
 	t_projection_attr	proj_attr;
 	t_render_option		render_opt;
@@ -322,6 +337,7 @@ void	init_projection_attribute(t_projection_attr *proj_attr);
 void	init_render_option(t_render_option *render_opt);
 void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
+void	add_door(t_cub *cub, int x, int y);
 
 // Raycasting
 t_ray	get_ray(t_cub *cub, double angle);
