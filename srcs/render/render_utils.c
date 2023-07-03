@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:42:09 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 12:51:20 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 12:53:01 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	get_tex_offset(t_ray *ray, t_slice *slice)
 	else if (ray->ray_ortt == VERTICAL)
 	{
 		grid_offset = fmod(ray->p_intersection.y, GRID_SIZE);
+		if (ray->angle > M_PI_2 && ray->angle < M_PI_2 * 3)
+			grid_offset = GRID_SIZE - grid_offset;
 		slice->offset = grid_offset / GRID_SIZE * tex->size.x;
 	}
 }
