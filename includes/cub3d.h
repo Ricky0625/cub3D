@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 18:06:46 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 20:32:42 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,12 @@
 // # define WIN_HEIGHT 480
 # define MANUAL_WIDTH 200
 # define MANUAL_BG_COLOR 0x331E1E1E
-# define MANUAL_TEXT_COLOR 0x00ffffff
 # define MANUAL_LINE_HEIGHT 20
 # define MANUAL_MAX_LINE_SIZE 50
+# define MANUAL_TEXT_COLOR 0x00ffffff
+# define MANUAL_TITLE_COLOR 0x00288ba8
+# define MANUAL_RED_COLOR 0x00e34234
+# define MANUAL_GREEN_COLOR 0x0086dc3d
 # define MM_IMG_SIZE 200
 # define MM_TILE_SIZE 20
 # define MM_NUM_TILES 10
@@ -407,6 +410,7 @@ void	exit_cub(t_cub *cub, char *err);
 void	validate_map(t_cub *cub, int row, int column);
 double	deg_to_rad(double deg);
 double	rad_to_deg(double rad);
+void	put_manual_string(t_cub *cub, t_vector pos, char *string, int color);
 
 // Render
 void	render_world(t_cub *cub);

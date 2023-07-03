@@ -6,16 +6,16 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 13:48:07 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/07/03 18:17:51 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 20:32:32 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	put_manual_string(t_cub *cub, t_vector pos, char *string)
+void	put_manual_string(t_cub *cub, t_vector pos, char *string, int color)
 {
 	mlx_string_put(cub->mlx, cub->win,
-		pos.x, pos.y, MANUAL_TEXT_COLOR, string);
+		pos.x, pos.y, color, string);
 }
 
 static void	put_coords_values(t_cub *cub, t_vector pos,
@@ -39,7 +39,7 @@ static void	put_coords_values(t_cub *cub, t_vector pos,
 	free(itoa_temp);
 	if (args.suffix)
 		ft_strcpy(temp_output, args.suffix);
-	put_manual_string(cub, pos, output);
+	put_manual_string(cub, pos, output, MANUAL_TEXT_COLOR);
 }
 
 void	put_single_value(t_cub *cub, t_vector pos,
@@ -61,29 +61,45 @@ void	put_single_value(t_cub *cub, t_vector pos,
 	else if (args.arg_type == BOOL)
 	{
 		if (args.arg.value)
-			temp = "true";
+			put_manual_string(cub, (t_vector){pos.x + ft_strlen(output) * 6.5,
+				pos.y}, "true", MANUAL_GREEN_COLOR);
 		else
-			temp = "false";
-		ft_strcpy(temp_output, temp);
-		temp_output += ft_strlen(temp);
+			put_manual_string(cub, (t_vector){pos.x + ft_strlen(output) * 6.5,
+				pos.y}, "false", MANUAL_RED_COLOR);
 	}
-	if (args.suffix)
+	if (args.arg_type == VALUE && args.suffix)
 		ft_strcpy(temp_output, args.suffix);
-	put_manual_string(cub, pos, output);
+	put_manual_string(cub, pos, output, MANUAL_TEXT_COLOR);
 }
 
-static void	put_manual2(t_cub *cub, int manual_start_x, char output[MANUAL_MAX_LINE_SIZE])
+static void	put_manual2(t_cub *cub, int manual_start_x,
+	char output[MANUAL_MAX_LINE_SIZE], t_manual_variable_arg var_arg)
 {
-	t_manual_variable_arg	var_arg;
-
-	var_arg.value = cub->proj_attr.fov;
 	put_single_value(cub, (t_vector){manual_start_x + 20, 160}, output,
-		(t_manual_args){"\tFOV: ", var_arg, "", VALUE});
+		(t_manual_args){"FOV: ", var_arg, "", VALUE});
 	var_arg.value = cub->render_opt.minimap;
 	put_single_value(cub, (t_vector){manual_start_x + 20, 180}, output,
-		(t_manual_args){"\tMinimap On: ", var_arg, "", BOOL});
+		(t_manual_args){"Minimap: ", var_arg, "", BOOL});
 	put_manual_string(cub, (t_vector){manual_start_x + 20, 220},
-		"\t\t/// Controls \\\\\\");
+		"  === Controls ===", MANUAL_TITLE_COLOR);
+	put_manual_string(cub, (t_vector){manual_start_x + 20, 240},
+		"Move: WASD", MANUAL_TEXT_COLOR);
+	put_manual_string(cub, (t_vector){manual_start_x + 20, 260},
+		"Rotate: <- | -> |", MANUAL_TEXT_COLOR);
+	put_manual_string(cub, (t_vector){manual_start_x + 20, 260},
+		"           ^", MANUAL_TEXT_COLOR);
+	put_manual_string(cub, (t_vector){manual_start_x + 20, 263},
+		"                V", MANUAL_TEXT_COLOR);
+	put_manual_string(cub, (t_vector){manual_start_x + 20, 280},
+		"Adjust FOV: +-", MANUAL_TEXT_COLOR);
+	put_manual_string(cub, (t_vector){manual_start_x + 20, 300},
+		"Toggle Minimap: Tab", MANUAL_TEXT_COLOR);
+	put_manual_string(cub, (t_vector){manual_start_x + 20, 320},
+		"Toggle Mouse: Left Shift", MANUAL_TEXT_COLOR);
+	put_manual_string(cub, (t_vector){manual_start_x + 20, 340},
+		"Open/Close door: E", MANUAL_TEXT_COLOR);
+	put_manual_string(cub, (t_vector){manual_start_x + 20, 360},
+		"Reset Render Options: R", MANUAL_TEXT_COLOR);
 }
 
 void	put_manual(t_cub *cub)
@@ -96,20 +112,21 @@ void	put_manual(t_cub *cub)
 	mlx_put_image_to_window(cub->mlx, cub->win,
 		cub->manual.ref, manual_start_x, 0);
 	put_manual_string(cub, (t_vector){manual_start_x + 20, 20},
-		"\t\t/// Player State \\\\\\");
+		"  === Player State ===", MANUAL_TITLE_COLOR);
 	var_arg.coords = cub->player.grid_pos;
 	put_coords_values(cub, (t_vector){manual_start_x + 20, 40}, output,
-		(t_manual_args){"\tGrid Pos: (", var_arg, ")", COORDS});
+		(t_manual_args){"Grid Pos: (", var_arg, ")", COORDS});
 	var_arg.coords = (t_vector){cub->player.unit_pos.x, cub->player.unit_pos.y};
 	put_coords_values(cub, (t_vector){manual_start_x + 20, 60}, output,
-		(t_manual_args){"\tUnit Pos: (", var_arg, ")", COORDS});
+		(t_manual_args){"Unit Pos: (", var_arg, ")", COORDS});
 	var_arg.value = rad_to_deg(cub->player.viewing_angle);
 	put_single_value(cub, (t_vector){manual_start_x + 20, 80}, output,
-		(t_manual_args){"\tAngle: ", var_arg, " deg", VALUE});
+		(t_manual_args){"Angle: ", var_arg, " deg", VALUE});
 	put_manual_string(cub, (t_vector){manual_start_x + 20, 120},
-		"\t\t/// Render Options \\\\\\");
+		" === Render Options ===", MANUAL_TITLE_COLOR);
 	var_arg.value = cub->render_opt.fisheye;
 	put_single_value(cub, (t_vector){manual_start_x + 20, 140}, output,
-		(t_manual_args){"\tFisheye: ", var_arg, "", BOOL});
-	put_manual2(cub, manual_start_x, output);
+		(t_manual_args){"Fisheye: ", var_arg, "", BOOL});
+	var_arg.value = cub->proj_attr.fov;
+	put_manual2(cub, manual_start_x, output, var_arg);
 }

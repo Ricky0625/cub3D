@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:25:50 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 14:57:17 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 20:33:29 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ static int	rendering(t_cub *cub)
 		render_minimap(cub);
 	if (cub->render_opt.manual)
 		put_manual(cub);
+	else
+		put_manual_string(cub, (t_vector){WIN_WIDTH - 180, WIN_HEIGHT - 30},
+			"Press M to Open Manual", 0);
 	return (0);
 }
 

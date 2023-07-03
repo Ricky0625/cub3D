@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:06:53 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 13:46:38 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 20:17:52 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ void	adjust_center_offset(t_cub *cub, int key)
 
 void	reset_raycasting_environment(t_cub *cub)
 {
+	int	old_manual_opt;
+
+	old_manual_opt = cub->render_opt.manual;
 	init_projection_attribute(&cub->proj_attr);
 	init_render_option(&cub->render_opt);
+	cub->render_opt.manual = old_manual_opt;
 }
