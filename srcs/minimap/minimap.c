@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 12:02:24 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 13:13:54 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * 
  * All x and y are offset by their start to make them at the top left corner.
 */
-void	mm_put_background(t_cub *cub, char **map, t_vector start, t_vector end)
+void	mm_put_background(t_img *minimap, char **map, t_vector start, t_vector end)
 {
 	int	x;
 	int	y;
@@ -34,11 +34,11 @@ void	mm_put_background(t_cub *cub, char **map, t_vector start, t_vector end)
 			&& x < end.x)
 		{
 			if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == '1')
-				draw_pixel(cub, x - start.x, y - start.y, MM_COLOR_WALL);
+				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_WALL);
 			else if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == ' ')
-				draw_pixel(cub, x - start.x, y - start.y, MM_COLOR_VOID);
+				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_VOID);
 			else
-				draw_pixel(cub, x - start.x, y - start.y, MM_COLOR_FLOOR);
+				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_FLOOR);
 		}
 	}
 }
@@ -71,7 +71,7 @@ void	mm_put_player(t_cub *cub, t_vector start, double scale)
 			+ cos(cub->player.viewing_angle - M_PI / 1.5) * MM_TILE_SIZE / 3);
 	vertices[2].y = roundf(y
 			+ -sin(cub->player.viewing_angle - M_PI / 1.5) * MM_TILE_SIZE / 3);
-	draw_triangle(cub, vertices, MM_COLOR_PLAYER, 1);
+	draw_triangle(&cub->minimap, vertices, MM_COLOR_PLAYER, 1);
 }
 
 /**
@@ -91,7 +91,7 @@ void	mm_put_rays(t_cub *cub, t_vector start, double scale)
 	{
 		scaled_ray_p_inter.x = cub->rays[i].p_intersection.x * scale - start.x;
 		scaled_ray_p_inter.y = cub->rays[i].p_intersection.y * scale - start.y;
-		mm_draw_ray(cub, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_RAY);
+		mm_draw_ray(&cub->minimap, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_RAY);
 	}
 }
 
@@ -108,13 +108,13 @@ void	render_minimap(t_cub *cub)
 	int			offset;
 
 	scale = cub->proj_attr.mm_scale;
-	offset = MM_SIZE / 2 * MM_TILE_SIZE;
+	offset = MM_NUM_TILES / 2 * MM_TILE_SIZE;
 	start.x = (int)roundf(cub->player.unit_pos.x * scale) - offset;
 	start.y = (int)roundf(cub->player.unit_pos.y * scale) - offset;
 	end.x = (int)roundf(cub->player.unit_pos.x * scale) + offset;
 	end.y = (int)roundf(cub->player.unit_pos.y * scale) + offset;
 	mm_adjust_start_and_end(cub, &start, &end);
-	mm_put_background(cub, cub->map.map, start, end);
+	mm_put_background(&cub->minimap, cub->map.map, start, end);
 	mm_put_player(cub, start, cub->proj_attr.mm_scale);
 	mm_put_rays(cub, start, cub->proj_attr.mm_scale);
 }
