@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 19:03:08 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/29 17:46:41 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/03 12:48:29 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	draw_slice(t_cub *cub, t_slice *slice, int col_index)
 	{
 		if (slice->des_start_y >= 0 && slice->des_start_y < WIN_HEIGHT)
 		{
-			pixel = texture_data[(int)texture_start * (texture->line_size / 4) + slice->offset];
+			pixel = texture_data[(int)texture_start * (texture->line_size / 4) + (int)slice->offset];
 			draw_pixel(cub, col_index, slice->des_start_y, pixel);
 		}
 		slice->des_start_y++;
