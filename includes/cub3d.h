@@ -286,9 +286,9 @@ typedef struct s_projection_attr
 
 typedef struct s_render_option
 {
-	int	fisheye;
-	int	minimap;
-	int	using_mouse;
+	int		fisheye;
+	int		minimap;
+	int		using_mouse;
 	double	times_to_rotate_horz;
 	double	mouse_rotate_speed;
 }	t_render_option;

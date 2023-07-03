@@ -51,26 +51,28 @@ double	get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
  * @details
  * 0. Get the height of the slice.
  * 1. Determine which texture to use for the wall.
- * 2. Determine the offset of the texture. Offset is basically the starting pixel to
- *    copy from the texture.
+ * 2. Determine the offset of the texture. Offset is basically the starting
+ *    pixel to copy from the texture.
  * 3. Calculate the starting & ending row where the pixel should copy to.
- * 4. Calculate the step of the texture. Step is basically the number of pixels to
- * 	  skip/repeat when copying the texture.
+ * 4. Calculate the step of the texture. Step is basically the number of pixels
+ *    to skip/repeat when copying the texture.
 */
 t_slice	setup_slice(t_cub *cub, t_ray *ray, int col_index)
 {
-	t_slice		slice;
-	t_vector	center;
-	int			center_offset;
+	t_slice				slice;
+	t_vector			center;
+	t_projection_attr	*proj_attr;
+	int					center_offset;
 
 	center = cub->proj_attr.center_pos;
 	center_offset = cub->proj_attr.center_offset;
-	slice.height = get_slice_height(ray, &cub->proj_attr);
+	proj_attr = &cub->proj_attr;
+	slice.height = get_slice_height(ray, proj_attr);
 	get_wall_texture(cub, ray, &slice);
 	get_tex_offset(ray, &slice);
 	slice.des_start_y = (center.x - (int)(slice.height / 2)) + center_offset;
 	slice.des_end_y = (int)(slice.des_start_y + slice.height);
-	slice.tex_step = slice.texture->size.y / get_slice_height(ray, &cub->proj_attr);
+	slice.tex_step = slice.texture->size.y / get_slice_height(ray, proj_attr);
 	return (slice);
 }
 

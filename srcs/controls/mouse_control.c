@@ -29,12 +29,21 @@ void	toggle_mouse(t_cub *cub)
 
 int	mouse_hook(int x, int y, t_cub *cub)
 {
+	double	rtt_speed;
+
+	rtt_speed = cub->render_opt.mouse_rotate_speed;
 	if (cub->render_opt.using_mouse)
 	{
 		if (x > WIN_WIDTH / 2)
-			cub->render_opt.mouse_rotate_speed = sqrt((x - WIN_WIDTH / 2) / (M_PI_2 / TURN_SPEED)) / 10;
+		{
+			rtt_speed = sqrt((x - WIN_WIDTH / 2) / (M_PI_2 / TURN_SPEED)) / 10;
+			cub->render_opt.mouse_rotate_speed = rtt_speed;
+		}
 		else if (x < WIN_WIDTH / 2)
-			cub->render_opt.mouse_rotate_speed = -sqrt((WIN_WIDTH / 2 - x) / (M_PI_2 / TURN_SPEED)) / 10;
+		{
+			rtt_speed = -sqrt((WIN_WIDTH / 2 - x) / (M_PI_2 / TURN_SPEED)) / 10;
+			cub->render_opt.mouse_rotate_speed = rtt_speed;
+		}
 		if (y > WIN_HEIGHT / 2)
 			adjust_center_offset(cub, KEY_DOWN);
 		else if (y < WIN_HEIGHT / 2)

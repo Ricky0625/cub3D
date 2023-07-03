@@ -75,7 +75,8 @@ void	mm_draw_ray(t_img *img, t_vector p1, t_vector p2, int color)
 	error[0] = delta.x + delta.y;
 	while (p1.x != p2.x || p1.y != p2.y)
 	{
-		if (p1.x >= MM_NUM_TILES * MM_TILE_SIZE || p1.y >= MM_NUM_TILES * MM_TILE_SIZE)
+		if (p1.x >= MM_NUM_TILES * MM_TILE_SIZE
+			|| p1.y >= MM_NUM_TILES * MM_TILE_SIZE)
 			return ;
 		draw_pixel(img, p1.x, p1.y, color);
 		brehensam_algo(&p1, delta, dir, error);
