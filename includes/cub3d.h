@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 14:19:06 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 18:06:46 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@
 # define WIN_HEIGHT 768
 // # define WIN_HEIGHT 480
 # define MANUAL_WIDTH 200
-# define MANUAL_BG_COLOR 0x332D2D2D
+# define MANUAL_BG_COLOR 0x331E1E1E
+# define MANUAL_TEXT_COLOR 0x00ffffff
+# define MANUAL_LINE_HEIGHT 20
+# define MANUAL_MAX_LINE_SIZE 50
 # define MM_IMG_SIZE 200
 # define MM_TILE_SIZE 20
 # define MM_NUM_TILES 10
@@ -61,7 +64,7 @@
 
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
-# define MOVE_SPEED 8
+# define MOVE_SPEED 6
 // NOTE: 5 is 5 units in unit coord, not grid coord
 # define TURN_SPEED 0.05
 // NOTE: 0.1 is 0.1 radian
@@ -272,6 +275,28 @@ typedef struct s_projection_attr
 	double		mm_scale;
 }	t_projection_attr;
 
+enum e_manual_arg_type
+{
+	COORDS,
+	VALUE,
+	BOOL
+};
+
+typedef union
+{
+	t_vector	coords;
+	int			value;
+}	t_manual_variable_arg;
+
+
+typedef struct
+{
+	char					*prefix;
+	t_manual_variable_arg		arg;
+	char					*suffix;
+	enum e_manual_arg_type	arg_type;
+}	t_manual_args;
+
 typedef struct s_render_option
 {
 	int	fisheye;
@@ -341,6 +366,7 @@ void	change_key_state(int key, t_cub *cub, int state);
 // Img utils
 void	new_image(t_cub *cub, t_img *img, t_vector size);
 void	xpm_to_image(t_cub *cub, t_img *img, char *xpm);
+void	put_color_to_image(t_img *img, int color, int size);
 
 // Parse Map
 void	parse_map(t_cub *cub, char *map_name);

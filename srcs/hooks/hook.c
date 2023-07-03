@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:25:50 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 14:14:54 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 14:57:17 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	rendering(t_cub *cub)
 	mlx_clear_window(cub->mlx, cub->win);
 	store_rays_to_cub(cub);
 	ft_bzero(cub->buffer.data, cub->buffer.size.x * cub->buffer.size.y * 4);
-	ft_memset(cub->minimap.data, MM_COLOR_VOID, MM_IMG_SIZE * MM_IMG_SIZE * 4);
+	put_color_to_image(&cub->minimap, MM_COLOR_VOID, MM_IMG_SIZE * MM_IMG_SIZE);
 	render_world(cub);
 	if (cub->render_opt.minimap)
 		render_minimap(cub);
