@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:19:15 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 13:21:03 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 14:12:26 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@ void	init_render_option(t_render_option *render_opt)
 	render_opt->fisheye = 0;
 	render_opt->minimap = 1;
 	render_opt->using_mouse = 0;
-	render_opt->times_to_rotate_horz = 0;
+	render_opt->manual = 0;
 	render_opt->mouse_rotate_speed = 0;
+}
+
+void	init_images(t_cub *cub)
+{
+	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
+	new_image(cub, &cub->minimap, (t_vector){MM_IMG_SIZE, MM_IMG_SIZE});
+	new_image(cub, &cub->manual, (t_vector){MANUAL_WIDTH, WIN_HEIGHT});
+	ft_memset(cub->manual.data, MANUAL_BG_COLOR, MANUAL_WIDTH * WIN_HEIGHT * 4);
 }

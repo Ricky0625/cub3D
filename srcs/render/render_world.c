@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_world.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:07:32 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/29 18:43:56 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:59:38 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,5 @@ void	render_world(t_cub *cub)
 		if (slice.des_end_y < WIN_HEIGHT)
 			draw_vertical_line(cub, (t_vector){col_index, slice.des_end_y}, WIN_HEIGHT - 1 - slice.des_end_y, cub->textures.floor);
 	}
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
 }

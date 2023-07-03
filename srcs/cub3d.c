@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 13:16:11 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 14:03:25 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static void	init_cub(t_cub *cub)
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
 	cub->map.info_list = NULL;
-	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
-	new_image(cub, &cub->minimap, (t_vector){MM_IMG_SIZE, MM_IMG_SIZE});
+	init_images(cub);
 	init_player(&cub->player);
 	init_projection_attribute(&cub->proj_attr);
 	init_render_option(&cub->render_opt);

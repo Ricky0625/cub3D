@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 13:24:14 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 14:19:06 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 // # define WIN_WIDTH 640
 # define WIN_HEIGHT 768
 // # define WIN_HEIGHT 480
+# define MANUAL_WIDTH 200
+# define MANUAL_BG_COLOR 0x332D2D2D
 # define MM_IMG_SIZE 200
 # define MM_TILE_SIZE 20
 # define MM_NUM_TILES 10
@@ -110,6 +112,7 @@ typedef enum e_controls
 	KEY_MINUS = 27,
 	KEY_LSHIFT = 257,
 	KEY_ESC = 53,
+	KEY_TAB = 48,
 	KEY_UP = 126,
 	KEY_DOWN = 125,
 	KEY_LEFT = 123,
@@ -274,7 +277,7 @@ typedef struct s_render_option
 	int	fisheye;
 	int	minimap;
 	int	using_mouse;
-	double	times_to_rotate_horz;
+	int	manual;
 	double	mouse_rotate_speed;
 }	t_render_option;
 
@@ -301,6 +304,7 @@ typedef struct s_cub
 	void				*win;
 	t_img				buffer;
 	t_img				minimap;
+	t_img				manual;
 	t_texture			textures;
 	t_active_key		active_key;
 	t_map				map;
@@ -321,6 +325,7 @@ void	init_projection_attribute(t_projection_attr *proj_attr);
 void	init_render_option(t_render_option *render_opt);
 void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
+void	init_images(t_cub *cub);
 
 // Raycasting
 t_ray	get_ray(t_cub *cub, double angle);
@@ -379,6 +384,7 @@ double	rad_to_deg(double rad);
 
 // Render
 void	render_world(t_cub *cub);
+void	put_manual(t_cub *cub);
 
 // Render utils
 void	get_wall_texture(t_cub *cub, t_ray *ray, t_slice *slice);
