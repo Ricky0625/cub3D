@@ -18,6 +18,7 @@ void	init_textures(t_texture *texture)
 	texture->so_tex.ref = NULL;
 	texture->we_tex.ref = NULL;
 	texture->ea_tex.ref = NULL;
+	texture->door_tex.ref = NULL;
 	texture->mm_floor.ref = NULL;
 	texture->mm_wall.ref = NULL;
 	texture->ceil_set = 0;

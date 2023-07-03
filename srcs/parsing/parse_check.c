@@ -38,6 +38,7 @@ int	is_map_content(char *str)
  * 
  * @return 1 if all set, 0 if not
 */
+// shouldn't check if a door texture is set here, since it's optional
 int	check_elements_all_set(t_texture *textures)
 {
 	return (
@@ -46,7 +47,7 @@ int	check_elements_all_set(t_texture *textures)
 		&& textures->ea_tex.ref != NULL
 		&& textures->we_tex.ref != NULL
 		&& textures->ceil_set == 1
-		&&textures->floor_set == 1
+		&& textures->floor_set == 1
 	);
 }
 

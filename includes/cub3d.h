@@ -225,6 +225,7 @@ typedef struct s_texture
 	t_img	so_tex;
 	t_img	we_tex;
 	t_img	ea_tex;
+	t_img	door_tex;
 	t_img	mm_wall;
 	t_img	mm_floor;
 	t_img	mm_player;

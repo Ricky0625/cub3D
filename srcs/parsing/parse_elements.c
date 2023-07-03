@@ -83,6 +83,8 @@ void	set_element(t_cub *cub, char **element_set)
 		xpm_to_image(cub, &cub->textures.we_tex, element_set[1]);
 	else if (ft_strcmp(element_set[0], "EA") == 0)
 		xpm_to_image(cub, &cub->textures.ea_tex, element_set[1]);
+	else if (ft_strcmp(element_set[0], "D") == 0)
+		xpm_to_image(cub, &cub->textures.door_tex, element_set[1]);
 	else if (ft_strcmp(element_set[0], "C") == 0)
 	{
 		store_color(cub, &cub->textures.ceil, element_set[1]);
