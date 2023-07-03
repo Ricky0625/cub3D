@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 19:03:08 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 12:48:29 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 13:14:41 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	draw_vertical_line(t_cub *cub, t_vector start, int len, int color)
 	i = 0;
 	while (i < len)
 	{
-		draw_pixel(cub, start.x, start.y + i, color);
+		draw_pixel(&cub->buffer, start.x, start.y + i, color);
 		i++;
 	}
 }
@@ -45,17 +45,17 @@ void	brehensam_algo(t_vector *p, t_vector delta, t_vector dir, int *error)
 /**
  * Draw a pixel with color specified at (x, y).
 */
-void	draw_pixel(t_cub *cub, int x, int y, int color)
+void	draw_pixel(t_img *img, int x, int y, int color)
 {
 	int		i;
 
 	if (x < 0 || y < 0 || x >= WIN_WIDTH || y >= WIN_HEIGHT)
 		return ;
-	i = (x * cub->buffer.bpp / 8) + (y * cub->buffer.line_size);
-	cub->buffer.data[i] = get_b(color);
-	cub->buffer.data[++i] = get_g(color);
-	cub->buffer.data[++i] = get_r(color);
-	cub->buffer.data[++i] = get_a(color);
+	i = (x * img->bpp / 8) + (y * img->line_size);
+	img->data[i] = get_b(color);
+	img->data[++i] = get_g(color);
+	img->data[++i] = get_r(color);
+	img->data[++i] = get_a(color);
 }
 
 /**
@@ -63,7 +63,7 @@ void	draw_pixel(t_cub *cub, int x, int y, int color)
  * Which only uses simple addition and subtraction,
  * instead of expensive calculations such as multiplication and division.
 */
-void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color)
+void	draw_line(t_img *img, t_vector p1, t_vector p2, int color)
 {
 	t_vector	dir;
 	t_vector	delta;
@@ -76,7 +76,7 @@ void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color)
 	error[0] = delta.x + delta.y;
 	while (p1.x != p2.x || p1.y != p2.y)
 	{
-		draw_pixel(cub, p1.x, p1.y, color);
+		draw_pixel(img, p1.x, p1.y, color);
 		brehensam_algo(&p1, delta, dir, error);
 	}
 }
@@ -101,7 +101,7 @@ void	draw_slice(t_cub *cub, t_slice *slice, int col_index)
 		if (slice->des_start_y >= 0 && slice->des_start_y < WIN_HEIGHT)
 		{
 			pixel = texture_data[(int)texture_start * (texture->line_size / 4) + (int)slice->offset];
-			draw_pixel(cub, col_index, slice->des_start_y, pixel);
+			draw_pixel(&cub->buffer, col_index, slice->des_start_y, pixel);
 		}
 		slice->des_start_y++;
 		texture_start += slice->tex_step;
@@ -117,15 +117,15 @@ void	draw_slice(t_cub *cub, t_slice *slice, int col_index)
  * While B gradually transform to C using the brehensam algo, draw lines too.
  * Kind of like how integration calculates area under curve btw.
 */
-void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill)
+void	draw_triangle(t_img *img, t_vector *vects, int color, int fill)
 {
 	t_vector	dir;
 	t_vector	delta;
 	int			error[2];
 
-	draw_line(cub, vects[0], vects[1], color);
-	draw_line(cub, vects[0], vects[2], color);
-	draw_line(cub, vects[1], vects[2], color);
+	draw_line(img, vects[0], vects[1], color);
+	draw_line(img, vects[0], vects[2], color);
+	draw_line(img, vects[1], vects[2], color);
 	if (fill)
 	{
 		delta.x = int_abs(vects[2].x - vects[1].x);
@@ -135,7 +135,7 @@ void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill)
 		error[0] = delta.x + delta.y;
 		while (vects[1].x != vects[2].x || vects[1].y != vects[2].y)
 		{
-			draw_line(cub, vects[0], vects[1], color);
+			draw_line(img, vects[0], vects[1], color);
 			brehensam_algo(&(vects[1]), delta, dir, error);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/29 18:43:02 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:24:14 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@
 // # define WIN_WIDTH 640
 # define WIN_HEIGHT 768
 // # define WIN_HEIGHT 480
+# define MM_IMG_SIZE 200
 # define MM_TILE_SIZE 20
-# define MM_SIZE 10
-# define MM_COLOR_WALL 0x00d5d6ea
-# define MM_COLOR_FLOOR 0x00f6f6eb
-# define MM_COLOR_VOID 0x0025131A
-# define MM_COLOR_PLAYER 0x0052dee5
-# define MM_COLOR_RAY 0x00bffcc6
+# define MM_NUM_TILES 10
+# define MM_COLOR_WALL 0x22d5d6ea
+# define MM_COLOR_FLOOR 0x22f6f6eb
+# define MM_COLOR_VOID 0x2225131A
+# define MM_COLOR_PLAYER 0x2252dee5
+# define MM_COLOR_RAY 0x22bffcc6
 
 // RAYCASTING ENVIRONMENT MACROS
 # define FOV 60
@@ -300,6 +301,7 @@ typedef struct s_cub
 	void				*mlx;
 	void				*win;
 	t_img				buffer;
+	t_img				minimap;
 	t_texture			textures;
 	t_active_key		active_key;
 	t_map				map;
@@ -360,7 +362,7 @@ void	rotate_player(t_cub *cub, t_controls key, double angle);
 
 // Minimap
 void	render_minimap(t_cub *cub);
-void	mm_draw_ray(t_cub *cub, t_vector p1, t_vector p2, int color);
+void	mm_draw_ray(t_img *img, t_vector p1, t_vector p2, int color);
 void	mm_adjust_start_and_end(t_cub *cub, t_vector *start, t_vector *end);
 
 // Utils
@@ -387,10 +389,10 @@ void	get_tex_offset(t_ray *ray, t_slice *slice);
 void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
 
 // Draw utils
-void	draw_pixel(t_cub *cub, int x, int y, int color);
-void	draw_line(t_cub *cub, t_vector p1, t_vector p2, int color);
+void	draw_pixel(t_img *img, int x, int y, int color);
+void	draw_line(t_img *img, t_vector p1, t_vector p2, int color);
 void	draw_slice(t_cub *cub, t_slice *slice, int col_index);
-void	draw_triangle(t_cub *cub, t_vector *vects, int color, int fill);
+void	draw_triangle(t_img *img, t_vector *vects, int color, int fill);
 void	draw_vertical_line(t_cub *cub, t_vector start, int len, int color);
 void	brehensam_algo(t_vector *p, t_vector delta, t_vector dir, int *error);
 

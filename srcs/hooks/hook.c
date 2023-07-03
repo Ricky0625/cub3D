@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:25:50 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/29 18:12:12 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:22:40 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,14 @@ static int	rendering(t_cub *cub)
 	mlx_clear_window(cub->mlx, cub->win);
 	store_rays_to_cub(cub);
 	ft_bzero(cub->buffer.data, cub->buffer.size.x * cub->buffer.size.y * 4);
+	ft_bzero(cub->minimap.data, cub->minimap.size.x * cub->minimap.size.y * 4);
 	render_world(cub);
-	if (cub->render_opt.minimap)
-		render_minimap(cub);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
+	if (cub->render_opt.minimap)
+	{
+		render_minimap(cub);
+		mlx_put_image_to_window(cub->mlx, cub->win, cub->minimap.ref, 0, 0);
+	}
 	return (0);
 }
 
