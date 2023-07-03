@@ -77,7 +77,7 @@ void	mm_put_player(t_cub *cub, t_vector start, double scale)
 }
 
 /**
- * Scale the player upos and every single ray.
+ * Scale the player upos and every single ray. 
  * Use the dedicated mm_draw_ray function to avoid ray exceeding the minimap.
 */
 void	mm_put_rays(t_cub *cub, t_vector start, double scale)

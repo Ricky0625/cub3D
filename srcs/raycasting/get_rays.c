@@ -77,12 +77,12 @@ t_ray	get_ray(t_cub *cub, double angle)
 	dists[0] = get_distance(cub->player.unit_pos, by_x);
 	dists[1] = get_distance(cub->player.unit_pos, by_y);
 	if (by_y.x == -42 && by_y.y == -42)
-		return ((t_ray){by_x, dists[0], angle, HORIZONTAL});
+		return ((t_ray){by_x, dists[0], angle, HORIZONTAL, NULL});
 	else if (by_x.x == -42 && by_x.y == -42)
-		return ((t_ray){by_y, dists[1], angle, VERTICAL});
+		return ((t_ray){by_y, dists[1], angle, VERTICAL, NULL});
 	if (dists[0] < dists[1])
-		return ((t_ray){by_x, dists[0], angle, HORIZONTAL});
-	return ((t_ray){by_y, dists[1], angle, VERTICAL});
+		return ((t_ray){by_x, dists[0], angle, HORIZONTAL, NULL});
+	return ((t_ray){by_y, dists[1], angle, VERTICAL, NULL});
 }
 
 void	store_rays_to_cub(t_cub *cub)
@@ -100,7 +100,15 @@ void	store_rays_to_cub(t_cub *cub)
 		ray = get_ray(cub, cast_angle);
 		if (cub->render_opt.fisheye == 0)
 			ray.dist *= cos(cub->player.viewing_angle - cast_angle);
+		ray.door_info = get_door_info(cub, &ray);
 		cub->rays[i] = ray;
 		cast_angle -= cub->proj_attr.ray_angle_step;
 	}
 }
+
+/**
+ * Ideas for open door:
+ * 1. If the door could be found inside the rays of struct,
+ * 	  and distance is within x, can open.
+ * 2. Press 'E' to open door, and press 'E' again to close door.
+*/

@@ -183,12 +183,19 @@ typedef struct s_vector_d
 	double	y;
 }	t_vector_d;
 
+typedef struct s_door
+{
+	t_vector		grid_pos;
+	t_door_state	state;
+}	t_door;
+
 typedef struct s_ray
 {
 	t_vector_d	p_intersection;
 	double		dist;
 	double		angle;
 	t_ortt		ray_ortt;
+	t_door		*door_info;
 }	t_ray;
 
 /**
@@ -268,12 +275,6 @@ typedef struct s_player
 	t_vector_d	displacement;
 }	t_player;
 
-typedef struct s_door
-{
-	t_vector		grid_pos;
-	t_door_state	state;
-}	t_door;
-
 typedef struct s_projection_attr
 {
 	double		dist_to_plane;
@@ -338,6 +339,7 @@ void	init_render_option(t_render_option *render_opt);
 void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 void	add_door(t_cub *cub, int x, int y);
+t_door	*get_door_info(t_cub *cub, t_ray *ray);
 
 // Raycasting
 t_ray	get_ray(t_cub *cub, double angle);

@@ -26,6 +26,11 @@
 */
 void	get_wall_texture(t_cub *cub, t_ray *ray, t_slice *slice)
 {
+	if (ray->door_info != NULL)
+	{
+		slice->texture = &cub->textures.door_tex;
+		return ;
+	}
 	if (ray->ray_ortt == HORIZONTAL)
 	{
 		if (ray->angle > 0 && ray->angle < M_PI)

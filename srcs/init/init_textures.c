@@ -43,3 +43,29 @@ void	add_door(t_cub *cub, int y, int x)
 	door->state = CLOSED;
 	ft_lstadd_back(&cub->doors, ft_lstnew(door));
 }
+
+t_door	*get_door_info(t_cub *cub, t_ray *ray)
+{
+	char		**map;
+	t_list		*doors;
+	t_door		*door_info;
+	t_vector	p_grid_pos;
+
+	map = cub->map.map;
+	doors = cub->doors;
+	p_grid_pos = (t_vector){
+		(int)ray->p_intersection.x / GRID_SIZE
+		, (int)ray->p_intersection.y / GRID_SIZE
+	};
+	if (map[p_grid_pos.y][p_grid_pos.x] != DOOR)
+		return (NULL);
+	while (doors != NULL)
+	{
+		door_info = (t_door *)doors->content;
+		if (door_info->grid_pos.x == p_grid_pos.y
+			&& door_info->grid_pos.y == p_grid_pos.x)
+			return (door_info);
+		doors = doors->next;
+	}
+	return (NULL);
+}
