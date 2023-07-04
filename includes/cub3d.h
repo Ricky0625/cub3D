@@ -57,6 +57,8 @@
 # define FOV_MAX 170
 # define CENTER_OFFSET_MAX 50
 # define GRID_SIZE 64
+# define DOOR_FOV 10
+# define OPEN_DOOR_DIST 100
 
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
