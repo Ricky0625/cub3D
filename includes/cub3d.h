@@ -117,6 +117,7 @@ typedef enum e_controls
 	KEY_A = 0,
 	KEY_S = 1,
 	KEY_D = 2,
+	KEY_E = 14,
 	KEY_F = 3,
 	KEY_M = 46,
 	KEY_R = 15,
@@ -417,6 +418,7 @@ void	adjust_fov(t_cub *cub, int key);
 void	adjust_center_offset(t_cub *cub, int key);
 void	change_raycasting_option(t_cub *cub, int key);
 void	reset_raycasting_environment(t_cub *cub);
+void	open_door(t_cub *cub);
 
 // Movement
 void	move_player(t_cub *cub, t_controls key);

@@ -58,11 +58,28 @@ static int	rendering(t_cub *cub)
 	return (0);
 }
 
+/**
+ * @brief Listen to mouse click hook
+ * 
+ * @details
+ * Check if it's using mouse to control, if yes, and it's left click, then
+ * open door.
+ * 
+ * @attention button 1 means left click
+*/
+int	mouse_click_hook(int button, int x, int y, t_cub *cub)
+{
+	if (cub->render_opt.using_mouse && button == 1)
+		open_door(cub);
+	return (0);
+}
+
 void	cub3d_hooks(t_cub *cub)
 {
 	mlx_hook(cub->win, 2, 1L << 0, key_down_hook, cub);
 	mlx_hook(cub->win, 3, 1L << 0, key_up_hook, cub);
 	mlx_hook(cub->win, 6, 1L << 6, mouse_hook, cub);
+	mlx_hook(cub->win, 4, 1L << 2, mouse_click_hook, cub);
 	mlx_hook(cub->win, 17, 0L, close_cub, cub);
 	mlx_loop_hook(cub->mlx, rendering, cub);
 	mlx_loop(cub->mlx);

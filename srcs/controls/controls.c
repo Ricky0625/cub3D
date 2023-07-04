@@ -64,3 +64,6 @@ void	reset_raycasting_environment(t_cub *cub)
 	init_render_option(&cub->render_opt);
 	cub->render_opt.manual = old_manual_opt;
 }
+
+void	open_door(t_cub *cub)
+{}
