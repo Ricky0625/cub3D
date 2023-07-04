@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:05:31 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/29 18:13:59 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:46:13 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	key_down_hook(int key, t_cub *cub)
 		close_cub(cub);
 	else if (key == KEY_PLUS || key == KEY_MINUS)
 		adjust_fov(cub, key);
-	else if (key == KEY_F || key == KEY_M)
+	else if (key == KEY_F || key == KEY_TAB || key == KEY_M)
 		change_raycasting_option(cub, key);
 	else if (key == KEY_LSHIFT)
 		toggle_mouse(cub);

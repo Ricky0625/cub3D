@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:25:50 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 13:22:40 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 20:33:29 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,15 @@ static int	rendering(t_cub *cub)
 	mlx_clear_window(cub->mlx, cub->win);
 	store_rays_to_cub(cub);
 	ft_bzero(cub->buffer.data, cub->buffer.size.x * cub->buffer.size.y * 4);
-	ft_bzero(cub->minimap.data, cub->minimap.size.x * cub->minimap.size.y * 4);
+	put_color_to_image(&cub->minimap, MM_COLOR_VOID, MM_IMG_SIZE * MM_IMG_SIZE);
 	render_world(cub);
-	mlx_put_image_to_window(cub->mlx, cub->win, cub->buffer.ref, 0, 0);
 	if (cub->render_opt.minimap)
-	{
 		render_minimap(cub);
-		mlx_put_image_to_window(cub->mlx, cub->win, cub->minimap.ref, 0, 0);
-	}
+	if (cub->render_opt.manual)
+		put_manual(cub);
+	else
+		put_manual_string(cub, (t_vector){WIN_WIDTH - 180, WIN_HEIGHT - 30},
+			"Press M to Open Manual", 0);
 	return (0);
 }
 

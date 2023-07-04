@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   controls.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:06:53 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/29 17:56:22 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/03 20:17:52 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ void	change_raycasting_option(t_cub *cub, int key)
 {
 	if (key == KEY_F)
 		cub->render_opt.fisheye = !cub->render_opt.fisheye;
-	else if (key == KEY_M)
+	else if (key == KEY_TAB)
 		cub->render_opt.minimap = !cub->render_opt.minimap;
+	else if (key == KEY_M)
+		cub->render_opt.manual = !cub->render_opt.manual;
 }
 
 void	adjust_center_offset(t_cub *cub, int key)
@@ -55,6 +57,10 @@ void	adjust_center_offset(t_cub *cub, int key)
 
 void	reset_raycasting_environment(t_cub *cub)
 {
+	int	old_manual_opt;
+
+	old_manual_opt = cub->render_opt.manual;
 	init_projection_attribute(&cub->proj_attr);
 	init_render_option(&cub->render_opt);
+	cub->render_opt.manual = old_manual_opt;
 }
