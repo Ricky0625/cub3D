@@ -69,3 +69,24 @@ t_door	*get_door_info(t_cub *cub, t_ray *ray)
 	}
 	return (NULL);
 }
+
+/**
+ * @attention The vector p should be divided with the GRID_SIZE.
+ * If it's for the minimap, divide it with the MM_TILE_SIZE.
+*/
+int	get_door_state(t_cub *cub, t_vector p_grid_pos)
+{
+	t_list		*doors;
+	t_door		*door_info;
+
+	doors = cub->doors;
+	while (doors != NULL)
+	{
+		door_info = (t_door *)doors->content;
+		if (door_info->grid_pos.x == p_grid_pos.y
+			&& door_info->grid_pos.y == p_grid_pos.x)
+			return (door_info->state);
+		doors = doors->next;
+	}
+	return (UNKWOWN_DOOR_STATE);
+}
