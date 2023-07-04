@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 13:13:54 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 13:59:15 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,5 @@ void	render_minimap(t_cub *cub)
 	mm_put_background(&cub->minimap, cub->map.map, start, end);
 	mm_put_player(cub, start, cub->proj_attr.mm_scale);
 	mm_put_rays(cub, start, cub->proj_attr.mm_scale);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->minimap.ref, 0, 0);
 }

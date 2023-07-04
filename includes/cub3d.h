@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 13:24:14 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 20:32:42 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,14 @@
 // # define WIN_WIDTH 640
 # define WIN_HEIGHT 768
 // # define WIN_HEIGHT 480
+# define MANUAL_WIDTH 200
+# define MANUAL_BG_COLOR 0x331E1E1E
+# define MANUAL_LINE_HEIGHT 20
+# define MANUAL_MAX_LINE_SIZE 50
+# define MANUAL_TEXT_COLOR 0x00ffffff
+# define MANUAL_TITLE_COLOR 0x00288ba8
+# define MANUAL_RED_COLOR 0x00e34234
+# define MANUAL_GREEN_COLOR 0x0086dc3d
 # define MM_IMG_SIZE 200
 # define MM_TILE_SIZE 20
 # define MM_NUM_TILES 10
@@ -60,7 +68,7 @@
 
 // PLAYER RELATED MACROS
 # define PLY_DIR "NSWE"
-# define MOVE_SPEED 8
+# define MOVE_SPEED 6
 // NOTE: 5 is 5 units in unit coord, not grid coord
 # define TURN_SPEED 0.05
 // NOTE: 0.1 is 0.1 radian
@@ -112,6 +120,7 @@ typedef enum e_controls
 	KEY_MINUS = 27,
 	KEY_LSHIFT = 257,
 	KEY_ESC = 53,
+	KEY_TAB = 48,
 	KEY_UP = 126,
 	KEY_DOWN = 125,
 	KEY_LEFT = 123,
@@ -285,12 +294,34 @@ typedef struct s_projection_attr
 	double		mm_scale;
 }	t_projection_attr;
 
+enum e_manual_arg_type
+{
+	COORDS,
+	VALUE,
+	BOOL
+};
+
+typedef union
+{
+	t_vector	coords;
+	int			value;
+}	t_manual_variable_arg;
+
+
+typedef struct
+{
+	char					*prefix;
+	t_manual_variable_arg		arg;
+	char					*suffix;
+	enum e_manual_arg_type	arg_type;
+}	t_manual_args;
+
 typedef struct s_render_option
 {
-	int		fisheye;
-	int		minimap;
-	int		using_mouse;
-	double	times_to_rotate_horz;
+	int	fisheye;
+	int	minimap;
+	int	using_mouse;
+	int	manual;
 	double	mouse_rotate_speed;
 }	t_render_option;
 
@@ -317,6 +348,7 @@ typedef struct s_cub
 	void				*win;
 	t_img				buffer;
 	t_img				minimap;
+	t_img				manual;
 	t_texture			textures;
 	t_active_key		active_key;
 	t_map				map;
@@ -340,6 +372,7 @@ void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 void	add_door(t_cub *cub, int x, int y);
 t_door	*get_door_info(t_cub *cub, t_ray *ray);
+void	init_images(t_cub *cub);
 
 // Raycasting
 t_ray	get_ray(t_cub *cub, double angle);
@@ -355,6 +388,7 @@ void	change_key_state(int key, t_cub *cub, int state);
 // Img utils
 void	new_image(t_cub *cub, t_img *img, t_vector size);
 void	xpm_to_image(t_cub *cub, t_img *img, char *xpm);
+void	put_color_to_image(t_img *img, int color, int size);
 
 // Parse Map
 void	parse_map(t_cub *cub, char *map_name);
@@ -395,9 +429,11 @@ void	exit_cub(t_cub *cub, char *err);
 void	validate_map(t_cub *cub, int row, int column);
 double	deg_to_rad(double deg);
 double	rad_to_deg(double rad);
+void	put_manual_string(t_cub *cub, t_vector pos, char *string, int color);
 
 // Render
 void	render_world(t_cub *cub);
+void	put_manual(t_cub *cub);
 
 // Render utils
 void	get_wall_texture(t_cub *cub, t_ray *ray, t_slice *slice);

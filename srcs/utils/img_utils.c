@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   img_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:56:01 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/29 17:12:31 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:56:01 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,18 @@ void	xpm_to_image(t_cub *cub, t_img *img, char *xpm)
 		return ;
 	img->data = mlx_get_data_addr(img->ref, &img->bpp, &img->line_size,
 			&img->endian);
+}
+
+void	put_color_to_image(t_img *img, int color, int size)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size * img->bpp / 8)
+	{
+		img->data[i] = color;
+		img->data[++i] = color >> 8;
+		img->data[++i] = color >> 16;
+		img->data[++i] = color >> 24;
+	}
 }

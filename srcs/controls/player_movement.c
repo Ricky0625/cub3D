@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 18:19:47 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/03 15:27:29 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	move(t_cub *cub, t_vector_d displacement)
 	temp_pos.y = cub->player.unit_pos.y + roundf(displacement.y);
 	if (!collide(cub, temp_pos))
 		cub->player.unit_pos.y += roundf(displacement.y);
+	cub->player.grid_pos.x = cub->player.unit_pos.x / GRID_SIZE;
+	cub->player.grid_pos.y = cub->player.unit_pos.y / GRID_SIZE;
 }
 
 void	move_x(t_cub *cub, t_controls key)
