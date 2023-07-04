@@ -84,16 +84,23 @@ void	mm_put_rays(t_cub *cub, t_vector start, double scale)
 {
 	t_vector	scaled_player_upos;
 	t_vector	scaled_ray_p_inter;
+	t_vector_d	door_fov;
+	t_ray		ray;
 	int			i;
 
 	scaled_player_upos.x = cub->player.unit_pos.x * scale - start.x;
 	scaled_player_upos.y = cub->player.unit_pos.y * scale - start.y;
+	door_fov = cub->proj_attr.door_fov;
 	i = -1;
 	while (++i < WIN_WIDTH)
 	{
-		scaled_ray_p_inter.x = cub->rays[i].p_intersection.x * scale - start.x;
-		scaled_ray_p_inter.y = cub->rays[i].p_intersection.y * scale - start.y;
-		mm_draw_ray(&cub->minimap, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_RAY);
+		ray = cub->rays[i];
+		scaled_ray_p_inter.x = ray.p_intersection.x * scale - start.x;
+		scaled_ray_p_inter.y = ray.p_intersection.y * scale - start.y;
+		if (ray.angle >= cub->proj_attr.door_fov.x && ray.angle <= cub->proj_attr.door_fov.y)
+			mm_draw_ray(&cub->minimap, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_DOOR);
+		else
+			mm_draw_ray(&cub->minimap, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_RAY);
 	}
 }
 

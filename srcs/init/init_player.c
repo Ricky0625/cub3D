@@ -80,8 +80,8 @@ void	update_door_fov(t_cub *cub)
 	viewing_angle = cub->player.viewing_angle;
 	proj_attr = &cub->proj_attr;
 	proj_attr->door_fov = (t_vector_d) {
-		viewing_angle - DOOR_FOV / 2,
-		viewing_angle + DOOR_FOV / 2
+		viewing_angle - deg_to_rad(DOOR_FOV / 2),
+		viewing_angle + deg_to_rad(DOOR_FOV / 2)
 	};
 }
 
