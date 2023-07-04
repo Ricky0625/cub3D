@@ -12,11 +12,21 @@
 
 #include "cub3d.h"
 
-static int	is_wall_or_door(char **map, t_vector p)
+static int	is_wall_or_door(t_cub *cub, t_vector p)
 {
+	char		**map;
+	char		grid;
+	t_vector	p_grid_pos;
+
+	map = cub->map.map;
+	p_grid_pos = (t_vector) {
+		(int)p.x / GRID_SIZE,
+		(int)p.y / GRID_SIZE
+	};
+	grid = map[p_grid_pos.y][p_grid_pos.x];
 	return (
-		map[p.y / GRID_SIZE][p.x / GRID_SIZE] == WALL
-		|| map[p.y / GRID_SIZE][p.x / GRID_SIZE] == DOOR
+		grid == WALL
+		|| (grid == DOOR && get_door_state(cub, p_grid_pos) == CLOSED)
 	);
 }
 
@@ -47,15 +57,15 @@ int	collide(t_cub *cub, t_vector p)
 	if (p.y < 0 || p.x < 0
 		|| !map[p.y / GRID_SIZE])
 		return (0);
-	if (is_wall_or_door(map, p))
+	if (is_wall_or_door(cub, p))
 		return (1);
 	if ((p.y + 1) / GRID_SIZE < cub->map.size.y && p.y > 0 && p.x > 0)
 	{
-		if (is_wall_or_door(map, (t_vector){p.x + 1, p.y + 1})
-			&& is_wall_or_door(map, (t_vector){p.x - 1, p.y - 1}))
+		if (is_wall_or_door(cub, (t_vector){p.x + 1, p.y + 1})
+			&& is_wall_or_door(cub, (t_vector){p.x - 1, p.y - 1}))
 			return (1);
-		else if (is_wall_or_door(map, (t_vector){p.x - 1, p.y + 1})
-			&& is_wall_or_door(map, (t_vector){p.x + 1, p.y - 1}))
+		else if (is_wall_or_door(cub, (t_vector){p.x - 1, p.y + 1})
+			&& is_wall_or_door(cub, (t_vector){p.x + 1, p.y - 1}))
 			return (1);
 	}
 	return (0);

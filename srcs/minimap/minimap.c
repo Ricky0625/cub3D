@@ -21,24 +21,35 @@
  * 
  * All x and y are offset by their start to make them at the top left corner.
 */
-void	mm_put_background(t_img *minimap, char **map, t_vector start, t_vector end)
+void	mm_put_background(t_cub *cub, t_vector start, t_vector end)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	char	tile;
+	char	**map;
+	t_img	*minimap;
 
 	y = start.y - 1;
+	map = cub->map.map;
+	minimap = &cub->minimap;
 	while (++y < end.y)
 	{
 		x = start.x - 1;
 		while (++x < MM_TILE_SIZE * (int)ft_strlen(map[y / MM_TILE_SIZE])
 			&& x < end.x)
 		{
-			if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == WALL)
+			tile = map[y / MM_TILE_SIZE][x / MM_TILE_SIZE];
+			if (tile == WALL)
 				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_WALL);
-			else if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == EMPTY)
+			else if (tile == EMPTY)
 				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_VOID);
-			else if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == DOOR)
-				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_DOOR);
+			else if (tile == DOOR)
+			{
+				if (get_door_state(cub, (t_vector){x / MM_TILE_SIZE, y / MM_TILE_SIZE}) == CLOSED)
+					draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_CLOSED_DOOR);
+				else
+					draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_DOOR);
+			}
 			else
 				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_FLOOR);
 		}
@@ -123,7 +134,7 @@ void	render_minimap(t_cub *cub)
 	end.x = (int)roundf(cub->player.unit_pos.x * scale) + offset;
 	end.y = (int)roundf(cub->player.unit_pos.y * scale) + offset;
 	mm_adjust_start_and_end(cub, &start, &end);
-	mm_put_background(&cub->minimap, cub->map.map, start, end);
+	mm_put_background(cub, start, end);
 	mm_put_player(cub, start, cub->proj_attr.mm_scale);
 	mm_put_rays(cub, start, cub->proj_attr.mm_scale);
 	mlx_put_image_to_window(cub->mlx, cub->win, cub->minimap.ref, 0, 0);

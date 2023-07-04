@@ -26,7 +26,7 @@
 */
 void	get_wall_texture(t_cub *cub, t_ray *ray, t_slice *slice)
 {
-	if (ray->door_info != NULL)
+	if (ray->door_info != NULL && ray->door_info->state == CLOSED)
 	{
 		slice->texture = &cub->textures.door_tex;
 		return ;

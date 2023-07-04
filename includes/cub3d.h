@@ -58,6 +58,8 @@
 # define MM_COLOR_PLAYER 0x2252dee5
 # define MM_COLOR_RAY 0x22bffcc6
 # define MM_COLOR_DOOR 0x22008080
+# define MM_COLOR_OPEN_DOOR 0xdd008080
+# define MM_COLOR_CLOSED_DOOR 0x22643b9f
 
 // RAYCASTING ENVIRONMENT MACROS
 # define FOV 60
@@ -174,7 +176,10 @@ typedef enum e_ortt
 typedef enum e_door_state
 {
 	OPEN,
-	CLOSED
+	OPENING,
+	CLOSING,
+	CLOSED,
+	UNKWOWN_DOOR_STATE
 }	t_door_state;
 
 /* ====== STRUCTS ====== */
@@ -375,6 +380,7 @@ void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 void	init_images(t_cub *cub);
 t_door	*get_door_info(t_cub *cub, t_ray *ray);
+int		get_door_state(t_cub *cub, t_vector p_grid_pos);
 void	add_door(t_cub *cub, int x, int y);
 void	update_door_fov(t_cub *cub);
 
