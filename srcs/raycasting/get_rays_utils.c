@@ -71,7 +71,7 @@ int	collide(t_cub *cub, t_vector p)
 	return (0);
 }
 
-int	dda(t_cub *cub, t_vector_d *p, t_vector_d displacement)
+int	dda(t_cub *cub, t_vector_d *p, t_vector_d displacement, t_ray *ray)
 {
 	while (1)
 	{
@@ -79,6 +79,11 @@ int	dda(t_cub *cub, t_vector_d *p, t_vector_d displacement)
 			return (0);
 		if (p->y < 0 || p->y >= cub->map.size.y * GRID_SIZE)
 			return (0);
+		if (ray->door_info == NULL && get_door_info(cub, *p) != NULL)
+		{
+			ray->door_info = get_door_info(cub, *p);
+			ray->door_info->dist = get_distance(cub->player.unit_pos, *p);
+		}
 		if (collide(cub, (t_vector){p->x, p->y})
 			&& collide(cub, (t_vector){ceil(p->x), ceil(p->y)}))
 			return (1);

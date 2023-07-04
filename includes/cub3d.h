@@ -176,11 +176,11 @@ typedef enum e_ortt
 
 typedef enum e_door_state
 {
+	UNKWOWN_DOOR_STATE,
 	OPEN,
 	OPENING,
 	CLOSING,
-	CLOSED,
-	UNKWOWN_DOOR_STATE
+	CLOSED
 }	t_door_state;
 
 /* ====== STRUCTS ====== */
@@ -204,6 +204,7 @@ typedef struct s_door
 {
 	t_vector		grid_pos;
 	t_door_state	state;
+	double			dist;
 }	t_door;
 
 typedef struct s_ray
@@ -380,13 +381,12 @@ void	init_render_option(t_render_option *render_opt);
 void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
 void	init_images(t_cub *cub);
-t_door	*get_door_info(t_cub *cub, t_ray *ray);
+t_door	*get_door_info(t_cub *cub, t_vector_d p_intersection);
 int		get_door_state(t_cub *cub, t_vector p_grid_pos);
 void	add_door(t_cub *cub, int x, int y);
 void	update_door_fov(t_cub *cub);
 
 // Raycasting
-t_ray	get_ray(t_cub *cub, double angle);
 void	store_rays_to_cub(t_cub *cub);
 
 // hook
@@ -418,7 +418,7 @@ void	adjust_fov(t_cub *cub, int key);
 void	adjust_center_offset(t_cub *cub, int key);
 void	change_raycasting_option(t_cub *cub, int key);
 void	reset_raycasting_environment(t_cub *cub);
-void	open_door(t_cub *cub);
+void	toggle_door(t_cub *cub);
 
 // Movement
 void	move_player(t_cub *cub, t_controls key);
@@ -470,6 +470,6 @@ double	rad_to_deg(double rad);
 
 // Raycasting Utils
 int		collide(t_cub *cub, t_vector p);
-int		dda(t_cub *cub, t_vector_d *p, t_vector_d displacement);
+int		dda(t_cub *cub, t_vector_d *p, t_vector_d displacement, t_ray *ray);
 
 #endif

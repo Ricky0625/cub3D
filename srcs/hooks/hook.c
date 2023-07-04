@@ -70,7 +70,7 @@ static int	rendering(t_cub *cub)
 int	mouse_click_hook(int button, int x, int y, t_cub *cub)
 {
 	if (cub->render_opt.using_mouse && button == 1)
-		open_door(cub);
+		toggle_door(cub);
 	return (0);
 }
 

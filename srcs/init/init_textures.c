@@ -54,7 +54,7 @@ void	add_door(t_cub *cub, int y, int x)
  * Iterate through the doors list, find one that matches
  * the grid position. If not found, return a NULL pointer.
 */
-t_door	*get_door_info(t_cub *cub, t_ray *ray)
+t_door	*get_door_info(t_cub *cub, t_vector_d p_intersection)
 {
 	char		**map;
 	t_list		*doors;
@@ -64,8 +64,8 @@ t_door	*get_door_info(t_cub *cub, t_ray *ray)
 	map = cub->map.map;
 	doors = cub->doors;
 	p_grid_pos = (t_vector){
-		(int)ray->p_intersection.x / GRID_SIZE
-		, (int)ray->p_intersection.y / GRID_SIZE
+		(int)p_intersection.x / GRID_SIZE
+		, (int)p_intersection.y / GRID_SIZE
 	};
 	if (map[p_grid_pos.y][p_grid_pos.x] != DOOR)
 		return (NULL);
