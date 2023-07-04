@@ -294,6 +294,7 @@ typedef struct s_projection_attr
 	int			center_offset;
 	t_vector	center_pos;
 	double		mm_scale;
+	t_vector_d	door_fov;
 }	t_projection_attr;
 
 enum e_manual_arg_type
@@ -372,9 +373,10 @@ void	init_projection_attribute(t_projection_attr *proj_attr);
 void	init_render_option(t_render_option *render_opt);
 void	init_player(t_player *player);
 void	set_player_initial_state(t_cub *cub, int row, int column);
-void	add_door(t_cub *cub, int x, int y);
-t_door	*get_door_info(t_cub *cub, t_ray *ray);
 void	init_images(t_cub *cub);
+t_door	*get_door_info(t_cub *cub, t_ray *ray);
+void	add_door(t_cub *cub, int x, int y);
+void	update_door_fov(t_cub *cub);
 
 // Raycasting
 t_ray	get_ray(t_cub *cub, double angle);

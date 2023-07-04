@@ -110,4 +110,5 @@ void	rotate_player(t_cub *cub, t_controls key, double angle)
 	cub->player.displacement.x = cos(new_angle) * MOVE_SPEED;
 	cub->player.displacement.y = -sin(new_angle) * MOVE_SPEED;
 	cub->player.viewing_angle = new_angle;
+	update_door_fov(cub);
 }

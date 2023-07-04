@@ -61,6 +61,31 @@ static void	set_player_viewing_angle(t_cub *cub)
 }
 
 /**
+ * @brief Update door fov.
+ * 
+ * @details
+ * Door fov is the angle use player's viewing angle as center,
+ * and minus/plus half of the door fov. If the door is in the fov,
+ * meaning that the user can open the door.
+ * 
+ * @attention
+ * door_fov.x is the left side of the fov
+ * door_fov.y is the right side of the fov
+*/
+void	update_door_fov(t_cub *cub)
+{
+	double				viewing_angle;
+	t_projection_attr	*proj_attr;
+
+	viewing_angle = cub->player.viewing_angle;
+	proj_attr = &cub->proj_attr;
+	proj_attr->door_fov = (t_vector_d) {
+		viewing_angle - DOOR_FOV / 2,
+		viewing_angle + DOOR_FOV / 2
+	};
+}
+
+/**
  * @brief Set player's initial state when we found a player in the map
 */
 void	set_player_initial_state(t_cub *cub, int row, int column)
@@ -77,4 +102,5 @@ void	set_player_initial_state(t_cub *cub, int row, int column)
 	unit_pos.y = row * GRID_SIZE + GRID_SIZE / 2;
 	player->unit_pos = unit_pos;
 	set_player_viewing_angle(cub);
+	update_door_fov(cub);
 }

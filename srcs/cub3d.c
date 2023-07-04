@@ -55,15 +55,3 @@ int	main(int ac, char **av)
 	cub3d_hooks(&cub);
 	return (0);
 }
-
-/**
- * Projection attributes
- * 
- * 1. Player [DONE]
- * 		- height (assume it's wall height / 2) [DONE]
- * 		- FOV (assume it's 60 degree first) [DONE]
- * 		- position [DONE]
- * 2. Projection plane's dimension []
- * 		* this is basically the window size
- * 3. Relationship between player and projection plane []
-*/
