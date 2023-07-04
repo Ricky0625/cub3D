@@ -72,19 +72,13 @@ void	toggle_door(t_cub *cub)
 	t_door	*door_info;
 	t_door	*target_door;
 
-	// check if within the door fov, is there a door?
-	// if yes, check if the distance is less than the open door distance
-	// if yes, check the state of the door
-	// if it's closed, open it
-	// if it's opened, close it
-	// if door is NULL, do nothing
 	i = -1;
 	target_door = NULL;
 	while (++i < WIN_WIDTH)
 	{
 		ray = &cub->rays[i];
 		if (ray->angle >= cub->proj_attr.door_fov.x && ray->angle <= cub->proj_attr.door_fov.y
-			&& ray->door_info != NULL) // within the door fov && has a door
+			&& ray->door_info != NULL)
 		{
 			door_info = ray->door_info;
 			if (target_door != NULL && target_door->dist > ray->dist)
@@ -93,11 +87,8 @@ void	toggle_door(t_cub *cub)
 				target_door = door_info;
 		}
 	}
-	if (target_door == NULL) {
-		printf("target door is null\n");
+	if (target_door == NULL)
 		return ;
-	}
-	printf("target door state: %d\n", target_door->state);
 	if (target_door->state == CLOSED)
 		target_door->state = OPEN;
 	else if (target_door->state == OPEN)
