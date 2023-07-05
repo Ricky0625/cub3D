@@ -6,7 +6,7 @@
 #    By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
-#    Updated: 2023/07/03 15:30:12 by wxuerui          ###   ########.fr        #
+#    Updated: 2023/07/05 16:07:02 by wxuerui          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ SRCS		:= cub3d.c \
 			   parsing/parse_map.c parsing/parse_elements.c parsing/parse_check.c \
 			   controls/player_movement.c controls/controls.c controls/mouse_control.c \
 			   raycasting/get_rays.c raycasting/get_rays_utils.c \
-			   render/render_world.c render/render_utils.c render/put_manual.c \
+			   render/render_world.c render/render_utils.c render/put_manual.c render/display_animation.c \
 			   minimap/minimap.c minimap/minimap_utils.c \
 			   utils/error.c utils/img_utils.c utils/color_utils.c utils/draw_utils.c utils/map_utils.c utils/math_utils.c \
 

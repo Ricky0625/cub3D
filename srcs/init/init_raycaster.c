@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:19:15 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 14:46:28 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 16:05:46 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	init_render_option(t_render_option *render_opt)
 	render_opt->using_mouse = 0;
 	render_opt->manual = 0;
 	render_opt->mouse_rotate_speed = 0;
+	render_opt->animation_index = -1;
 }
 
 void	init_images(t_cub *cub)
