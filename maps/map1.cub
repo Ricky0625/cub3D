@@ -1,10 +1,10 @@
-NO assets/no.xpm
-SO assets/so.xpm
-EA assets/ea.xpm
-WE assets/we.xpm
-D assets/duck.xpm
-C 183,183,183
-F 50,100,255
+NO assets/vwall.xpm
+SO assets/player.xpm
+EA assets/skeleton.xpm
+WE assets/floor.xpm
+D assets/ghost.xpm
+C 0,0,0
+F 0,0,0
         1111111111111111111111111
         1111111111111111111111111
         111111111111111111111111
