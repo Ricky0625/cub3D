@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/05 17:05:52 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:58:37 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,28 +311,27 @@ enum e_manual_arg_type
 	BOOL
 };
 
-typedef union
+typedef union u_manual_variable_arg
 {
 	t_vector	coords;
 	int			value;
 }	t_manual_variable_arg;
 
-
-typedef struct
+typedef struct s_manual_args
 {
 	char					*prefix;
-	t_manual_variable_arg		arg;
+	t_manual_variable_arg	arg;
 	char					*suffix;
 	enum e_manual_arg_type	arg_type;
 }	t_manual_args;
 
 typedef struct s_render_option
 {
-	int	fisheye;
-	int	minimap;
-	int	using_mouse;
-	int	manual;
-	int	animation_index;
+	int		fisheye;
+	int		minimap;
+	int		using_mouse;
+	int		manual;
+	int		animation_index;
 	double	mouse_rotate_speed;
 }	t_render_option;
 
@@ -461,7 +460,6 @@ void	map_iterator(t_cub *cub, t_map_iterator_func f, t_iterate_type type);
 // Draw utils
 void	draw_pixel(t_img *img, int x, int y, int color);
 void	draw_line(t_img *img, t_vector p1, t_vector p2, int color);
-void	draw_slice(t_cub *cub, t_slice *slice, int col_index);
 void	draw_triangle(t_img *img, t_vector *vects, int color, int fill);
 void	draw_vertical_line(t_cub *cub, t_vector start, int len, int color);
 void	brehensam_algo(t_vector *p, t_vector delta, t_vector dir, int *error);

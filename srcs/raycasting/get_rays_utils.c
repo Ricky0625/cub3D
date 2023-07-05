@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_rays_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 22:26:20 by wxuerui           #+#    #+#             */
-/*   Updated: 2023/06/27 19:27:29 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:57:14 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_wall_or_door(t_cub *cub, t_vector p)
 	t_vector	p_grid_pos;
 
 	map = cub->map.map;
-	p_grid_pos = (t_vector) {
+	p_grid_pos = (t_vector){
 		(int)p.x / GRID_SIZE,
 		(int)p.y / GRID_SIZE
 	};

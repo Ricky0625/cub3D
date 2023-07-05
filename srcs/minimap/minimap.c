@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 13:59:15 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:06:50 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	mm_draw_tile(t_cub *cub, t_vector start, int x, int y)
+{
+	char	**map;
+	char	tile;
+	t_img	*minimap;
+	int		door_state;
+
+	map = cub->map.map;
+	tile = map[y / MM_TILE_SIZE][x / MM_TILE_SIZE];
+	minimap = &cub->minimap;
+	if (tile == WALL)
+		draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_WALL);
+	else if (tile == EMPTY)
+		draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_VOID);
+	else if (tile == DOOR)
+	{
+		door_state = get_door_state(cub,
+				(t_vector){x / MM_TILE_SIZE, y / MM_TILE_SIZE});
+		if (door_state == CLOSED)
+			draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_CLOSED_DOOR);
+		else
+			draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_DOOR);
+	}
+	else
+		draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_FLOOR);
+}
 
 /**
  * Render the square background map
@@ -38,20 +65,7 @@ void	mm_put_background(t_cub *cub, t_vector start, t_vector end)
 		while (++x < MM_TILE_SIZE * (int)ft_strlen(map[y / MM_TILE_SIZE])
 			&& x < end.x)
 		{
-			tile = map[y / MM_TILE_SIZE][x / MM_TILE_SIZE];
-			if (tile == WALL)
-				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_WALL);
-			else if (tile == EMPTY)
-				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_VOID);
-			else if (tile == DOOR)
-			{
-				if (get_door_state(cub, (t_vector){x / MM_TILE_SIZE, y / MM_TILE_SIZE}) == CLOSED)
-					draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_CLOSED_DOOR);
-				else
-					draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_DOOR);
-			}
-			else
-				draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_FLOOR);
+			mm_draw_tile(cub, start, x, y);
 		}
 	}
 }
@@ -108,7 +122,8 @@ void	mm_put_rays(t_cub *cub, t_vector start, double scale)
 		ray = cub->rays[i];
 		scaled_ray_p_inter.x = ray.p_intersection.x * scale - start.x;
 		scaled_ray_p_inter.y = ray.p_intersection.y * scale - start.y;
-		if (ray.angle >= cub->proj_attr.door_fov.x && ray.angle <= cub->proj_attr.door_fov.y)
+		if (ray.angle >= cub->proj_attr.door_fov.x
+			&& ray.angle <= cub->proj_attr.door_fov.y)
 			mm_draw_ray(&cub->minimap, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_DOOR);
 		else
 			mm_draw_ray(&cub->minimap, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_RAY);

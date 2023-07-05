@@ -51,5 +51,6 @@ void	init_images(t_cub *cub)
 	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});
 	new_image(cub, &cub->minimap, (t_vector){MM_IMG_SIZE, MM_IMG_SIZE});
 	new_image(cub, &cub->manual, (t_vector){MANUAL_WIDTH, WIN_HEIGHT});
-	put_color_to_image(&cub->manual, MANUAL_BG_COLOR, MANUAL_WIDTH * WIN_HEIGHT);
+	put_color_to_image(&cub->manual, MANUAL_BG_COLOR,
+		MANUAL_WIDTH * WIN_HEIGHT);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 19:03:08 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 13:14:41 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:58:19 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,33 +78,6 @@ void	draw_line(t_img *img, t_vector p1, t_vector p2, int color)
 	{
 		draw_pixel(img, p1.x, p1.y, color);
 		brehensam_algo(&p1, delta, dir, error);
-	}
-}
-
-void	draw_slice(t_cub *cub, t_slice *slice, int col_index)
-{
-	t_img		*texture;
-	int			*texture_data;
-	int			pixel;
-	double		texture_start;
-
-	texture = slice->texture;
-	texture_data = (int *)texture->data;
-	texture_start = 0;
-	if (slice->des_start_y < 0)
-	{
-		texture_start = -slice->des_start_y * slice->tex_step;
-		slice->des_start_y = 0;
-	}
-	while (slice->des_start_y < slice->des_end_y && slice->des_start_y < WIN_HEIGHT)
-	{
-		if (slice->des_start_y >= 0 && slice->des_start_y < WIN_HEIGHT)
-		{
-			pixel = texture_data[(int)texture_start * (texture->line_size / 4) + (int)slice->offset];
-			draw_pixel(&cub->buffer, col_index, slice->des_start_y, pixel);
-		}
-		slice->des_start_y++;
-		texture_start += slice->tex_step;
 	}
 }
 

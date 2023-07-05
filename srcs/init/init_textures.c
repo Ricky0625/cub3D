@@ -64,8 +64,8 @@ t_door	*get_door_info(t_cub *cub, t_vector_d p_intersection)
 	map = cub->map.map;
 	doors = cub->doors;
 	p_grid_pos = (t_vector){
-		(int)p_intersection.x / GRID_SIZE
-		, (int)p_intersection.y / GRID_SIZE
+		(int)p_intersection.x / GRID_SIZE,
+		(int)p_intersection.y / GRID_SIZE
 	};
 	if (map[p_grid_pos.y][p_grid_pos.x] != DOOR)
 		return (NULL);
