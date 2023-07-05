@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/05 18:06:50 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:18:26 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,10 @@ void	mm_put_background(t_cub *cub, t_vector start, t_vector end)
 {
 	int		x;
 	int		y;
-	char	tile;
 	char	**map;
-	t_img	*minimap;
 
 	y = start.y - 1;
 	map = cub->map.map;
-	minimap = &cub->minimap;
 	while (++y < end.y)
 	{
 		x = start.x - 1;

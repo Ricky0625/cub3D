@@ -6,7 +6,7 @@
 #    By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/06 14:14:36 by wricky-t          #+#    #+#              #
-#    Updated: 2023/07/05 17:55:05 by wricky-t         ###   ########.fr        #
+#    Updated: 2023/07/05 18:18:42 by wricky-t         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ NAME		:= cub3D
 CC			:= gcc
 
 CFLAGS		:= -Wall -Werror -Wextra $(INCFLAGS)
-CFLAGS		+= -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function
 
 ifeq ($(DB), 1)
 	CFLAGS += -fsanitize=address -g3

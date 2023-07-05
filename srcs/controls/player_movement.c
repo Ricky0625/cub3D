@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 15:27:29 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:21:31 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * Move separately on x and y axis
  * and move only when it doesn't run into a wall after move.
 */
-void	move(t_cub *cub, t_vector_d displacement)
+static void	move(t_cub *cub, t_vector_d displacement)
 {
 	t_vector	temp_pos;
 
@@ -32,7 +32,7 @@ void	move(t_cub *cub, t_vector_d displacement)
 	cub->player.grid_pos.y = cub->player.unit_pos.y / GRID_SIZE;
 }
 
-void	move_x(t_cub *cub, t_controls key)
+static void	move_x(t_cub *cub, t_controls key)
 {
 	t_vector_d	displacement;
 
@@ -54,7 +54,7 @@ void	move_x(t_cub *cub, t_controls key)
 	}
 }
 
-void	move_y(t_cub *cub, t_controls key)
+static void	move_y(t_cub *cub, t_controls key)
 {
 	t_vector_d	displacement;
 

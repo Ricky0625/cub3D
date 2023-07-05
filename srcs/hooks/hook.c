@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:25:50 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/05 17:11:46 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 18:21:56 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ static int	rendering(t_cub *cub)
  * 
  * @attention button 1 means left click
 */
-int	mouse_click_hook(int button, int x, int y, t_cub *cub)
+static int	mouse_click_hook(int button, int x, int y, t_cub *cub)
 {
+	(void)x;
+	(void)y;
 	if (cub->render_opt.using_mouse && button == 1)
 	{
 		cub->render_opt.animation_index = 0;

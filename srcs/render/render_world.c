@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 16:07:32 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/05 18:00:01 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:19:54 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
  * 
  * slice height = (texture height / dist of ray) / dist to plane
 */
-double	get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
+static double	get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
 {
 	double	slice_height;
 
@@ -57,7 +57,7 @@ double	get_slice_height(t_ray *ray, t_projection_attr *proj_attr)
  * 4. Calculate the step of the texture. Step is basically the number of pixels
  *    to skip/repeat when copying the texture.
 */
-t_slice	setup_slice(t_cub *cub, t_ray *ray, int col_index)
+static t_slice	setup_slice(t_cub *cub, t_ray *ray)
 {
 	t_slice				slice;
 	t_vector			center;
@@ -115,7 +115,7 @@ void	render_world(t_cub *cub)
 	while (++col_index < WIN_WIDTH)
 	{
 		ray = &cub->rays[col_index];
-		slice = setup_slice(cub, ray, col_index);
+		slice = setup_slice(cub, ray);
 		if (slice.des_start_y > 0)
 			draw_vertical_line(cub, (t_vector){col_index, 0},
 				slice.des_start_y, cub->textures.ceil);
