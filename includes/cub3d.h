@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 20:32:42 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 13:58:57 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,7 +415,7 @@ int		mouse_hook(int x, int y, t_cub *cub);
 
 // Controls
 void	adjust_fov(t_cub *cub, int key);
-void	adjust_center_offset(t_cub *cub, int key);
+void	adjust_center_offset(t_cub *cub, int key, int step_size);
 void	change_raycasting_option(t_cub *cub, int key);
 void	reset_raycasting_environment(t_cub *cub);
 void	toggle_door(t_cub *cub);

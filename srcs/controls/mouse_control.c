@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_control.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 16:28:38 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/29 17:58:16 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/05 14:02:00 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	mouse_hook(int x, int y, t_cub *cub)
 			cub->render_opt.mouse_rotate_speed = rtt_speed;
 		}
 		if (y > WIN_HEIGHT / 2)
-			adjust_center_offset(cub, KEY_DOWN);
+			adjust_center_offset(cub, KEY_DOWN, WIN_HEIGHT / 2 - y);
 		else if (y < WIN_HEIGHT / 2)
-			adjust_center_offset(cub, KEY_UP);
+			adjust_center_offset(cub, KEY_UP, WIN_HEIGHT / 2 - y);
 		mlx_mouse_move(cub->win, WIN_WIDTH / 2, WIN_HEIGHT / 2);
 	}
 	return (0);

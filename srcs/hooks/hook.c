@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:25:50 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 20:33:29 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:03:53 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static void	update_player_state(t_cub *cub)
 	if (cub->active_key.right)
 		rotate_player(cub, KEY_RIGHT, TURN_SPEED);
 	if (cub->active_key.up)
-		adjust_center_offset(cub, KEY_UP);
+		adjust_center_offset(cub, KEY_UP, CENTER_OFFSET_STEP);
 	if (cub->active_key.down)
-		adjust_center_offset(cub, KEY_DOWN);
+		adjust_center_offset(cub, KEY_DOWN, -CENTER_OFFSET_STEP);
 	if (cub->render_opt.mouse_rotate_speed)
 	{
 		if (cub->render_opt.mouse_rotate_speed > 0)
