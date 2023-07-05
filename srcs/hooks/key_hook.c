@@ -60,7 +60,10 @@ int	key_down_hook(int key, t_cub *cub)
 	else if (key == KEY_R)
 		reset_raycasting_environment(cub);
 	else if (key == KEY_E)
+	{
+		cub->render_opt.animation_index = 0;
 		toggle_door(cub);
+	}
 	else
 		change_key_state(key, cub, 1);
 	return (0);

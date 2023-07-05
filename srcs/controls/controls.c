@@ -50,10 +50,6 @@ void	adjust_center_offset(t_cub *cub, int key, int step_size)
 		|| (key == KEY_DOWN && proj_attr->center_offset <= -WIN_HEIGHT / 2))
 		return ;
 		proj_attr->center_offset += step_size;
-	// if (key == KEY_UP)
-	// 	proj_attr->center_offset += CENTER_OFFSET_STEP;
-	// else if (key == KEY_DOWN)
-	// 	proj_attr->center_offset -= CENTER_OFFSET_STEP;
 }
 
 void	reset_raycasting_environment(t_cub *cub)
