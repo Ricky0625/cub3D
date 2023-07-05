@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:06:53 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 20:17:52 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:01:01 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	change_raycasting_option(t_cub *cub, int key)
 		cub->render_opt.manual = !cub->render_opt.manual;
 }
 
-void	adjust_center_offset(t_cub *cub, int key)
+void	adjust_center_offset(t_cub *cub, int key, int step_size)
 {
 	t_projection_attr	*proj_attr;
 
@@ -49,10 +49,11 @@ void	adjust_center_offset(t_cub *cub, int key)
 	if ((key == KEY_UP && proj_attr->center_offset >= WIN_HEIGHT / 2)
 		|| (key == KEY_DOWN && proj_attr->center_offset <= -WIN_HEIGHT / 2))
 		return ;
-	if (key == KEY_UP)
-		proj_attr->center_offset += CENTER_OFFSET_STEP;
-	else if (key == KEY_DOWN)
-		proj_attr->center_offset -= CENTER_OFFSET_STEP;
+		proj_attr->center_offset += step_size;
+	// if (key == KEY_UP)
+	// 	proj_attr->center_offset += CENTER_OFFSET_STEP;
+	// else if (key == KEY_DOWN)
+	// 	proj_attr->center_offset -= CENTER_OFFSET_STEP;
 }
 
 void	reset_raycasting_environment(t_cub *cub)

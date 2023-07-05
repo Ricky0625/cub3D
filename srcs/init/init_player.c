@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 15:46:49 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/27 18:33:37 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:06:39 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@ void	init_player(t_player *player)
 	player->dir = UNDEFINED;
 	player->grid_pos = (t_vector){-1, -1};
 	player->viewing_angle = 0.0;
+}
+
+void	init_hand_animation(t_cub *cub)
+{
+	xpm_to_image(cub, &cub->hand_animation[0],
+		"assets/hand_animation/frame_0.xpm");
+	xpm_to_image(cub, &cub->hand_animation[1],
+		"assets/hand_animation/frame_1.xpm");
+	xpm_to_image(cub, &cub->hand_animation[2],
+		"assets/hand_animation/frame_2.xpm");
+	xpm_to_image(cub, &cub->hand_animation[3],
+		"assets/hand_animation/frame_3.xpm");
+	xpm_to_image(cub, &cub->hand_animation[4],
+		"assets/hand_animation/frame_4.xpm");
 }
 
 static void	set_player_viewing_angle(t_cub *cub)

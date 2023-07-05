@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 20:32:42 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 17:05:52 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,7 @@ typedef struct s_render_option
 	int	minimap;
 	int	using_mouse;
 	int	manual;
+	int	animation_index;
 	double	mouse_rotate_speed;
 }	t_render_option;
 
@@ -367,6 +368,7 @@ typedef struct s_cub
 	t_projection_attr	proj_attr;
 	t_render_option		render_opt;
 	t_ray				rays[WIN_WIDTH];
+	t_img				hand_animation[5];
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */
@@ -385,6 +387,7 @@ t_door	*get_door_info(t_cub *cub, t_vector_d p_intersection);
 int		get_door_state(t_cub *cub, t_vector p_grid_pos);
 void	add_door(t_cub *cub, int x, int y);
 void	update_door_fov(t_cub *cub);
+void	init_hand_animation(t_cub *cub);
 
 // Raycasting
 void	store_rays_to_cub(t_cub *cub);
@@ -415,7 +418,7 @@ int		mouse_hook(int x, int y, t_cub *cub);
 
 // Controls
 void	adjust_fov(t_cub *cub, int key);
-void	adjust_center_offset(t_cub *cub, int key);
+void	adjust_center_offset(t_cub *cub, int key, int step_size);
 void	change_raycasting_option(t_cub *cub, int key);
 void	reset_raycasting_environment(t_cub *cub);
 void	toggle_door(t_cub *cub);
@@ -446,6 +449,7 @@ void	put_manual_string(t_cub *cub, t_vector pos, char *string, int color);
 // Render
 void	render_world(t_cub *cub);
 void	put_manual(t_cub *cub);
+void	play_animation(t_cub *cub);
 
 // Render utils
 void	get_wall_texture(t_cub *cub, t_ray *ray, t_slice *slice);

@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/03 14:03:25 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/05 16:18:35 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	init_cub(t_cub *cub)
 	cub->doors = NULL;
 	init_images(cub);
 	init_player(&cub->player);
+	init_hand_animation(cub);
 	init_projection_attribute(&cub->proj_attr);
 	init_render_option(&cub->render_opt);
 }
