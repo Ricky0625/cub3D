@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/05 18:18:26 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/06 13:53:10 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,11 @@ void	mm_put_rays(t_cub *cub, t_vector start, double scale)
 		scaled_ray_p_inter.y = ray.p_intersection.y * scale - start.y;
 		if (ray.angle >= cub->proj_attr.door_fov.x
 			&& ray.angle <= cub->proj_attr.door_fov.y)
-			mm_draw_ray(&cub->minimap, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_DOOR);
+			mm_draw_ray(&cub->minimap, scaled_player_upos,
+				scaled_ray_p_inter, MM_COLOR_DOOR);
 		else
-			mm_draw_ray(&cub->minimap, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_RAY);
+			mm_draw_ray(&cub->minimap, scaled_player_upos,
+				scaled_ray_p_inter, MM_COLOR_RAY);
 	}
 }
 
