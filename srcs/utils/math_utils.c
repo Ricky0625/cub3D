@@ -17,11 +17,6 @@ double	get_distance(t_vector_d p1, t_vector_d p2)
 	return (sqrt(pow((p2.x - p1.x), 2) + pow((p2.y - p1.y), 2)));
 }
 
-double	get_gradient(t_vector p1, t_vector p2)
-{
-	return (-((double)(p2.y - p1.y) / (double)(p2.x - p1.x)));
-}
-
 int	int_abs(int num)
 {
 	if (num < 0)

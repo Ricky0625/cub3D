@@ -12,6 +12,9 @@
 
 #include "cub3d.h"
 
+/**
+ * @brief toggle mouse control
+*/
 void	toggle_mouse(t_cub *cub)
 {
 	cub->render_opt.using_mouse = !cub->render_opt.using_mouse;
@@ -27,6 +30,9 @@ void	toggle_mouse(t_cub *cub)
 		mlx_mouse_show();
 }
 
+/**
+ * @brief listen to mouse move event
+*/
 int	mouse_hook(int x, int y, t_cub *cub)
 {
 	double	rtt_speed;

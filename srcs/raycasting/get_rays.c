@@ -100,6 +100,12 @@ void	get_ray(t_cub *cub, double angle, t_ray *ray)
 		ray->door_info = by_y.door_info;
 }
 
+/**
+ * @brief Raycaster
+ * 
+ * @details
+ * For each column of the WINDOW, cast a ray from the player's position
+*/
 void	store_rays_to_cub(t_cub *cub)
 {
 	int		i;
@@ -117,10 +123,3 @@ void	store_rays_to_cub(t_cub *cub)
 		cast_angle -= cub->proj_attr.ray_angle_step;
 	}
 }
-
-/**
- * Ideas for open door:
- * 1. If the door could be found inside the rays of struct,
- * 	  and distance is within x, can open.
- * 2. Press 'E' to open door, and press 'E' again to close door.
-*/

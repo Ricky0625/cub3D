@@ -32,6 +32,9 @@ static void	move(t_cub *cub, t_vector_d displacement)
 	cub->player.grid_pos.y = cub->player.unit_pos.y / GRID_SIZE;
 }
 
+/**
+ * @brief Move player on x axis
+*/
 static void	move_x(t_cub *cub, t_controls key)
 {
 	t_vector_d	displacement;
@@ -54,6 +57,9 @@ static void	move_x(t_cub *cub, t_controls key)
 	}
 }
 
+/**
+ * @brief Move player on y axis
+*/
 static void	move_y(t_cub *cub, t_controls key)
 {
 	t_vector_d	displacement;
@@ -83,6 +89,13 @@ static void	move_y(t_cub *cub, t_controls key)
  * Mouse move to rotate (like A and D)
 */
 
+/**
+ * @brief Move player based on the key
+ * 
+ * @attention
+ * KEY_A and KEY_D - move on x axis
+ * KEY_W and KEY_S - move on y axis
+*/
 void	move_player(t_cub *cub, t_controls key)
 {
 	if (key == KEY_A || key == KEY_D)
@@ -92,7 +105,7 @@ void	move_player(t_cub *cub, t_controls key)
 }
 
 /**
- * XDisplacement and YDisplacement should be calculated when angle changed
+ * @brief Rotate player based on the key
 */
 void	rotate_player(t_cub *cub, t_controls key, double angle)
 {

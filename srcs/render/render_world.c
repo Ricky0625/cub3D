@@ -76,6 +76,13 @@ static t_slice	setup_slice(t_cub *cub, t_ray *ray)
 	return (slice);
 }
 
+/**
+ * @brief Draw the slice.
+ * 
+ * @attention
+ * A slice is defined as a vertical line of pixels. This comprises of the
+ * pixels for ceiling, wall, and floor.
+*/
 static void	draw_slice(t_cub *cub, t_slice *slice, int col_index)
 {
 	t_img		*texture;

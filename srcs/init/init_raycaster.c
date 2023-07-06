@@ -36,6 +36,14 @@ void	init_projection_attribute(t_projection_attr *proj_attr)
 	proj_attr->mm_scale = (double)MM_TILE_SIZE / GRID_SIZE;
 }
 
+/**
+ * @brief Setup render options
+ * 
+ * @param render_opt Pointer to render options struct
+ * 
+ * @details
+ * Set all the render options to their default values
+*/
 void	init_render_option(t_render_option *render_opt)
 {
 	render_opt->fisheye = 0;
@@ -46,6 +54,19 @@ void	init_render_option(t_render_option *render_opt)
 	render_opt->animation_index = -1;
 }
 
+/**
+ * @brief Initialize all the required images
+ * 
+ * @param cub the main struct
+ * 
+ * @details
+ * Below are the images that will be initialized:
+ * 1. Buffer - The main image that will be used to render our world
+ * 2. Minimap - The minimap image
+ * 3. Manual - The manual image. After initialize this image, we will
+ * 		   put the manual background color to it
+ * 4. Mouse Pointer - The mouse pointer image
+*/
 void	init_images(t_cub *cub)
 {
 	new_image(cub, &cub->buffer, (t_vector){WIN_WIDTH, WIN_HEIGHT});

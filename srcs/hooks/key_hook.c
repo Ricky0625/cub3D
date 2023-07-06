@@ -12,12 +12,18 @@
 
 #include "cub3d.h"
 
+/**
+ * @brief exit cub3d
+*/
 int	close_cub(t_cub *cub)
 {
 	exit_cub(cub, NULL);
 	return (0);
 }
 
+/**
+ * @brief use to update the active key flags
+*/
 void	change_key_state(int key, t_cub *cub, int state)
 {
 	if (!cub->render_opt.using_mouse)
@@ -41,12 +47,24 @@ void	change_key_state(int key, t_cub *cub, int state)
 		cub->active_key.d = state;
 }
 
+/**
+ * @brief key up hook
+ * 
+ * @details
+ * When a key is released, we need to update the active key flags to false
+*/
 int	key_up_hook(int key, t_cub *cub)
 {
 	change_key_state(key, cub, 0);
 	return (0);
 }
 
+/**
+ * @brief key down hook
+ * 
+ * @details
+ * Recognize the key code and do the corresponding action
+*/
 int	key_down_hook(int key, t_cub *cub)
 {
 	if (key == KEY_ESC)

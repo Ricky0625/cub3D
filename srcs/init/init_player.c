@@ -43,6 +43,9 @@ void	init_player(t_player *player)
 	player->viewing_angle = 0.0;
 }
 
+/**
+ * @brief Initialize hand animation frames
+*/
 void	init_hand_animation(t_cub *cub)
 {
 	xpm_to_image(cub, &cub->hand_animation[0],
@@ -57,6 +60,9 @@ void	init_hand_animation(t_cub *cub)
 		"assets/hand_animation/frame_4.xpm");
 }
 
+/**
+ * @brief Initialize player's viewing angle and displacement
+*/
 static void	set_player_viewing_angle(t_cub *cub)
 {
 	t_dir	player_facing_direction;
@@ -78,7 +84,7 @@ static void	set_player_viewing_angle(t_cub *cub)
  * @brief Update door fov.
  * 
  * @details
- * Door fov is the angle use player's viewing angle as center,
+ * Door fov is the angle range that use player's viewing angle as center,
  * and minus/plus half of the door fov. If the door is in the fov,
  * meaning that the user can open the door.
  * 

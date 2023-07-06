@@ -12,6 +12,12 @@
 
 #include "cub3d.h"
 
+/**
+ * @brief Update the state of the door
+ * 
+ * @attention
+ * If the target door is NULL, meaning no door is found, it will do nothing
+*/
 static void	update_door_state(t_door *target_door)
 {
 	if (target_door == NULL)
@@ -22,6 +28,14 @@ static void	update_door_state(t_door *target_door)
 		target_door->state = CLOSED;
 }
 
+/**
+ * @brief Toggle the door based on its state
+ * 
+ * @details
+ * Will first iterate through all the rays and within the door fov,
+ * look for doors that are close enough to be toggled. If there are
+ * multiple doors, it will toggle the closest one.
+*/
 void	toggle_door(t_cub *cub)
 {
 	int			i;

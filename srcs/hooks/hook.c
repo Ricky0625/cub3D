@@ -12,6 +12,12 @@
 
 #include "cub3d.h"
 
+/**
+ * @brief Update player state (will be called every tick)
+ * 
+ * @details
+ * Based on the active key, update player state accordingly
+*/
 static void	update_player_state(t_cub *cub)
 {
 	if (cub->active_key.w)
@@ -40,6 +46,20 @@ static void	update_player_state(t_cub *cub)
 	}
 }
 
+/**
+ * @brief The main function that handles rendering (will be called every tick)
+ * 
+ * @details
+ * Every tick, we need to:
+ * 1. Update player state
+ * 2. Clear window
+ * 3. Raycasting
+ * 4. Set the buffer to just transparent pixels, this is because we are only
+ *    using one image, so need to wipe off the "canvas" before we draw
+ * 5. Render the world
+ * 6. Based on the render option, optionally render minimap and manual.
+ * 7. Put mouse pointer to the center of the screen
+*/
 static int	rendering(t_cub *cub)
 {
 	update_player_state(cub);
@@ -82,6 +102,9 @@ static int	mouse_click_hook(int button, int x, int y, t_cub *cub)
 	return (0);
 }
 
+/**
+ * @brief Main hook function
+*/
 void	cub3d_hooks(t_cub *cub)
 {
 	mlx_hook(cub->win, 2, 1L << 0, key_down_hook, cub);

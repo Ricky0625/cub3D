@@ -12,6 +12,13 @@
 
 #include "cub3d.h"
 
+/**
+ * @brief Initialize textures struct
+ * 
+ * @details
+ * By default, all texture references are set to NULL. So to check if a
+ * texture is properly initialized, check if the reference is NULL.
+*/
 void	init_textures(t_texture *texture)
 {
 	texture->no_tex.ref = NULL;

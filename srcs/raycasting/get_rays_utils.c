@@ -12,6 +12,9 @@
 
 #include "cub3d.h"
 
+/**
+ * @brief Check if the current intersection point is a wall or closed door.
+*/
 static int	is_wall_or_door(t_cub *cub, t_vector p)
 {
 	char		**map;
@@ -71,6 +74,9 @@ int	collide(t_cub *cub, t_vector p)
 	return (0);
 }
 
+/**
+ * @brief DDA algorithm.
+*/
 int	dda(t_cub *cub, t_vector_d *p, t_vector_d displacement, t_ray *ray)
 {
 	while (1)

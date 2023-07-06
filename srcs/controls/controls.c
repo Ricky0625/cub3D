@@ -12,6 +12,13 @@
 
 #include "cub3d.h"
 
+/**
+ * @brief Adjust the fov based on the given key
+ * 
+ * @details
+ * Since dist_to_pance and ray_angle_step are dependent on fov,
+ * we need to recalculate it every time we change fov.
+*/
 void	adjust_fov(t_cub *cub, int key)
 {
 	int					new_fov;
@@ -31,6 +38,9 @@ void	adjust_fov(t_cub *cub, int key)
 	proj_attr->ray_angle_step = deg_to_rad((double)new_fov / WIN_WIDTH);
 }
 
+/**
+ * @brief Change the render options based on the given key
+*/
 void	change_raycasting_option(t_cub *cub, int key)
 {
 	if (key == KEY_F)
@@ -41,6 +51,12 @@ void	change_raycasting_option(t_cub *cub, int key)
 		cub->render_opt.manual = !cub->render_opt.manual;
 }
 
+/**
+ * @brief Adjust the center offset based on the given key
+ * 
+ * @attention
+ * Center offset is use to let viewer to look up and down.
+*/
 void	adjust_center_offset(t_cub *cub, int key, int step_size)
 {
 	t_projection_attr	*proj_attr;
@@ -52,6 +68,12 @@ void	adjust_center_offset(t_cub *cub, int key, int step_size)
 		proj_attr->center_offset += step_size;
 }
 
+/**
+ * @brief Reset the raycasting environment
+ * 
+ * @attention
+ * If the manual is currently open, we don't want to reset the manual option.
+*/
 void	reset_raycasting_environment(t_cub *cub)
 {
 	int	old_manual_opt;
