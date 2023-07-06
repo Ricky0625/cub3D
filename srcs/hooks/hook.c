@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 14:25:50 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/05 18:21:56 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/06 14:08:51 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static int	rendering(t_cub *cub)
 	else
 		put_manual_string(cub, (t_vector){WIN_WIDTH - 180, WIN_HEIGHT - 30},
 			"Press M to Open Manual", 0);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->mouse_pointer.ref,
+		WIN_WIDTH / 2 - 9, WIN_HEIGHT / 2 - 9);
 	return (0);
 }
 

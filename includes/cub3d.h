@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:32:46 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/05 17:58:37 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/06 14:02:06 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,6 +368,7 @@ typedef struct s_cub
 	t_render_option		render_opt;
 	t_ray				rays[WIN_WIDTH];
 	t_img				hand_animation[5];
+	t_img				mouse_pointer;
 }	t_cub;
 
 /* ====== FUNCTION PROTOTYPES ====== */

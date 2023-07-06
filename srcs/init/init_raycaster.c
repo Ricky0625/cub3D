@@ -6,7 +6,7 @@
 /*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 16:19:15 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/07/05 16:05:46 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/06 14:06:58 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ void	init_images(t_cub *cub)
 	new_image(cub, &cub->manual, (t_vector){MANUAL_WIDTH, WIN_HEIGHT});
 	put_color_to_image(&cub->manual, MANUAL_BG_COLOR,
 		MANUAL_WIDTH * WIN_HEIGHT);
+	xpm_to_image(cub, &cub->mouse_pointer, "assets/mouse_pointer.xpm");
 }
