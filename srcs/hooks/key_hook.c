@@ -3,40 +3,86 @@
 /*                                                        :::      ::::::::   */
 /*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:05:31 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:37:34 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/03 13:46:13 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief exit cub3d
+*/
 int	close_cub(t_cub *cub)
 {
 	exit_cub(cub, NULL);
 	return (0);
 }
 
-int	key_hook(int key, t_cub *cub)
+/**
+ * @brief use to update the active key flags
+*/
+void	change_key_state(int key, t_cub *cub, int state)
+{
+	if (!cub->render_opt.using_mouse)
+	{
+		if (key == KEY_UP)
+			cub->active_key.up = state;
+		else if (key == KEY_DOWN)
+			cub->active_key.down = state;
+		else if (key == KEY_LEFT)
+			cub->active_key.left = state;
+		else if (key == KEY_RIGHT)
+			cub->active_key.right = state;
+	}
+	if (key == KEY_W)
+		cub->active_key.w = state;
+	else if (key == KEY_S)
+		cub->active_key.s = state;
+	else if (key == KEY_A)
+		cub->active_key.a = state;
+	else if (key == KEY_D)
+		cub->active_key.d = state;
+}
+
+/**
+ * @brief key up hook
+ * 
+ * @details
+ * When a key is released, we need to update the active key flags to false
+*/
+int	key_up_hook(int key, t_cub *cub)
+{
+	change_key_state(key, cub, 0);
+	return (0);
+}
+
+/**
+ * @brief key down hook
+ * 
+ * @details
+ * Recognize the key code and do the corresponding action
+*/
+int	key_down_hook(int key, t_cub *cub)
 {
 	if (key == KEY_ESC)
 		close_cub(cub);
 	else if (key == KEY_PLUS || key == KEY_MINUS)
 		adjust_fov(cub, key);
-	else if (key == KEY_Q || key == KEY_E)
-		adjust_center_offset(cub, key);
-	else if (key == KEY_F || key == KEY_M)
+	else if (key == KEY_F || key == KEY_TAB || key == KEY_M)
 		change_raycasting_option(cub, key);
-	else if (!cub->render_opt.using_mouse
-		&& (key == KEY_LEFT || key == KEY_RIGHT))
-		rotate_player(cub, key);
 	else if (key == KEY_LSHIFT)
-		cub->render_opt.using_mouse = !cub->render_opt.using_mouse;
+		toggle_mouse(cub);
 	else if (key == KEY_R)
 		reset_raycasting_environment(cub);
-	else if (key == KEY_W || key == KEY_S
-		|| key == KEY_A || key == KEY_D)
-		move_player(cub, key);
+	else if (key == KEY_E)
+	{
+		cub->render_opt.animation_index = 0;
+		toggle_door(cub);
+	}
+	else
+		change_key_state(key, cub, 1);
 	return (0);
 }

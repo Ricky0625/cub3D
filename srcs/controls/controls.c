@@ -6,12 +6,19 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 15:06:53 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/23 16:28:54 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/05 17:53:21 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief Adjust the fov based on the given key
+ * 
+ * @details
+ * Since dist_to_pance and ray_angle_step are dependent on fov,
+ * we need to recalculate it every time we change fov.
+*/
 void	adjust_fov(t_cub *cub, int key)
 {
 	int					new_fov;
@@ -27,34 +34,52 @@ void	adjust_fov(t_cub *cub, int key)
 	else if (key == KEY_MINUS && proj_attr->fov > FOV_MIN)
 		new_fov -= FOV_STEP;
 	proj_attr->fov = new_fov;
-	proj_attr->dist_to_proj_plane = (WIN_WIDTH / 2) / tan(deg_to_rad(FOV / 2));
+	proj_attr->dist_to_plane = (WIN_WIDTH / 2) / tan(deg_to_rad(FOV / 2));
 	proj_attr->ray_angle_step = deg_to_rad((double)new_fov / WIN_WIDTH);
 }
 
+/**
+ * @brief Change the render options based on the given key
+*/
 void	change_raycasting_option(t_cub *cub, int key)
 {
 	if (key == KEY_F)
 		cub->render_opt.fisheye = !cub->render_opt.fisheye;
-	else if (key == KEY_M)
+	else if (key == KEY_TAB)
 		cub->render_opt.minimap = !cub->render_opt.minimap;
+	else if (key == KEY_M)
+		cub->render_opt.manual = !cub->render_opt.manual;
 }
 
-void	adjust_center_offset(t_cub *cub, int key)
+/**
+ * @brief Adjust the center offset based on the given key
+ * 
+ * @attention
+ * Center offset is use to let viewer to look up and down.
+*/
+void	adjust_center_offset(t_cub *cub, int key, int step_size)
 {
 	t_projection_attr	*proj_attr;
 
 	proj_attr = &cub->proj_attr;
-	if ((key == KEY_Q && proj_attr->center_offset == CENTER_OFFSET_MAX)
-		|| (key == KEY_E && proj_attr->center_offset == -CENTER_OFFSET_MAX))
+	if ((key == KEY_UP && proj_attr->center_offset >= WIN_HEIGHT / 2)
+		|| (key == KEY_DOWN && proj_attr->center_offset <= -WIN_HEIGHT / 2))
 		return ;
-	if (key == KEY_Q && proj_attr->center_offset < CENTER_OFFSET_MAX)
-		proj_attr->center_offset += CENTER_OFFSET_STEP;
-	else if (key == KEY_E && proj_attr->center_offset > -CENTER_OFFSET_MAX)
-		proj_attr->center_offset -= CENTER_OFFSET_STEP;
+		proj_attr->center_offset += step_size;
 }
 
+/**
+ * @brief Reset the raycasting environment
+ * 
+ * @attention
+ * If the manual is currently open, we don't want to reset the manual option.
+*/
 void	reset_raycasting_environment(t_cub *cub)
 {
+	int	old_manual_opt;
+
+	old_manual_opt = cub->render_opt.manual;
 	init_projection_attribute(&cub->proj_attr);
 	init_render_option(&cub->render_opt);
+	cub->render_opt.manual = old_manual_opt;
 }

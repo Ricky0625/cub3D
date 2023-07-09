@@ -3,39 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wxuerui <wangxuerui2003@gmail.com>         +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 21:19:55 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 11:58:52 by wxuerui          ###   ########.fr       */
+/*   Updated: 2023/07/06 13:53:10 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	mm_draw_tile(t_cub *cub, t_vector start, int x, int y)
+{
+	char	**map;
+	char	tile;
+	t_img	*minimap;
+	int		door_state;
+
+	map = cub->map.map;
+	tile = map[y / MM_TILE_SIZE][x / MM_TILE_SIZE];
+	minimap = &cub->minimap;
+	if (tile == WALL)
+		draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_WALL);
+	else if (tile == EMPTY)
+		draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_VOID);
+	else if (tile == DOOR)
+	{
+		door_state = get_door_state(cub,
+				(t_vector){x / MM_TILE_SIZE, y / MM_TILE_SIZE});
+		if (door_state == CLOSED)
+			draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_CLOSED_DOOR);
+		else
+			draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_DOOR);
+	}
+	else
+		draw_pixel(minimap, x - start.x, y - start.y, MM_COLOR_FLOOR);
+}
+
 /**
- * Render the background map
+ * Render the square background map
+ * From start to end, put the corresponding colors.
  * If at '1', draw wall color.
  * else if at ' ', draw void color.
  * else ('0', player), draw floor color;
+ * 
+ * All x and y are offset by their start to make them at the top left corner.
 */
-void	mm_render_background(t_cub *cub, char **map, t_vector size)
+void	mm_put_background(t_cub *cub, t_vector start, t_vector end)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	char	**map;
 
-	y = -1;
-	ft_bzero(cub->buffer.data, WIN_WIDTH * WIN_HEIGHT);
-	while (++y < MM_TILE_SIZE * size.y)
+	y = start.y - 1;
+	map = cub->map.map;
+	while (++y < end.y)
 	{
-		x = -1;
-		while (++x < MM_TILE_SIZE * (int)ft_strlen(map[y / MM_TILE_SIZE]))
+		x = start.x - 1;
+		while (++x < MM_TILE_SIZE * (int)ft_strlen(map[y / MM_TILE_SIZE])
+			&& x < end.x)
 		{
-			if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == '1')
-				draw_pixel(cub, x, y, MM_COLOR_WALL);
-			else if (map[y / MM_TILE_SIZE][x / MM_TILE_SIZE] == ' ')
-				draw_pixel(cub, x, y, MM_COLOR_VOID);
-			else
-				draw_pixel(cub, x, y, MM_COLOR_FLOOR);
+			mm_draw_tile(cub, start, x, y);
 		}
 	}
 }
@@ -48,52 +75,81 @@ void	mm_render_background(t_cub *cub, char **map, t_vector size)
  * 
  * Hint: M_PI / 1.5 is 120 deg
 */
-void	mm_put_player(t_cub *cub, t_player *player, double scale)
+void	mm_put_player(t_cub *cub, t_vector start, double scale)
 {
 	t_vector	vertices[3];
 	int			x;
 	int			y;
 
-	x = player->unit_pos.x;
-	y = player->unit_pos.y;
-	vertices[0].x = roundf(x * scale
-			+ cos(player->viewing_angle) * MM_TILE_SIZE / 2);
-	vertices[0].y = roundf(y * scale
-			+ -sin(player->viewing_angle) * MM_TILE_SIZE / 2);
-	vertices[1].x = roundf(x * scale
-			+ cos(player->viewing_angle + M_PI / 1.5) * MM_TILE_SIZE / 3);
-	vertices[1].y = roundf(y * scale
-			+ -sin(player->viewing_angle + M_PI / 1.5) * MM_TILE_SIZE / 3);
-	vertices[2].x = roundf(x * scale
-			+ cos(player->viewing_angle - M_PI / 1.5) * MM_TILE_SIZE / 3);
-	vertices[2].y = roundf(y * scale
-			+ -sin(player->viewing_angle - M_PI / 1.5) * MM_TILE_SIZE / 3);
-	draw_triangle(cub, vertices, MM_COLOR_PLAYER, 1);
+	x = cub->player.unit_pos.x * scale - start.x;
+	y = cub->player.unit_pos.y * scale - start.y;
+	vertices[0].x = roundf(x
+			+ cos(cub->player.viewing_angle) * MM_TILE_SIZE / 2);
+	vertices[0].y = roundf(y
+			+ -sin(cub->player.viewing_angle) * MM_TILE_SIZE / 2);
+	vertices[1].x = roundf(x
+			+ cos(cub->player.viewing_angle + M_PI / 1.5) * MM_TILE_SIZE / 3);
+	vertices[1].y = roundf(y
+			+ -sin(cub->player.viewing_angle + M_PI / 1.5) * MM_TILE_SIZE / 3);
+	vertices[2].x = roundf(x
+			+ cos(cub->player.viewing_angle - M_PI / 1.5) * MM_TILE_SIZE / 3);
+	vertices[2].y = roundf(y
+			+ -sin(cub->player.viewing_angle - M_PI / 1.5) * MM_TILE_SIZE / 3);
+	draw_triangle(&cub->minimap, vertices, MM_COLOR_PLAYER, 1);
 }
 
 /**
- * 
+ * Scale the player upos and every single ray. 
+ * Use the dedicated mm_draw_ray function to avoid ray exceeding the minimap.
 */
-void	mm_draw_rays(t_cub *cub, t_player *player, double scale)
+void	mm_put_rays(t_cub *cub, t_vector start, double scale)
 {
 	t_vector	scaled_player_upos;
 	t_vector	scaled_ray_p_inter;
+	t_vector_d	door_fov;
+	t_ray		ray;
 	int			i;
 
-	scaled_player_upos.x = player->unit_pos.x * scale;
-	scaled_player_upos.y = player->unit_pos.y * scale;
+	scaled_player_upos.x = cub->player.unit_pos.x * scale - start.x;
+	scaled_player_upos.y = cub->player.unit_pos.y * scale - start.y;
+	door_fov = cub->proj_attr.door_fov;
 	i = -1;
 	while (++i < WIN_WIDTH)
 	{
-		scaled_ray_p_inter.x = cub->rays[i].p_intersection.x * scale;
-		scaled_ray_p_inter.y = cub->rays[i].p_intersection.y * scale;
-		draw_line(cub, scaled_player_upos, scaled_ray_p_inter, MM_COLOR_RAY);
+		ray = cub->rays[i];
+		scaled_ray_p_inter.x = ray.p_intersection.x * scale - start.x;
+		scaled_ray_p_inter.y = ray.p_intersection.y * scale - start.y;
+		if (ray.angle >= cub->proj_attr.door_fov.x
+			&& ray.angle <= cub->proj_attr.door_fov.y)
+			mm_draw_ray(&cub->minimap, scaled_player_upos,
+				scaled_ray_p_inter, MM_COLOR_DOOR);
+		else
+			mm_draw_ray(&cub->minimap, scaled_player_upos,
+				scaled_ray_p_inter, MM_COLOR_RAY);
 	}
 }
 
+/**
+ * Start and End are for transforming pixels for later use.
+ * The pixels will be all at the top left corner to form a minimap.
+ * Offset is for start and end to get their relative position in the minimap.
+*/
 void	render_minimap(t_cub *cub)
 {
-	mm_render_background(cub, cub->map.map, cub->map.size);
-	mm_put_player(cub, &cub->player, cub->mm_scale);
-	mm_draw_rays(cub, &cub->player, cub->mm_scale);
+	t_vector	start;
+	t_vector	end;
+	double		scale;
+	int			offset;
+
+	scale = cub->proj_attr.mm_scale;
+	offset = MM_NUM_TILES / 2 * MM_TILE_SIZE;
+	start.x = (int)roundf(cub->player.unit_pos.x * scale) - offset;
+	start.y = (int)roundf(cub->player.unit_pos.y * scale) - offset;
+	end.x = (int)roundf(cub->player.unit_pos.x * scale) + offset;
+	end.y = (int)roundf(cub->player.unit_pos.y * scale) + offset;
+	mm_adjust_start_and_end(cub, &start, &end);
+	mm_put_background(cub, start, end);
+	mm_put_player(cub, start, cub->proj_attr.mm_scale);
+	mm_put_rays(cub, start, cub->proj_attr.mm_scale);
+	mlx_put_image_to_window(cub->mlx, cub->win, cub->minimap.ref, 0, 0);
 }

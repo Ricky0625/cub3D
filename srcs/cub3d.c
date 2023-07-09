@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:27:54 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:39:14 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/05 16:18:35 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ static void	init_cub(t_cub *cub)
 	cub->mlx = mlx_init();
 	cub->win = mlx_new_window(cub->mlx, WIN_WIDTH, WIN_HEIGHT, "CUB3D");
 	cub->map.info_list = NULL;
+	cub->doors = NULL;
+	init_images(cub);
 	init_player(&cub->player);
+	init_hand_animation(cub);
 	init_projection_attribute(&cub->proj_attr);
 	init_render_option(&cub->render_opt);
-	cub->mm_scale = (double)MM_TILE_SIZE / GRID_SIZE;
 }
 
 /**
@@ -54,15 +56,3 @@ int	main(int ac, char **av)
 	cub3d_hooks(&cub);
 	return (0);
 }
-
-/**
- * Projection attributes
- * 
- * 1. Player [DONE]
- * 		- height (assume it's wall height / 2) [DONE]
- * 		- FOV (assume it's 60 degree first) [DONE]
- * 		- position [DONE]
- * 2. Projection plane's dimension []
- * 		* this is basically the window size
- * 3. Relationship between player and projection plane []
-*/

@@ -1,15 +1,13 @@
-NO assets/vwall1.xpm
-SO assets/vwall1.xpm
-EA assets/vwall1.xpm
-WE assets/vwall1.xpm
+NO assets/wall.xpm
+SO assets/wall.xpm
+EA assets/wall.xpm
+WE assets/wall.xpm
+D assets/final.xpm
 C 184,184,184
 F 220,100,0
 
-11111111
-10100001
-10000101
-100N0101
-10000001
-10001111
-11000001
-11111111
+111111
+100001
+10N111111
+1D0DD1
+11111

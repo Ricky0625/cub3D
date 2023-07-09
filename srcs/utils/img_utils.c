@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   img_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
+/*   By: wxuerui <wxuerui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 18:56:01 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/03/15 19:12:58 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/03 14:56:01 by wxuerui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,49 +38,16 @@ void	xpm_to_image(t_cub *cub, t_img *img, char *xpm)
 			&img->endian);
 }
 
-void	new_rect(t_cub *cub, t_img *img, t_vector size, int color)
+void	put_color_to_image(t_img *img, int color, int size)
 {
-	int	x;
-	int	y;
-	int	pixel;
+	int	i;
 
-	new_image(cub, img, size);
-	if (img->ref == NULL || img->data == NULL)
-		return ;
-	y = -1;
-	while (++y < size.y)
+	i = -1;
+	while (++i < size * img->bpp / 8)
 	{
-		x = -1;
-		while (++x < size.x)
-		{
-			pixel = (y * img->line_size) + (x * 4);
-			ft_memcpy(&img->data[pixel], &color, sizeof(int));
-		}
-	}
-}
-
-void	copy_image(t_img *src, t_img *dst, t_vector d_pos)
-{
-	int	x;
-	int	y;
-	int	src_pixel;
-	int	dst_pixel;
-	int	color;
-
-	if (src->ref == NULL || dst->ref == NULL)
-		return ;
-	y = -1;
-	while (++y < src->size.y)
-	{
-		x = -1;
-		while (++x < src->size.x)
-		{
-			src_pixel = (y * src->line_size) + (x * 4);
-			dst_pixel = ((d_pos.y + y) * dst->line_size) + ((d_pos.x + x) * 4);
-			ft_memcpy(&color, &src->data[src_pixel], sizeof(int));
-			if (get_a(color, src->endian) != 255)
-				ft_memcpy(&dst->data[dst_pixel], &src->data[src_pixel],
-					sizeof(int));
-		}
+		img->data[i] = color;
+		img->data[++i] = color >> 8;
+		img->data[++i] = color >> 16;
+		img->data[++i] = color >> 24;
 	}
 }

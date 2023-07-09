@@ -6,7 +6,7 @@
 /*   By: wricky-t <wricky-t@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 12:29:48 by wricky-t          #+#    #+#             */
-/*   Updated: 2023/06/24 13:43:33 by wricky-t         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:21:31 by wricky-t         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,26 @@
  * Move separately on x and y axis
  * and move only when it doesn't run into a wall after move.
 */
-void	move(t_cub *cub, t_vector_d displacement)
+static void	move(t_cub *cub, t_vector_d displacement)
 {
 	t_vector	temp_pos;
 
 	temp_pos.x = cub->player.unit_pos.x + roundf(displacement.x);
 	temp_pos.y = cub->player.unit_pos.y;
-	if (!is_wall(cub, temp_pos))
+	if (!collide(cub, temp_pos))
 		cub->player.unit_pos.x += roundf(displacement.x);
 	temp_pos.x = cub->player.unit_pos.x;
 	temp_pos.y = cub->player.unit_pos.y + roundf(displacement.y);
-	if (!is_wall(cub, temp_pos))
+	if (!collide(cub, temp_pos))
 		cub->player.unit_pos.y += roundf(displacement.y);
+	cub->player.grid_pos.x = cub->player.unit_pos.x / GRID_SIZE;
+	cub->player.grid_pos.y = cub->player.unit_pos.y / GRID_SIZE;
 }
 
-void	move_x(t_cub *cub, t_controls key)
+/**
+ * @brief Move player on x axis
+*/
+static void	move_x(t_cub *cub, t_controls key)
 {
 	t_vector_d	displacement;
 
@@ -52,7 +57,10 @@ void	move_x(t_cub *cub, t_controls key)
 	}
 }
 
-void	move_y(t_cub *cub, t_controls key)
+/**
+ * @brief Move player on y axis
+*/
+static void	move_y(t_cub *cub, t_controls key)
 {
 	t_vector_d	displacement;
 
@@ -81,6 +89,13 @@ void	move_y(t_cub *cub, t_controls key)
  * Mouse move to rotate (like A and D)
 */
 
+/**
+ * @brief Move player based on the key
+ * 
+ * @attention
+ * KEY_A and KEY_D - move on x axis
+ * KEY_W and KEY_S - move on y axis
+*/
 void	move_player(t_cub *cub, t_controls key)
 {
 	if (key == KEY_A || key == KEY_D)
@@ -90,17 +105,17 @@ void	move_player(t_cub *cub, t_controls key)
 }
 
 /**
- * XDisplacement and YDisplacement should be calculated when angle changed
+ * @brief Rotate player based on the key
 */
-void	rotate_player(t_cub *cub, t_controls key)
+void	rotate_player(t_cub *cub, t_controls key, double angle)
 {
 	double	new_angle;
 
 	new_angle = cub->player.viewing_angle;
 	if (key == KEY_LEFT)
-		new_angle += TURN_SPEED;
+		new_angle += angle;
 	else if (key == KEY_RIGHT)
-		new_angle -= TURN_SPEED;
+		new_angle -= angle;
 	if (new_angle < 0)
 		new_angle += 2 * M_PI;
 	else if (new_angle >= 2 * M_PI)
@@ -108,4 +123,5 @@ void	rotate_player(t_cub *cub, t_controls key)
 	cub->player.displacement.x = cos(new_angle) * MOVE_SPEED;
 	cub->player.displacement.y = -sin(new_angle) * MOVE_SPEED;
 	cub->player.viewing_angle = new_angle;
+	update_door_fov(cub);
 }
