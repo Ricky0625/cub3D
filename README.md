@@ -96,8 +96,8 @@ Before we continue to explain the parsing phase, we would like to list down the 
       - Textures: `NO ./path/to/texture`. Specify the identifier then the path.
       - Colors: `C 255,255,255`. Specify the identifier then the RGB value.
     - There's one optional textures, which is the door texture (D). It's completely optional so even if you don't provide it, the program will still run. For door, you need to follow the **format for textures**.
-    - Again, it's **STRICTLY** required to the format here. Otherwise, you will see an error message when you are trying to run the program.
     - Each element can be seperated by a new line.
+    - Again, it's **STRICTLY** required to follow the format above. Otherwise, you will see an error message when you are trying to run the program.
   
 3. Map content
 
@@ -119,7 +119,7 @@ Besides this, when we are validating our map file, we will also do some initiali
 
 Now, the fun part begins. This is where we do raycasting. If we were to explain it in a simple terms, this is what we do in this phase:
 
-    For each **column** of the screen, we **cast a ray** to see **where and what this ray hits**. We **store the data of the ray** and continue the process until we reach the last column of the screen.
+For each **column** of the screen, we **cast a ray** to see **where and what this ray hits**. We **store the data of the ray** and continue the process until we reach the last column of the screen.
 
 Is this simple enough? Hahaha. If you are still confused, let's break it down into smaller chunks.
 
