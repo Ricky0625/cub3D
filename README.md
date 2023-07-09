@@ -139,7 +139,7 @@ We will use this algorithm to know the intersection point of the ray. OK, but li
 
 Ok... I guess you know how it works now right? So, we will use DDA to find the intersection point of the ray. In the video, it actually "cast" a ray both horizontally and vertically simultaneously. But we don't actually do it that way. Instead, we cast two ray, one will seek for intersection on a horizontal axis, and another will seek for intersection on a vertical axis.
 
-When both of the found their intersection point, we calculate the distance between the player and the intersection point. Then we compare both ray (horizontal and vertical) and choose the one that's closer to the player. This ray will then store into an array of rays and ready to be used in the next phase.
+When both of the ray found their intersection point, we calculate the distance between the player and the intersection point. Then we compare both ray (horizontal and vertical) and choose the one that's closer to the player. This ray will then store into an array of rays and ready to be used in the next phase.
 
 To check whether we should stop the whole DDA process is by using our collision system. Once it found a wall or a closed door, the DDA algorithm will stop.
 
