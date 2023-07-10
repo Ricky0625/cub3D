@@ -26,6 +26,5 @@ void	exit_cub(t_cub *cub, char *err)
 		ft_printf("[ERROR]: %s\n", err);
 		exit_status = EXIT_FAILURE;
 	}
-	system("leaks -q cub3D");
 	exit(exit_status);
 }
