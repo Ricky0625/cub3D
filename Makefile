@@ -111,6 +111,9 @@ $(NAME): $(OBJS)
 	@make bonus -C $(LIBFT)
 	@$(CC) $(CFLAGS) $(MLXFLAGS) $^ $(STATLIB) -o $@
 
+minilibx:
+	@make -C $(MLX)
+
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -138,4 +141,4 @@ norm: $(SRCS)
 	@$(NORM) $(SRCS) $(INCLUDES) $(LIBFT)
 
 .PHONY:
-	clean fclean re
+	clean fclean re minilibx
